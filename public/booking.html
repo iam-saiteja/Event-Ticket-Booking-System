@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Registration - Chalana Chithram</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="bookingStyle.css" rel="stylesheet" />
+  <link rel="icon" href="images/branding.png" type="image/png" />
+  <style>
+    /* Custom QR Code styling */
+    #qr-code {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #144e4a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    #qr-code img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+
+<body class="bg-film-background min-h-screen">
+  <nav class="film-navbar">
+    <div class="container mx-auto flex justify-between items-center py-4">
+      <div class="logo flex items-center">
+        <button onclick="window.history.back()" class="mr-4 text-white hover:text-primary-color">
+          <i class="fas fa-arrow-left text-2xl"></i>
+        </button>
+        <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+        <h1 class="text-2xl font-bold text-primary-color">
+          Chalana Chithram
+        </h1>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Event Poster Section -->
+      <div class=" flex justify-center items-center">
+        <div class="w-full max-w-[500px] lg:max-w-[600px] relative group">
+          <img id="poster-image"
+            class="w-full h-full object-contain rounded-2xl shadow-2xl transition-transform duration-300 group-hover:scale-105"
+            alt="Event Poster">
+        </div>
+      </div>
+      <!-- Registration Form -->
+      <div class="bg-dark-color p-8 rounded-lg">
+        <h2 id="event-name" class="text-3xl font-bold text-primary-color mb-6">
+          Event Registration
+        </h2>
+
+        <form id="registration-form">
+          <input type="hidden" id="event-id" />
+
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label class="block text-white mb-2">Full Name</label>
+              <input type="text" id="participant-name" required class="w-full p-2 rounded bg-gray-800 text-white" />
+            </div>
+
+            <div>
+              <label class="block text-white mb-2">College Name</label>
+              <div class="flex items-center">
+                  <select id="predefined-college" class="w-full p-2 rounded bg-gray-800 text-white mr-2">
+                      <option value="">Select College (Optional)</option>
+                      <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                      <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                      <option value="Other">Other College</option>
+                  </select>
+                  <input 
+                      type="text" 
+                      id="college-name" 
+                      placeholder="Enter College Name" 
+                      class="w-full p-2 rounded bg-gray-800 text-white"
+                  />
+              </div>
+          </div>
+
+            <div>
+              <label class="block text-white mb-2">Email</label>
+              <input type="email" id="participant-email" required class="w-full p-2 rounded bg-gray-800 text-white" />
+            </div>
+
+            <div>
+              <label class="block text-white mb-2">Confirm Email</label>
+              <input type="email" id="confirm-email" required class="w-full p-2 rounded bg-gray-800 text-white" />
+              <p id="email-match-error" class="text-red-500 text-sm mt-1 hidden">Emails do not match</p>
+              <p class="text-gray-400 text-xs mt-1">A confirmation email will be sent to this address</p>
+            </div>
+
+            <div>
+              <label class="block text-white mb-2">Phone Number</label>
+              <input type="tel" id="phone-number" required class="w-full p-2 rounded bg-gray-800 text-white" />
+            </div>
+
+            <div>
+              <label class="block text-white mb-2">Roll Number (Optional)</label>
+              <input type="text" id="roll-number" class="w-full p-2 rounded bg-gray-800 text-white" />
+            </div>
+
+            <div>
+              <label class="block text-white mb-2">Year of Study</label>
+              <select id="study-year" required class="w-full p-2 rounded bg-gray-800 text-white">
+                <option value="">Select Year</option>
+                <option value="1st">1st Year</option>
+                <option value="2nd">2nd Year</option>
+                <option value="3rd">3rd Year</option>
+                <option value="4th">4th Year</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-6 bg-[rgba(10,30,30,0.7)] border-2 border-[rgb(77,143,142)] rounded-lg p-6 shadow-lg">
+            <h3 class="text-2xl text-[rgb(0,239,225)] mb-6 border-b-2 border-[rgb(77,143,142)] pb-3">
+              <i class="fas fa-info-circle mr-3"></i>Event Details
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-[rgb(10,92,87)] p-4 rounded-lg shadow-md">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-calendar-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                  <h4 class="text-[rgb(0,239,225)] font-bold">Date</h4>
+                </div>
+                <p id="event-date" class="text-white">-</p>
+              </div>
+              <div class="bg-[rgb(10,92,87)] p-4 rounded-lg shadow-md">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-clock text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                  <h4 class="text-[rgb(0,239,225)] font-bold">Time</h4>
+                </div>
+                <p id="event-time" class="text-white">-</p>
+              </div>
+              <div class="bg-[rgb(10,92,87)] p-4 rounded-lg shadow-md">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-map-marker-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                  <h4 class="text-[rgb(0,239,225)] font-bold">Venue</h4>
+                </div>
+                <p id="event-venue" class="text-white">-</p>
+              </div>
+              <div class="bg-[rgb(10,92,87)] p-4 rounded-lg shadow-md">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-ticket-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                  <h4 class="text-[rgb(0,239,225)] font-bold">Entry Fee</h4>
+                </div>
+                <p id="event-price" class="text-white font-bold">₹0</p>
+              </div>
+              <div class="bg-[rgb(10,92,87)] p-4 rounded-lg shadow-md col-span-full">
+                <div class="flex items-center mb-2">
+                  <i class="fas fa-trophy text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                  <h4 class="text-[rgb(0,239,225)] font-bold">Prize Pool</h4>
+                </div>
+                <p id="event-prize-pool" class="text-white">-</p>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit"
+            class="w-full mt-6 bg-primary-color text-dark-color py-3 rounded hover:bg-tertiary-color">
+            Register for Event
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this after the registration form -->
+  <div id="payment-section" class="hidden mt-6 bg-dark-color p-6 rounded-lg">
+    <h3 class="text-2xl text-primary-color mb-4">Payment Details</h3>
+
+    <!-- QR Code and Payment Options -->
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- QR Code Section -->
+      <div id="qr-code" class="w-full max-w-[300px]"></div>
+
+
+      <!-- Payment Options -->
+      <div>
+        <div class="mb-4">
+          <h4 class="text-white mb-2">Payment Amount</h4>
+          <p id="payment-amount" class="text-primary-color text-2xl font-bold">
+            ₹0
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4 class="text-white mb-2">Booking ID</h4>
+          <p id="booking-id" class="text-tertiary-color text-lg"></p>
+        </div>
+
+<!-- Add this after the QR code section or where you want to display the UPI ID -->
+<div class="bg-[rgb(10,30,30)] border border-[rgb(77,143,142)] p-4 rounded-lg mb-4">
+  <h4 class="text-white mb-2">Manual Payment Option</h4>
+  <div class="flex flex-col sm:flex-row items-start sm:items-center mb-2">
+    <span class="text-white mr-2 mb-1 sm:mb-0">UPI ID:</span>
+    <div class="relative w-full">
+      <input 
+        type="text" 
+        id="upi-id-display" 
+        class="w-full p-2 rounded bg-[rgb(20,77,74)] text-white text-sm overflow-x-auto"
+        style="min-width: 0; word-break: break-all; text-overflow: ellipsis;"
+        readonly
+      />
+      <button 
+        id="copy-upi-id" 
+        class="absolute right-2 top-1/2 transform -translate-y-1/2 text-primary-color hover:text-[rgb(0,239,225)]"
+        title="Copy UPI ID"
+      >
+        <i class="fas fa-copy"></i>
+      </button>
+    </div>
+  </div>
+  <p class="text-xs text-gray-400 mt-1">
+    You can manually enter this UPI ID in your payment app if scanning QR code doesn't work.
+  </p>
+</div>
+<!-- Replace the UPI Payment Options section with this simplified version -->
+<div class="payment-options">
+  <h4 class="text-white mb-2">Payment Instructions</h4>
+  
+  <div class="bg-gray-800 p-4 rounded-lg mb-4">
+    <button id="download-qr" style="background-color: rgb(20, 77, 74);" class="w-full text-white p-3 rounded flex items-center justify-center mb-4">
+      <i class="fas fa-download mr-2"></i>
+      <span>Download QR Code</span>
+    </button>
+    
+    <div class="text-white text-sm space-y-3">
+      <p class="font-bold">How to pay using any UPI app:</p>
+      <ol class="list-decimal pl-5 space-y-2">
+        <li>Download the QR code using the button above</li>
+        <li>Open any UPI app on your phone (PhonePe, Google Pay, Paytm, etc.)</li>
+        <li>Select the "Scan & Pay" or "Scan QR" option in your UPI app</li>
+        <li>Choose "Upload from Gallery" or "Pick from Photos" option</li>
+        <li>Select the downloaded QR code from your gallery</li>
+        <li>Verify the payment details and complete the transaction</li>
+        <li>After payment, enter the UTR number and upload screenshot below</li>
+      </ol>
+    </div>
+  </div>
+  
+  <p class="text-xs text-gray-400 text-center">
+    After completing payment, don't forget to enter the UTR number and upload the payment screenshot below.
+  </p>
+</div>
+
+
+        <!-- Payment Verification -->
+
+        <div class="mb-4">
+          <label class="block text-white mb-2">UTR Number</label>
+          <input type="text" id="transaction-uid" class="w-full p-2 rounded bg-[rgb(10,92,87)] text-white"
+            placeholder="Enter unique UTR number" maxlength="12" oninput="validateUTRNumber(this)">
+          <button onclick="showUTRGuide()" class="mt-2 text-[rgb(0,239,225)] underline">
+            How to find UTR number?
+          </button>
+        </div>
+
+        <label class="block text-white mb-2 mt-4">Upload Payment Screenshot</label>
+        <input type="file" id="payment-screenshot" accept="image/*" class="w-full p-2 rounded bg-gray-800 text-white" />
+
+        <button id="submit-payment" class="w-full mt-4 bg-primary-color text-dark-color py-3 rounded">
+          Verify Payment
+        </button>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+      authDomain: "screenings-663cf.firebaseapp.com",
+      databaseURL:
+        "https://screenings-663cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "screenings-663cf",
+      storageBucket: "screenings-663cf.firebasestorage.app",
+      messagingSenderId: "75644576041",
+      appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+      measurementId: "G-TVB3Z3CH96",
+    };
+
+    function validateUTRNumber(input) {
+      // Remove any non-digit characters
+      input.value = input.value.replace(/\D/g, '');
+      // Ensure the length does not exceed 12 digits
+      if (input.value.length > 12) {
+        input.value = input.value.slice(0, 12);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    const predefinedCollegeSelect = document.getElementById('predefined-college');
+    const collegeNameInput = document.getElementById('college-name');
+
+    // Initially disable custom college input
+    collegeNameInput.disabled = true;
+
+    // Event listener for predefined college dropdown
+    predefinedCollegeSelect.addEventListener('change', (e) => {
+        if (e.target.value === 'Other') {
+            // Enable custom college input when 'Other' is selected
+            collegeNameInput.disabled = false;
+            collegeNameInput.value = ''; // Clear previous value
+            collegeNameInput.focus();
+        } else if (e.target.value) {
+            // Set college name to selected predefined college
+            collegeNameInput.value = e.target.value;
+            collegeNameInput.disabled = true;
+        } else {
+            // Reset when no selection is made
+            collegeNameInput.value = '';
+            collegeNameInput.disabled = true;
+        }
+    });
+
+    // Event listener for custom college input
+    collegeNameInput.addEventListener('input', () => {
+        // When user types, unselect predefined college
+        predefinedCollegeSelect.value = 'Other';
+    });
+});
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const firestore = firebase.firestore();
+
+    // Payment-related variables
+    let bookingId = "";
+    let eventPrice = 0;
+
+    // Generate Booking ID
+    function generateBookingId() {
+      return `CCF-${Date.now().toString(36).toUpperCase()}`;
+    }
+
+// After generating QR code, also populate the UPI ID field
+function generateQRCode(upiData) {
+  const qr = qrcode(0, "M");
+  qr.addData(upiData);
+  qr.make();
+  const qrCodeContainer = document.getElementById("qr-code");
+  qrCodeContainer.innerHTML = qr.createImgTag(5);
+  
+  // Extract UPI ID from the data and populate the field
+  const upiIdMatch = upiData.match(/pa=([^&]+)/);
+  if (upiIdMatch && upiIdMatch[1]) {
+    const upiIdField = document.getElementById("upi-id-display");
+    if (upiIdField) {
+      upiIdField.value = decodeURIComponent(upiIdMatch[1]);
+    }
+  }
+}
+
+// Add event listener for copy button
+document.addEventListener('DOMContentLoaded', function() {
+  const copyUpiBtn = document.getElementById('copy-upi-id');
+  if (copyUpiBtn) {
+    copyUpiBtn.addEventListener('click', function() {
+      const upiIdField = document.getElementById('upi-id-display');
+      upiIdField.select();
+      document.execCommand('copy');
+      
+      // Show feedback
+      const originalHTML = copyUpiBtn.innerHTML;
+      copyUpiBtn.innerHTML = '<i class="fas fa-check"></i>';
+      setTimeout(() => {
+        copyUpiBtn.innerHTML = originalHTML;
+      }, 2000);
+    });
+  }
+});
+
+    // Get Event ID from URL
+    function getEventIdFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("eventId");
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+  // QR code download functionality
+  const downloadQrBtn = document.getElementById('download-qr');
+  if (downloadQrBtn) {
+    downloadQrBtn.addEventListener('click', function() {
+      const qrImg = document.querySelector('#qr-code img');
+      if (qrImg) {
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = qrImg.src;
+        link.download = `payment-qr-${document.getElementById('booking-id').textContent}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Show success message
+        alert('QR code downloaded successfully. Please open your UPI app and upload this QR from your gallery to make payment.');
+      } else {
+        alert('QR code not available yet. Please try again.');
+      }
+    });
+  }
+});
+
+    // Load Event Details
+    async function loadEventDetails() {
+      const eventId = getEventIdFromURL();
+      if (!eventId) {
+        alert("No event selected");
+        return;
+      }
+
+      try {
+        const eventDoc = await firestore
+          .collection("chitrosav_events")
+          .doc(eventId)
+          .get();
+        const eventData = eventDoc.data();
+
+        // Populate hidden event ID
+        document.getElementById("event-id").value = eventId;
+
+        // Populate event details
+        document.getElementById("event-name").textContent = eventData.name;
+        document.getElementById("event-date").textContent = eventData.date;
+        document.getElementById("event-time").textContent =
+          eventData.time || "TBA";
+        document.getElementById("event-venue").textContent =
+          eventData.venue || "Not specified";
+
+        // Store event price globally
+        eventPrice = eventData.price || 0;
+        document.getElementById("event-price").textContent = `₹${eventPrice}`;
+        document.getElementById("event-prize-pool").textContent =
+          eventData.prizePool || "TBA";
+
+        // Set poster image
+        const posterImage = document.getElementById("poster-image");
+        posterImage.src = eventData.posterBase64 || "default-poster.jpg";
+        posterImage.alt = `${eventData.name} Poster`;
+
+        // Store UPI ID in a data attribute for later use
+        const qrCodeContainer = document.getElementById("qr-code");
+        qrCodeContainer.dataset.upiId = eventData.upiId || '';
+
+      } catch (error) {
+        alert("Failed to load event details");
+      }
+    }
+    // Function to open UPI Apps with dynamic Booking ID & Fixed Amount
+    function openUPIApp(app) {
+      const upiContainer = document.getElementById('qr-code');
+      const upiId = upiContainer.dataset.upiId;
+
+      // Retrieve dynamically set values
+      const eventPrice = document.getElementById('payment-amount').textContent.replace('₹', '').trim();
+      const bookingId = document.getElementById('booking-id').textContent.trim();
+
+      // Generate fixed UPI payment links
+      const upiLinks = {
+        phonepe: `phonepe://pay?pa=${upiId}&pn=Chalana Chithram&am=${eventPrice}&cu=INR&tn=Booking%20${bookingId}&tr=${bookingId}`,
+        googlepay: `tez://upi/pay?pa=${upiId}&pn=Chalana Chithram&am=${eventPrice}&cu=INR&tn=Booking%20${bookingId}&tr=${bookingId}`,
+        paytm: `paytm://upi/pay?pa=${upiId}&pn=Chalana Chithram&am=${eventPrice}&cu=INR&tn=Booking%20${bookingId}&tr=${bookingId}`,
+      };
+
+      // Redirect user to the selected UPI app
+      if (upiLinks[app]) {
+        window.location.href = upiLinks[app];
+      } else {
+        alert("Selected UPI app is not supported.");
+      }
+    }
+
+    // Add this code to handle page navigation/leaving and payment processing
+document.addEventListener('DOMContentLoaded', () => {
+    // Load event details
+    loadEventDetails();
+    
+    // Variables to track registration state
+    let registrationSubmitted = false;
+    let paymentSubmitted = false;
+    let registrationDocId = null;
+    let eventId = getEventIdFromURL();
+    
+    // Show warning when user tries to leave the page after registration but before payment
+    window.addEventListener('beforeunload', (e) => {
+        if (registrationSubmitted && !paymentSubmitted && registrationDocId) {
+            const message = 'Your registration is not complete. Are you sure you want to leave?';
+            e.returnValue = message;
+            return message;
+        }
+    });
+
+    // Handle back button and navigation
+    window.addEventListener('popstate', (e) => {
+        if (registrationSubmitted && !paymentSubmitted) {
+            showPaymentWarning();
+            // Prevent the back action
+            history.pushState(null, document.title, window.location.href);
+        }
+    });
+
+    // Push a state to enable catching the back button
+    history.pushState(null, document.title, window.location.href);
+
+    // Show payment warning popup
+    function showPaymentWarning() {
+        const warningContainer = document.createElement('div');
+        warningContainer.className = 'fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4';
+        warningContainer.innerHTML = `
+            <div class="bg-dark-color p-6 rounded-lg w-full max-w-md text-center">
+                <i class="fas fa-exclamation-triangle text-yellow-500 text-4xl mb-4"></i>
+                <h2 class="text-xl text-primary-color mb-4">Payment Not Complete</h2>
+                <p class="text-white mb-6">Your registration will not be confirmed until you complete the payment. Do you want to continue with payment or cancel your registration?</p>
+                <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 justify-center">
+                    <button id="continuePaymentBtn" class="bg-primary-color text-dark-color px-6 py-2 rounded font-bold">
+                        Continue Payment
+                    </button>
+                    <button id="cancelRegistrationBtn" class="bg-red-500 text-white px-6 py-2 rounded">
+                        Cancel Registration
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(warningContainer);
+
+        // Continue payment button
+        document.getElementById('continuePaymentBtn').addEventListener('click', () => {
+            document.body.removeChild(warningContainer);
+        });
+
+        // Cancel registration button
+        document.getElementById('cancelRegistrationBtn').addEventListener('click', async () => {
+            try {
+                if (registrationDocId) {
+                    // Delete the registration
+                    await firestore.collection('event_registrations').doc(registrationDocId).delete();
+                    
+                    // No need to restore ticket count here as we haven't decremented it yet
+                    // (tickets are decremented only when payment is submitted)
+                }
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
+            } catch (error) {
+                alert('Failed to cancel registration. Please try again.');
+                document.body.removeChild(warningContainer);
+            }
+        });
+    }
+
+// Modify the Registration Submission handler
+document.getElementById('registration-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const submitButton = e.target.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Processing...';
+
+    try {
+        const eventId = document.getElementById('event-id').value;
+
+        // Validate form fields
+        const name = document.getElementById('participant-name').value.trim();
+        const email = document.getElementById('participant-email').value.trim();
+        const confirmEmail = document.getElementById('confirm-email').value.trim();
+        const phone = document.getElementById('phone-number').value.trim();
+        const college = document.getElementById('college-name').value.trim();
+
+        // Comprehensive validation
+        if (!name) throw new Error('Name is required');
+        if (!email) throw new Error('Email is required');
+        if (!confirmEmail) throw new Error('Confirm email is required');
+        if (!phone) throw new Error('Phone number is required');
+        if (!college) throw new Error('College name is required');
+        
+        // Check if emails match
+        if (email !== confirmEmail) {
+            throw new Error('Email addresses do not match');
+        }
+
+        // Fetch event details first
+        const eventRef = firestore.collection('chitrosav_events').doc(eventId);
+        const eventDoc = await eventRef.get();
+
+        // Check if event exists
+        if (!eventDoc.exists) {
+            throw new Error('Event not found');
+        }
+
+        const eventData = eventDoc.data();
+
+        // Check ticket availability
+        if ((eventData.availableTickets || 0) <= 0) {
+            throw new Error('No tickets available');
+        }
+
+        // Generate unique booking ID
+        const bookingId = generateBookingId();
+
+        // Prepare registration data
+        const registrationData = {
+            eventId: eventId,
+            eventName: eventData.name,
+            bookingId: bookingId,
+            name: name,
+            college: college,
+            email: email,
+            phone: phone,
+            rollNumber: document.getElementById('roll-number').value.trim() || 'N/A',
+            year: document.getElementById('study-year').value,
+            registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+            paymentStatus: 'pending',
+            eventPrice: eventData.price || 0,
+            eventDate: eventData.date,
+            eventVenue: eventData.venue,
+            eventTime: eventData.time
+        };
+
+        // Save registration
+        const registrationRef = await firestore.collection('event_registrations').add(registrationData);
+        registrationDocId = registrationRef.id;
+        registrationSubmitted = true;
+
+        // Show payment section
+        document.getElementById('registration-form').classList.add('hidden');
+        document.getElementById('payment-section').classList.remove('hidden');
+
+        // Set payment details
+        document.getElementById('payment-amount').textContent = `₹${registrationData.eventPrice}`;
+        document.getElementById('booking-id').textContent = bookingId;
+
+        const upiId = eventData.upiId;
+
+        // Generate QR Code
+        const upiData = `upi://pay?pa=${upiId}&pn=Chalana Chithram&am=${eventPrice}&cu=INR&tn=Booking ${bookingId}&tr=${bookingId}`;
+        generateQRCode(upiData);
+
+    } catch (error) {
+        alert(error.message);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Register for Event';
+    }
+});
+    // Modify the Payment Submission handler
+    document.getElementById('submit-payment')?.addEventListener('click', async () => {
+        const transactionUid = document.getElementById('transaction-uid').value.trim();
+        const paymentScreenshot = document.getElementById('payment-screenshot').files[0];
+        const bookingId = document.getElementById('booking-id').textContent;
+
+        // Validate inputs
+        if (!transactionUid) {
+            alert('Please enter UTR number');
+            return;
+        }
+
+        if (!paymentScreenshot) {
+            alert('Please upload payment screenshot');
+            return;
+        }
+
+        // Get submit button reference
+        const submitButton = document.getElementById('submit-payment');
+
+        try {
+            // Disable submit button and show processing state
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Processing <i class="fas fa-spinner fa-spin"></i>';
+
+            // Check for unique UTR
+            const existingTransactions = await firestore.collection('payment_verifications')
+                .where('transactionUid', '==', transactionUid)
+                .get();
+
+            if (!existingTransactions.empty) {
+                throw new Error('This UTR number has already been used');
+            }
+
+            // Retrieve registration details
+            const registrationSnapshot = await firestore.collection('event_registrations')
+                .where('bookingId', '==', bookingId)
+                .get();
+
+            if (registrationSnapshot.empty) {
+                throw new Error('Registration not found');
+            }
+
+            const registrationDoc = registrationSnapshot.docs[0];
+            const registration = registrationDoc.data();
+
+            // Retrieve event details
+            const eventSnapshot = await firestore.collection('chitrosav_events')
+                .doc(registration.eventId)
+                .get();
+
+            if (!eventSnapshot.exists) {
+                throw new Error('Event not found');
+            }
+
+            const eventDetails = eventSnapshot.data();
+
+            // Reduce ticket count when user submits payment
+            await firestore.collection('chitrosav_events').doc(registration.eventId).update({
+                availableTickets: firebase.firestore.FieldValue.increment(-1)
+            });
+
+            // Convert screenshot to Base64
+            const reader = new FileReader();
+            reader.readAsDataURL(paymentScreenshot);
+            reader.onloadend = async () => {
+                try {
+                    // Prepare payment data
+                    const paymentData = {
+                        bookingId: bookingId,
+                        eventId: registration.eventId,
+                        eventName: eventDetails.name,
+                        transactionUid: transactionUid,
+                        paymentScreenshot: reader.result,
+                        verificationStatus: 'pending',
+                        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        participantName: registration.name,
+                        participantEmail: registration.email,
+                        whatsappGroupLink: eventDetails.whatsappGroupLink || null
+                    };
+
+                    // Save payment details
+                    const paymentDocRef = await firestore.collection('payment_verifications').add(paymentData);
+                    
+                    // Update registration payment status
+                    await firestore.collection('event_registrations')
+                        .doc(registrationDoc.id)
+                        .update({ 
+                            paymentStatus: 'pending',
+                            paymentSubmittedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        });
+                    
+                    // Mark payment as submitted
+                    paymentSubmitted = true;
+
+                    // Show processing popup
+                    showPaymentProcessingPopup(bookingId, eventDetails.whatsappGroupLink);
+
+                } catch (error) {
+                    alert('Failed to submit payment. Please try again.');
+
+                    // Reset submit button
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Verify Payment';
+                }
+            };
+
+        } catch (error) {
+            alert(error.message);
+
+            // Reset submit button
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Verify Payment';
+        }
+    });
+
+    // Update the Payment Processing Popup Function
+    function showPaymentProcessingPopup(bookingId, whatsappGroupLink) {
+        // Create popup container
+        const popupContainer = document.createElement('div');
+        popupContainer.className = 'fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-2 sm:p-4 overflow-y-auto';
+        popupContainer.innerHTML = `
+        <div class="bg-dark-color p-4 sm:p-6 rounded-lg w-full max-w-md mx-auto my-auto relative overflow-hidden max-h-[90vh] overflow-y-auto">
+            <div class="mb-4 sm:mb-6 text-center">
+                <i class="fas fa-spinner fa-spin text-4xl sm:text-6xl text-primary-color mb-2 sm:mb-4"></i>
+                <h2 class="text-xl sm:text-2xl text-primary-color mb-2 sm:mb-4">Payment Processing</h2>
+            </div>
+
+            <div class="bg-[rgb(10,92,87)] p-3 sm:p-4 rounded-lg mb-3 sm:mb-4">
+                <h3 class="text-lg sm:text-xl text-primary-color mb-2">Payment Details</h3>
+                <p class="text-white mb-1 sm:mb-2"><strong>Booking ID:</strong> ${bookingId}</p>
+                <p class="text-white mb-2 sm:mb-4">Your payment is under verification</p>
+            </div>
+
+            <div class="bg-[rgb(10,92,87)] p-3 sm:p-4 rounded-lg mb-3 sm:mb-4">
+                <h3 class="text-lg sm:text-xl text-primary-color mb-2">Next Steps</h3>
+                <ul class="text-white text-left list-disc list-inside space-y-1 sm:space-y-2">
+                    <li class="text-sm sm:text-base">Payment will be manually verified within 6 hours</li>
+                    <li class="text-sm sm:text-base">Confirmation PDF will be sent to your email</li>
+                    <li class="text-sm sm:text-base">You can check payment status later</li>
+                </ul>
+            </div>
+
+            <div class="space-y-2 sm:space-y-4">
+                ${whatsappGroupLink ? `
+                    <a href="${whatsappGroupLink}" target="_blank" class="w-full bg-green-500 text-white py-2 sm:py-3 rounded inline-block text-center text-sm sm:text-base">
+                        <i class="fab fa-whatsapp mr-2"></i>Join WhatsApp Group
+                    </a>
+                ` : ''}
+
+                <a href="checkConfirmation.html?bookingId=${bookingId}" class="w-full bg-primary-color text-dark-color py-2 sm:py-3 rounded inline-block text-center text-sm sm:text-base">
+                    Check Payment Status
+                </a>
+
+                <button id="closePopupBtn" class="w-full bg-tertiary-color text-dark-color py-2 sm:py-3 rounded text-sm sm:text-base">
+                    Close
+                </button>
+            </div>
+
+            <p class="text-gray-400 mt-2 sm:mt-4 text-xs sm:text-sm text-center">
+                Note: Please keep your booking ID for future reference
+            </p>
+        </div>
+    `;
+
+        // Add popup to body
+        document.body.appendChild(popupContainer);
+
+        // Close functionality
+        const closePopupBtn = popupContainer.querySelector('#closePopupBtn');
+        const closePopup = () => {
+            document.body.removeChild(popupContainer);
+            window.location.href = "index.html"; // Redirect to index.html when closed
+        };
+
+        closePopupBtn.addEventListener('click', closePopup);
+
+        // Close popup when clicking outside
+        popupContainer.addEventListener('click', (e) => {
+            if (e.target === popupContainer) {
+                closePopup();
+            }
+        });
+    }
+});
+
+    // UTR Guide Modal Function
+    function showUTRGuide() {
+      const modalContainer = document.createElement('div');
+      modalContainer.className = 'fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4';
+      modalContainer.innerHTML = `
+        <div class="relative w-80 bg-dark-color p-5 rounded-lg shadow-lg text-center">
+            <button class="absolute top-1 right-2 text-white text-lg close-modal hover:text-red-500">
+                ❌
+            </button>
+            <h2 class="text-lg text-primary-color mb-3">Find Your UTR Number</h2>
+            <img 
+                src="images/ss.jpg" 
+                alt="UTR Guide" 
+                class="w-48 mx-auto rounded-lg mb-3"
+            >
+            <div class="text-white text-xs text-left">
+                <h3 class="text-sm mb-2">Steps:</h3>
+                <ol class="list-decimal pl-4 space-y-1">
+                    <li>Open your UPI app</li>
+                    <li>Go to transaction history</li>
+                    <li>Select the transaction</li>
+                    <li>Find the UTR/Transaction ID</li>
+                    <li>Copy the 12-character code</li>
+                </ol>
+                <p class="mt-3 text-gray-300 text-[10px]">
+                    UTR is a unique transaction ID.
+                </p>
+            </div>
+        </div>
+    `;
+
+      document.body.appendChild(modalContainer);
+
+      modalContainer.querySelector('.close-modal').addEventListener('click', () => {
+        document.body.removeChild(modalContainer);
+      });
+    }
+
+
+    // Load event details on page load
+    document.addEventListener("DOMContentLoaded", loadEventDetails);
+  
+  
+  </script>
+</body>
+
+</html>

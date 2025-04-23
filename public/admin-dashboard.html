@@ -1,0 +1,3787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="google-signin-scope" content="https://www.googleapis.com/auth/spreadsheets" />
+  <meta name="google-signin-client_id" content="COPIED_CLIENT_ID.apps.googleusercontent.com" />
+  <title>Chalana Chithram - Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link rel="icon" href="images/branding.png" type="image/png" />
+  <link href="adminPageStyle.css" rel="stylesheet" />
+</head>
+
+<body class="admin-dashboard">
+  <div class="flex">
+    <!-- Sidebar -->
+    <div class="sidebar bg-dark-color w-64 min-h-screen p-4">
+      <div class="logo flex items-center mb-8">
+        <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+        <h1 class="text-xl font-bold text-primary-color">Admin Panel</h1>
+      </div>
+
+      <nav>
+        <ul>
+          <li class="sidebar-item active" data-section="dashboard">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-home mr-3"></i>Dashboard
+            </a>
+          </li>
+          <li class="sidebar-item" data-section="add-events">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-plus-circle mr-3"></i>Add Events
+            </a>
+          </li>
+          <li class="sidebar-item" data-section="edit-events">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-edit mr-3"></i>Edit Events
+            </a>
+          </li>
+          <li class="sidebar-item" data-section="verify-payments">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-money-check-alt mr-3"></i>Verify Payments
+            </a>
+          </li>
+          <li class="sidebar-item" data-section="scanner">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-qrcode mr-3"></i>Scanner
+            </a>
+          </li>
+          <li class="sidebar-item" data-section="exclude-events">
+            <a href="#" class="flex items-center">
+              <i class="fas fa-eye-slash mr-3"></i>Exclude Event
+            </a>
+          </li>
+          <li class="sidebar-item logout">
+            <a href="#" id="logout-btn" class="flex items-center text-red-500">
+              <i class="fas fa-sign-out-alt mr-3"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content flex-1 bg-secondary-color min-h-screen p-8">
+      <!-- Dashboard Header -->
+      <header class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-bold text-primary-color">Dashboard</h2>
+        <div class="admin-info flex items-center">
+          <span class="mr-4 text-white" id="admin-email">Welcome</span>
+          <div class="admin-avatar w-10 h-10 bg-tertiary-color rounded-full flex items-center justify-center">
+            <i class="fas fa-user text-dark-color"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard Sections -->
+      <section id="dashboard-section" class="admin-section">
+        <button id="export-short-film-registrations"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Export Short Film Registrations
+        </button>
+        <div id="event-stats-container" class="space-y-4">
+          <!-- Event-wise statistics will be dynamically loaded here -->
+        </div>
+      </section>
+
+      <!-- Add Events Section -->
+      <section id="add-events-section" class="admin-section hidden">
+        <div class="admin-card">
+          <h3 class="text-2xl font-bold mb-6 text-primary-color">
+            Add New Event
+          </h3>
+          <form id="add-event-form">
+            <div class="grid grid-cols-2 gap-4">
+              <!-- Event Basic Details -->
+              <div>
+                <label class="block text-white mb-2">Event Name</label>
+                <input type="text" id="event-name" placeholder="Event Name" required class="admin-input w-full" />
+              </div>
+              <div>
+                <label class="block text-white mb-2">Event Type</label>
+                <select id="event-type" class="admin-input w-full">
+                  <option value="">Select Event Type</option>
+                  <option value="workshop">Workshop</option>
+                  <option value="screening">Screening</option>
+                  <option value="competition">Competition</option>
+                </select>
+              </div>
+
+              <!-- Date and Time -->
+              <div>
+                <label class="block text-white mb-2">Event Date</label>
+                <input type="date" id="event-date" required class="admin-input w-full" />
+              </div>
+              <div>
+                <label class="block text-white mb-2">Event Time</label>
+                <input type="time" id="event-time" class="admin-input w-full" />
+              </div>
+
+              <!-- Venue and Prize Pool -->
+              <div>
+                <label class="block text-white mb-2">Venue</label>
+                <input type="text" id="event-venue" placeholder="Event Venue" class="admin-input w-full" />
+              </div>
+              <div>
+                <label class="block text-white mb-2">Prize Pool</label>
+                <input type="text" id="event-prize-pool" placeholder="Prize Details" class="admin-input w-full" />
+              </div>
+
+              <!-- Add these two new fields in the existing form -->
+              <div>
+                <label class="block text-white mb-2">UPI ID</label>
+                <input type="text" id="event-upi-id" placeholder="Enter UPI ID for event payments"
+                  class="admin-input w-full" />
+              </div>
+              <div>
+                <label class="block text-white mb-2">WhatsApp Group Invite Link</label>
+                <input type="url" id="event-whatsapp-link" placeholder="Enter WhatsApp Group Invite Link"
+                  class="admin-input w-full" />
+              </div>
+
+              <!-- Financial Details -->
+              <div>
+                <label class="block text-white mb-2">Entry Fee</label>
+                <input type="number" id="event-price" placeholder="Entry Fee" class="admin-input w-full" />
+              </div>
+              <div>
+                <label class="block text-white mb-2">Available Tickets</label>
+                <input type="number" id="event-tickets" placeholder="Total Tickets" class="admin-input w-full" />
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mt-4">
+              <label class="block text-white mb-2">Event Description</label>
+              <textarea id="event-description" placeholder="Event Description" class="admin-input w-full"
+                rows="4"></textarea>
+            </div>
+
+            <!-- Poster Upload -->
+            <div class="file-upload mt-4">
+              <label class="block text-white mb-2">Upload Event Poster</label>
+              <input type="file" id="event-poster" accept="image/*" class="admin-input-file" />
+            </div>
+            <button type="submit" class="admin-btn mt-4 w-full">
+              Add Event
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Edit Events Section -->
+      <section id="edit-events-section" class="admin-section hidden">
+        <div class="admin-card">
+          <h3 class="text-2xl font-bold mb-6 text-primary-color">
+            Manage Events
+          </h3>
+          <div id="events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Events will be dynamically loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Add this in your main content area -->
+      <section id="verify-payments-section" class="admin-section hidden">
+        <div class="admin-card">
+          <h3 class="text-2xl font-bold mb-6 text-primary-color">
+            Verify Payments
+          </h3>
+          <div id="payments-list">
+            <!-- Payment verification entries will be dynamically loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <section id="exclude-events-section" class="admin-section hidden">
+        <!-- Excluded Events Management Section -->
+        <div id="excluded-events-section"
+          class="bg-[rgba(10,30,30,0.7)] border-2 border-[rgb(77,143,142)] rounded-lg p-6 mb-8">
+          <h2 class="text-2xl text-[rgb(0,239,225)] mb-4">Manage Excluded Events</h2>
+
+          <div class="mb-6">
+            <p class="text-white mb-2">These events will be hidden from the main events page:</p>
+            <div id="excluded-events-list" class="bg-[rgb(10,92,87)] p-4 rounded-lg min-h-[100px]">
+              <p class="text-gray-400 text-center">Loading excluded events...</p>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <h3 class="text-lg text-[rgb(0,239,225)] mb-2">Add Event to Excluded List</h3>
+            <div class="flex space-x-2">
+              <select id="available-events-dropdown" class="flex-grow bg-[rgb(10,92,87)] text-gray-200 p-2 rounded">
+                <option value="">Select an event to exclude</option>
+              </select>
+              <button id="add-excluded-event-btn" class="bg-[rgb(0,239,225)] text-[rgb(4,34,32)] px-4 py-2 rounded">
+                Add
+              </button>
+            </div>
+          </div>
+
+          <div class="text-sm text-gray-400">
+            <p>Note: Excluded events will not appear on the main events page, but their individual registration pages
+              will still be accessible via direct links.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="scanner-section" class="admin-section hidden">
+        <button id="refresh-scanner-btn" class="bg-blue-500 text-white px-4 py-2 rounded">
+          Refresh Scanner
+        </button>
+        <div class="admin-card">
+          <h3 class="text-2xl font-bold text-primary-color mb-6">
+            Event Scanner
+          </h3>
+
+          <div class="scanner-container mb-4">
+            <div id="scanner-video" class="w-full max-w-md mx-auto"></div>
+            <canvas id="scanner-canvas" class="hidden"></canvas>
+          </div>
+
+          <div id="scan-result" class="mt-4 p-4 rounded bg-[rgb(10,92,87)]">
+            <div id="participant-details" class="hidden">
+              <h4 class="text-xl text-primary-color mb-4">
+                Participant Details
+              </h4>
+              <div id="participant-info" class="text-white"></div>
+            </div>
+
+            <div id="verification-actions" class="hidden mt-4">
+              <div class="flex space-x-4">
+                <button id="entry-verify-btn" class="flex-1 bg-green-500 text-white py-2 rounded">
+                  Verify Entry
+                </button>
+                <button id="participation-verify-btn" class="flex-1 bg-blue-500 text-white py-2 rounded">
+                  Verify Participation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="html5-qrcode.min.js"></script>
+  <!-- Add these script tags -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+      authDomain: "screenings-663cf.firebaseapp.com",
+      databaseURL:
+        "https://screenings-663cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "screenings-663cf",
+      storageBucket: "screenings-663cf.firebasestorage.app",
+      messagingSenderId: "75644576041",
+      appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+      measurementId: "G-TVB3Z3CH96",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const firestore = firebase.firestore();
+
+    function convertImageToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    }
+
+    // Authentication State Observer
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        document.getElementById(
+          "admin-email"
+        ).textContent = `Welcome, ${user.email}`;
+        loadDashboardStats();
+        loadEventsList();
+      } else {
+        // No user is signed in, redirect to login
+        window.location.href = "admin-login.html";
+      }
+    });
+
+    // Logout Functionality
+    document
+      .getElementById("logout-btn")
+      .addEventListener("click", async () => {
+        try {
+          await auth.signOut();
+        } catch (error) {
+          console.error("Logout error:", error);
+        }
+      });
+
+    let isLoadingStats = false; // Prevent duplicate execution
+
+    async function loadDashboardStats() {
+      if (isLoadingStats) return;
+      isLoadingStats = true;
+
+      try {
+        const user = auth.currentUser;
+        if (!user) {
+          console.error("No authenticated user");
+          return;
+        }
+
+        // Fetch events for the year
+        const eventsSnapshot = await firestore
+          .collection("chitrosav_events")
+          .where("year", "==", 2025)
+          .get();
+
+        const eventStatsContainer = document.getElementById(
+          "event-stats-container"
+        );
+        eventStatsContainer.innerHTML = "";
+
+        // Global Statistics Section
+        const globalStatsSection = document.createElement("div");
+        globalStatsSection.className =
+          "bg-[rgb(10,30,30)] p-6 rounded-lg mb-6 border-2 border-[rgb(77,143,142)]";
+
+        // Global statistics tracking
+        let globalStats = {
+          totalEvents: 0,
+          totalGateEntries: 0,
+        };
+
+        // Process each event
+        for (const doc of eventsSnapshot.docs) {
+          const eventId = doc.id;
+          const event = { id: eventId, ...doc.data() };
+
+          // Increment global events
+          globalStats.totalEvents++;
+
+          // Fetch registrations, payments, and participation data
+          const registrationsSnapshot = await firestore
+            .collection("event_registrations")
+            .where("eventId", "==", event.id)
+            .get();
+
+          const paymentsSnapshot = await firestore
+            .collection("payment_verifications")
+            .where("eventId", "==", event.id)
+            .get();
+
+          // Get all registrations for this event
+          const registrations = registrationsSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+
+          // Calculate statistics
+          const totalRegistrations = registrationsSnapshot.size;
+          const verifiedPayments = paymentsSnapshot.docs.filter(
+            (doc) => doc.data().verificationStatus === "verified"
+          ).length;
+          const pendingPayments = paymentsSnapshot.docs.filter(
+            (doc) => doc.data().verificationStatus === "pending"
+          ).length;
+          const rejectedPayments = paymentsSnapshot.docs.filter(
+            (doc) => doc.data().verificationStatus === "rejected"
+          ).length;
+
+          // Count participation and entries with special handling for team events
+          let totalParticipation = 0;
+          let totalGateEntries = 0;
+
+          // Process each registration to count entries and participation
+          for (const registration of registrations) {
+            // Count standard participation and entries
+            if (registration.participationConfirmed) {
+              totalParticipation++;
+            }
+            if (registration.entryConfirmed) {
+              totalGateEntries++;
+            }
+
+            // Special handling for Squid Game team event
+            if (
+              eventId === "0zwPGSJNrYWDTl4PLyB1" &&
+              registration.teamMembers
+            ) {
+              // Count team member entries and participation
+              for (let i = 0; i < registration.teamMembers.length; i++) {
+                const memberEntryKey = `teamMember_${i}_entryConfirmed`;
+                const memberParticipationKey = `teamMember_${i}_participationConfirmed`;
+
+                if (registration[memberEntryKey]) {
+                  totalGateEntries++;
+                }
+                if (registration[memberParticipationKey]) {
+                  totalParticipation++;
+                }
+              }
+            }
+
+            // Special handling for Short Film Contest
+            if (
+              eventId === "PaAXzX2C4q24KCghSGoU" &&
+              registration.crewDetails
+            ) {
+              // Count crew member entries and participation
+              const crewRoles = [
+                "director",
+                "writer",
+                "cinematographer",
+                "editor",
+                "leadActor",
+              ];
+              crewRoles.forEach((role) => {
+                if (registration.crewDetails[role]) {
+                  const roleEntryKey = `crew_${role}_entryConfirmed`;
+                  const roleParticipationKey = `crew_${role}_participationConfirmed`;
+
+                  if (registration[roleEntryKey]) {
+                    totalGateEntries++;
+                  }
+                  if (registration[roleParticipationKey]) {
+                    totalParticipation++;
+                  }
+                }
+              });
+            }
+          }
+
+          // Update global gate entries
+          globalStats.totalGateEntries += totalGateEntries;
+
+          // Calculate revenue (only from verified payments)
+          const verifiedRevenue = verifiedPayments * (event.price || 0);
+
+          // Create event stats card
+          const eventStatsCard = document.createElement("div");
+          eventStatsCard.className = `
+            bg-[rgb(15,40,40)] 
+            rounded-lg 
+            mb-6 
+            overflow-hidden 
+            shadow-2xl 
+            border-2 
+            border-[rgb(77,143,142)]
+        `;
+
+          eventStatsCard.innerHTML = `
+<div class="bg-[rgb(0,239,225)] p-4 text-[rgb(15,40,40)] flex justify-between items-center">
+    <h3 class="text-2xl font-bold">${event.name}</h3>
+    <div class="flex items-center space-x-2">
+        <button 
+            onclick="downloadEventDetails('${eventId}')" 
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition flex items-center"
+        >
+            <i class="fas fa-download mr-2"></i>Download Details
+        </button>
+    </div>
+</div>
+
+<div class="p-6 grid grid-cols-3 gap-6">
+    <div>
+        <h4 class="text-lg font-bold text-[rgb(0,239,225)] mb-3">Ticket Overview</h4>
+        <div class="space-y-2">
+            <p class="text-white">
+                <strong>Total Tickets:</strong> 
+                <span class="text-[rgb(0,239,225)]">${event.totalTickets || 0
+            }</span>
+            </p>
+            <p class="text-white">
+                <strong>Available Tickets:</strong> 
+                <span class="text-green-400">${event.availableTickets || 0
+            }</span>
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-lg font-bold text-[rgb(0,239,225)] mb-3">Registration Status</h4>
+        <div class="space-y-2">
+            <p class="text-white">
+                <strong>Total Registrations:</strong> 
+                <span class="text-blue-400">${totalRegistrations}</span>
+            </p>
+            <p class="text-white">
+                <strong>Booked (Verified):</strong> 
+                <span class="text-green-400">${verifiedPayments}</span>
+            </p>
+            <p class="text-white">
+                <strong>Pending:</strong> 
+                <span class="text-yellow-400">${pendingPayments}</span>
+            </p>
+            <p class="text-white">
+                <strong>Rejected:</strong> 
+                <span class="text-red-400">${rejectedPayments}</span>
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <h4 class="text-lg font-bold text-[rgb(0,239,225)] mb-3">Participation Details</h4>
+        <div class="space-y-2">
+            <p class="text-white">
+                <strong>Total Participation:</strong> 
+                <span class="text-blue-400">${totalParticipation}</span>
+            </p>
+            <p class="text-white">
+                <strong>Gate Entries:</strong> 
+                <span class="text-green-400">${totalGateEntries}</span>
+            </p>
+            <p class="text-white">
+                <strong>Revenue (Verified):</strong> 
+                <span class="text-green-400">₹${verifiedRevenue.toLocaleString()}</span>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="p-6 bg-[rgb(10,30,30)] flex justify-center space-x-4">
+    <button 
+        onclick="updateTickets('${eventId}', 'add')" 
+        class="
+            bg-green-500 
+            text-white 
+            px-6 
+            py-2 
+            rounded-lg 
+            hover:bg-green-600 
+            transition
+            flex items-center
+        "
+    >
+        <i class="fas fa-plus mr-2"></i>Add Ticket
+    </button>
+    <button 
+        onclick="updateTickets('${eventId}', 'remove')" 
+        class="
+            bg-red-500 
+            text-white 
+            px-6 
+            py-2 
+            rounded-lg 
+            hover:bg-red-600 
+            transition
+            flex items-center
+        "
+    >
+        <i class="fas fa-minus mr-2"></i>Remove Ticket
+    </button>
+</div>
+`;
+
+          eventStatsContainer.appendChild(eventStatsCard);
+        }
+
+        // Update global statistics section
+        globalStatsSection.innerHTML = `
+        <h2 class="text-3xl font-bold text-[rgb(0,239,225)] mb-4">Chitrosav 2025 - Global Overview</h2>
+        <div class="grid grid-cols-2 gap-4" id="global-stats-details">
+            <div class="bg-[rgb(10,92,87)] p-4 rounded-lg">
+                <h3 class="text-lg text-[rgb(0,239,225)] mb-2">Total Events</h3>
+                <p class="text-white text-2xl">${globalStats.totalEvents}</p>
+            </div>
+            <div class="bg-[rgb(10,92,87)] p-4 rounded-lg">
+                <h3 class="text-lg text-[rgb(0,239,225)] mb-2">Total Gate Entries</h3>
+                <p class="text-white text-2xl">${globalStats.totalGateEntries}</p>
+            </div>
+        </div>
+    `;
+        eventStatsContainer.insertBefore(
+          globalStatsSection,
+          eventStatsContainer.firstChild
+        );
+      } catch (error) {
+        console.error("Error loading stats:", error);
+      } finally {
+        isLoadingStats = false;
+      }
+    }
+    // Modify the updateTickets function to handle ticket updates
+    async function updateTickets(eventId, action) {
+      try {
+        const eventRef = firestore
+          .collection("chitrosav_events")
+          .doc(eventId);
+
+        // Run a transaction to safely update tickets
+        await firestore.runTransaction(async (transaction) => {
+          const eventDoc = await transaction.get(eventRef);
+          if (!eventDoc.exists) {
+            throw new Error("Event not found");
+          }
+
+          const eventData = eventDoc.data();
+          const currentTotalTickets = eventData.totalTickets || 0;
+          const currentAvailableTickets = eventData.availableTickets || 0;
+
+          // Update tickets based on action
+          let newTotalTickets = currentTotalTickets;
+          let newAvailableTickets = currentAvailableTickets;
+
+          if (action === "add") {
+            newTotalTickets += 1;
+            newAvailableTickets += 1;
+          } else if (
+            action === "remove" &&
+            currentTotalTickets > 0 &&
+            currentAvailableTickets > 0
+          ) {
+            newTotalTickets -= 1;
+            newAvailableTickets -= 1;
+          }
+
+          // Update both total and available tickets
+          transaction.update(eventRef, {
+            totalTickets: newTotalTickets,
+            availableTickets: newAvailableTickets,
+          });
+        });
+
+        // Reload dashboard to reflect changes
+        loadDashboardStats();
+      } catch (error) {
+        console.error("Error updating tickets:", error);
+        alert(`Failed to ${action} ticket: ${error.message}`);
+      }
+    }
+
+    async function downloadEventDetails(eventId) {
+      try {
+        // Fetch event details
+        const eventDoc = await firestore
+          .collection("chitrosav_events")
+          .doc(eventId)
+          .get();
+        const eventData = eventDoc.data();
+
+        // Fetch registrations
+        const registrationsSnapshot = await firestore
+          .collection("event_registrations")
+          .where("eventId", "==", eventId)
+          .get();
+
+        // Fetch payment verifications
+        const paymentsSnapshot = await firestore
+          .collection("payment_verifications")
+          .where("eventId", "==", eventId)
+          .get();
+
+        // Prepare data for Excel
+        const excelData = registrationsSnapshot.docs.map((doc) => {
+          const registration = doc.data();
+          const payment = paymentsSnapshot.docs
+            .find((p) => p.data().bookingId === registration.bookingId)
+            ?.data();
+
+          return {
+            Name: registration.name,
+            Email: registration.email,
+            Phone: registration.phone,
+            College: registration.college,
+            BookingID: registration.bookingId,
+            PaymentStatus: registration.paymentStatus,
+            TransactionID: payment?.transactionUid || "N/A",
+            VerificationStatus: payment?.verificationStatus || "N/A",
+          };
+        });
+
+        // Use SheetJS to generate Excel
+        const worksheet = XLSX.utils.json_to_sheet(excelData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(
+          workbook,
+          worksheet,
+          `${eventData.name} Details`
+        );
+
+        // Download Excel
+        XLSX.writeFile(workbook, `${eventData.name}_Event_Details.xlsx`);
+      } catch (error) {
+        console.error("Error downloading event details:", error);
+        alert(`Failed to download event details: ${error.message}`);
+      }
+    }
+
+    // Add to admin-dashboard.html script
+
+    async function loadPaymentVerifications() {
+      try {
+        const paymentsList = document.getElementById("payments-list");
+
+        if (!paymentsList) {
+          console.error("Payments list container not found");
+          return;
+        }
+
+        paymentsList.innerHTML = "";
+
+        // Fetch pending payments
+        const paymentsSnapshot = await firestore
+          .collection("payment_verifications")
+          .where("verificationStatus", "==", "pending")
+          .get();
+
+        if (paymentsSnapshot.empty) {
+          paymentsList.innerHTML = `
+                <p class="text-gray-400 text-center py-6">
+                    No pending payments
+                </p>
+            `;
+          return;
+        }
+
+        // Group payments by event
+        const eventPayments = {};
+        for (const doc of paymentsSnapshot.docs) {
+          const payment = { id: doc.id, ...doc.data() };
+
+          // Fetch associated registration details
+          const registrationSnapshot = await firestore
+            .collection("event_registrations")
+            .where("bookingId", "==", payment.bookingId)
+            .get();
+
+          if (registrationSnapshot.empty) {
+            console.warn(
+              `No registration found for booking ID: ${payment.bookingId}`
+            );
+            continue;
+          }
+
+          const registration = registrationSnapshot.docs[0].data();
+
+          // Group payments by event
+          if (!eventPayments[registration.eventId]) {
+            // Fetch event details
+            const eventSnapshot = await firestore
+              .collection("chitrosav_events")
+              .doc(registration.eventId)
+              .get();
+
+            if (!eventSnapshot.exists) {
+              console.warn(`No event found for ID: ${registration.eventId}`);
+              continue;
+            }
+
+            const eventDetails = eventSnapshot.data();
+
+            eventPayments[registration.eventId] = {
+              eventId: registration.eventId,
+              eventName: eventDetails.name,
+              paymentCount: 1,
+              eventDetails: eventDetails,
+            };
+          } else {
+            eventPayments[registration.eventId].paymentCount++;
+          }
+        }
+
+        // Display events with pending payments
+        Object.values(eventPayments).forEach((event) => {
+          const eventCard = document.createElement("div");
+          eventCard.className =
+            "bg-dark-color p-6 rounded-lg mb-4 cursor-pointer hover:bg-[rgb(20,50,50)] transition";
+          eventCard.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-primary-color">${event.eventName
+            }</h3>
+                        <p class="text-white">
+                            <strong>${event.paymentCount}</strong> 
+                            Pending Payment${event.paymentCount !== 1 ? "s" : ""
+            }
+                        </p>
+                    </div>
+                    <div class="text-white">
+                        <i class="fas fa-chevron-right text-2xl"></i>
+                    </div>
+                </div>
+            `;
+
+          // Add click event to show event-specific payments
+          eventCard.addEventListener("click", () =>
+            loadEventPayments(event.eventId, event.eventName)
+          );
+
+          paymentsList.appendChild(eventCard);
+        });
+      } catch (error) {
+        console.error("Error loading payments:", error);
+
+        const paymentsList = document.getElementById("payments-list");
+        if (paymentsList) {
+          paymentsList.innerHTML = `
+                <p class="text-red-500 text-center py-6">
+                    Failed to load payments. 
+                    ${error.message}
+                </p>
+            `;
+        }
+      }
+    }
+
+    async function verifyPayment(paymentId, isVerified, eventId, eventName) {
+  const paymentCard = document.getElementById(`payment-card-${paymentId}`);
+  const verifyBtn = document.getElementById(`verify-btn-${paymentId}`);
+  const batch = firestore.batch();
+
+  try {
+    // Disable all buttons in this card to prevent double-clicks
+    const allButtons = paymentCard.querySelectorAll('button');
+    allButtons.forEach(btn => {
+      btn.disabled = true;
+      if (btn === verifyBtn) {
+        btn.innerHTML = `
+          <span class="inline-flex items-center">
+            Processing 
+            <i class="fas fa-spinner fa-spin ml-2"></i>
+          </span>
+        `;
+      } else {
+        btn.classList.add('opacity-50');
+      }
+    });
+    
+    // Add processing overlay
+    const processingOverlay = document.createElement('div');
+    processingOverlay.className = 'absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center rounded-lg z-10';
+    processingOverlay.id = `processing-overlay-${paymentId}`;
+    processingOverlay.innerHTML = `
+      <div class="bg-dark-color p-4 rounded-lg shadow-lg text-center">
+        <i class="fas fa-spinner fa-spin fa-2x text-primary-color mb-2"></i>
+        <p class="text-white">${isVerified ? 'Verifying' : 'Rejecting'} payment...</p>
+      </div>
+    `;
+    
+    // Make the payment card relative for absolute positioning of overlay
+    paymentCard.style.position = 'relative';
+    paymentCard.appendChild(processingOverlay);
+    
+    // Get payment details
+    const paymentDoc = await firestore
+      .collection("payment_verifications")
+      .doc(paymentId)
+      .get();
+      
+    if (!paymentDoc.exists) {
+      throw new Error("Payment data not found");
+    }
+    
+    const paymentData = paymentDoc.data();
+
+    // Update payment verification status
+    batch.update(
+      firestore.collection("payment_verifications").doc(paymentId),
+      { 
+        verificationStatus: isVerified ? "verified" : "rejected",
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        verifiedBy: firebase.auth().currentUser ? firebase.auth().currentUser.email : 'unknown'
+      }
+    );
+
+    // Find the corresponding registration
+    const registrationSnapshot = await firestore
+      .collection("event_registrations")
+      .where("bookingId", "==", paymentData.bookingId)
+      .get();
+
+    if (registrationSnapshot.empty) {
+      throw new Error("Registration not found for this payment");
+    }
+    
+    const registrationDoc = registrationSnapshot.docs[0];
+    const registrationData = registrationDoc.data();
+
+    // Update event tickets
+    const eventRef = firestore
+      .collection("chitrosav_events")
+      .doc(registrationData.eventId);
+
+    if (isVerified) {
+      // Payment verified - update registration status
+      batch.update(registrationDoc.ref, {
+        paymentStatus: "paid",
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      // Call post-verification tasks in the background
+      handlePostVerificationTasks(registrationData, paymentData)
+        .catch(error => {
+          console.error("Post Verification Error:", {
+            message: error.message,
+            code: error.code,
+            stack: error.stack,
+          });
+          // Log error but don't block the process
+        });
+    } else {
+      // Payment rejected - return ticket to available pool
+      batch.update(eventRef, {
+        availableTickets: firebase.firestore.FieldValue.increment(1),
+      });
+
+      // Update registration status to failed
+      batch.update(registrationDoc.ref, {
+        paymentStatus: "failed",
+        rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        rejectionReason: "Payment verification failed"
+      });
+    }
+
+    // Commit all updates
+    await batch.commit();
+
+    // Remove the processing overlay
+    const overlay = document.getElementById(`processing-overlay-${paymentId}`);
+    if (overlay) overlay.remove();
+
+    // Show success animation
+    paymentCard.innerHTML = `
+      <div class="text-center py-8 animate-fade-in">
+        <div class="inline-block rounded-full bg-${isVerified ? 'green' : 'red'}-500 p-3 mb-4">
+          <i class="fas fa-${isVerified ? 'check' : 'times'} text-white text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-bold text-${isVerified ? 'green' : 'red'}-500 mb-2">
+          Payment ${isVerified ? 'Verified' : 'Rejected'} Successfully
+        </h3>
+        <p class="text-gray-400 text-sm">
+          ${isVerified 
+            ? 'The participant has been notified and their registration is confirmed.' 
+            : 'The ticket has been returned to the available pool.'}
+        </p>
+      </div>
+    `;
+
+    // Fade out and remove the card after a delay
+    setTimeout(() => {
+      paymentCard.style.transition = "opacity 0.5s, transform 0.5s";
+      paymentCard.style.opacity = "0";
+      paymentCard.style.transform = "translateY(-20px)";
+      
+      setTimeout(() => {
+        paymentCard.remove();
+        
+        // Check if there are no more payment cards
+        const remainingCards = document.querySelectorAll('[id^="payment-card-"]');
+        if (remainingCards.length === 0) {
+          // If no more payments, show a message
+          const paymentsList = document.getElementById("payments-list");
+          if (paymentsList) {
+            paymentsList.innerHTML += `
+              <div class="text-center py-8 animate-fade-in">
+                <i class="fas fa-check-circle text-green-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-bold text-primary-color mb-2">
+                  All payments processed!
+                </h3>
+                <p class="text-gray-400 mb-4">
+                  You've processed all pending payments for this event.
+                </p>
+                <button 
+                  onclick="loadEventPayments('${eventId}', '${eventName}')" 
+                  class="bg-primary-color text-white px-4 py-2 rounded hover:bg-opacity-80 transition"
+                >
+                  Refresh
+                </button>
+              </div>
+            `;
+          }
+        }
+      }, 500);
+    }, 1500);
+
+    // Log the action for analytics
+    console.log(`Payment ${isVerified ? 'verified' : 'rejected'}: ${paymentId}`);
+    
+    // Optional: Show a toast notification
+    if (typeof showToast === 'function') {
+      showToast(`Payment ${isVerified ? 'verified' : 'rejected'} successfully`, isVerified ? 'success' : 'warning');
+    }
+    
+  } catch (error) {
+    console.error("Error verifying payment:", {
+      message: error.message,
+      code: error.code,
+      stack: error.stack,
+    });
+    
+    // Remove the processing overlay if it exists
+    const overlay = document.getElementById(`processing-overlay-${paymentId}`);
+    if (overlay) overlay.remove();
+    
+    // Re-enable buttons
+    const allButtons = paymentCard.querySelectorAll('button');
+    allButtons.forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('opacity-50');
+    });
+    
+    if (verifyBtn) {
+      verifyBtn.innerHTML = isVerified ? "Verify Payment" : "Reject Payment";
+    }
+    
+    // Show error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = "mt-4 p-3 bg-red-500 bg-opacity-20 text-red-500 rounded text-sm";
+    errorDiv.innerHTML = `
+      <div class="flex items-start">
+        <i class="fas fa-exclamation-circle mt-1 mr-2"></i>
+        <div>
+          <p class="font-bold">Error processing payment</p>
+          <p>${error.message}</p>
+        </div>
+      </div>
+      <button class="mt-2 text-xs underline" onclick="this.parentNode.remove()">Dismiss</button>
+    `;
+    
+    // Add error message to the card
+    paymentCard.appendChild(errorDiv);
+    
+    // Optional: Show a toast notification
+    if (typeof showToast === 'function') {
+      showToast(`Error: ${error.message}`, 'error');
+    }
+  }
+}
+
+async function loadEventPayments(eventId, eventName) {
+  try {
+    const paymentsList = document.getElementById("payments-list");
+    paymentsList.innerHTML = `
+      <div class="mb-4">
+        <button id="back-to-events-btn" class="text-primary-color hover:text-white">
+          <i class="fas fa-arrow-left mr-2"></i>Back to Events
+        </button>
+      </div>
+      <h2 class="text-2xl font-bold text-primary-color mb-4">${eventName} - Pending Payments</h2>
+      <div id="loading-indicator" class="text-center py-4">
+        <i class="fas fa-spinner fa-spin fa-2x text-primary-color"></i>
+        <p class="mt-2 text-gray-400">Loading payments...</p>
+      </div>
+    `;
+
+    // Add back button functionality
+    document
+      .getElementById("back-to-events-btn")
+      .addEventListener("click", loadPaymentVerifications);
+
+    // Fetch pending payments for this event - use a more efficient query
+    const paymentsSnapshot = await firestore
+      .collection("payment_verifications")
+      .where("verificationStatus", "==", "pending")
+      .get();
+
+    // Create a loading placeholder for payments
+    const loadingPlaceholder = document.getElementById("loading-indicator");
+    
+    // If no payments at all, show message and return early
+    if (paymentsSnapshot.empty) {
+      loadingPlaceholder.innerHTML = `
+        <p class="text-gray-400 text-center py-6">
+          No pending payments for this event
+        </p>
+      `;
+      return;
+    }
+
+    // Process payments in batches to improve performance
+    const batchSize = 5;
+    let processedCount = 0;
+    let eventPaymentsFound = false;
+    const allPayments = paymentsSnapshot.docs;
+    
+    // Remove loading indicator once we start showing actual payments
+    loadingPlaceholder.remove();
+
+    // Process payments in smaller batches
+    for (let i = 0; i < allPayments.length; i += batchSize) {
+      const batch = allPayments.slice(i, i + batchSize);
+      
+      // Process this batch of payments
+      await Promise.all(batch.map(async (doc) => {
+        const payment = { id: doc.id, ...doc.data() };
+
+        try {
+          // Fetch associated registration details
+          const registrationSnapshot = await firestore
+            .collection("event_registrations")
+            .where("bookingId", "==", payment.bookingId)
+            .get();
+
+          if (registrationSnapshot.empty) {
+            console.warn(`No registration found for booking ID: ${payment.bookingId}`);
+            return;
+          }
+
+          const registration = registrationSnapshot.docs[0].data();
+
+          // Check if this payment is for the selected event
+          if (registration.eventId !== eventId) return;
+
+          // Fetch event details - use a cache to avoid redundant fetches
+          let eventDetails = window.eventCache?.[registration.eventId];
+          
+          if (!eventDetails) {
+            const eventSnapshot = await firestore
+              .collection("chitrosav_events")
+              .doc(registration.eventId)
+              .get();
+
+            if (!eventSnapshot.exists) {
+              console.warn(`No event found for ID: ${registration.eventId}`);
+              return;
+            }
+
+            eventDetails = eventSnapshot.data();
+            
+            // Cache the event details
+            if (!window.eventCache) window.eventCache = {};
+            window.eventCache[registration.eventId] = eventDetails;
+          }
+
+          // Create payment card with lazy loading for images
+          const paymentCard = document.createElement("div");
+          paymentCard.id = `payment-card-${payment.id}`;
+          paymentCard.className = "bg-dark-color p-6 rounded-lg mb-6 border-2 border-tertiary-color";
+          paymentCard.innerHTML = `
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-primary-color mb-2">Event Details</h4>
+                <p><strong>Event Name:</strong> ${eventDetails.name}</p>
+                <p><strong>Booking ID:</strong> ${payment.bookingId}</p>
+                <p><strong>Event Price:</strong> ₹${eventDetails.price}</p>
+                <p><strong>Date:</strong> ${eventDetails.date}</p>
+                <p><strong>Time:</strong> ${eventDetails.time || "N/A"}</p>
+                <p><strong>Venue:</strong> ${eventDetails.venue || "N/A"}</p>
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-primary-color mb-2">Payment Details</h4>
+                <p><strong>Transaction ID:</strong> ${payment.transactionUid}</p>
+                <p><strong>Submitted At:</strong> ${payment.submittedAt.toDate().toLocaleString()}</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div>
+                <h4 class="text-xl font-bold text-primary-color mb-2">Participant Information</h4>
+                <p><strong>Name:</strong> ${registration.name}</p>
+                <p><strong>Email:</strong> ${registration.email}</p>
+                <p><strong>Phone:</strong> ${registration.phone}</p>
+                <p><strong>College:</strong> ${registration.college}</p>
+                <p><strong>Year:</strong> ${registration.year}</p>
+                ${registration.rollNumber && registration.rollNumber !== "N/A"
+                  ? `<p><strong>Roll Number:</strong> ${registration.rollNumber}</p>`
+                  : ""
+                }
+              </div>
+              <div>
+                <h4 class="text-xl font-bold text-primary-color mb-2">Payment Screenshot</h4>
+                <div class="w-48 h-32 bg-gray-800 flex items-center justify-center" id="img-placeholder-${payment.id}">
+                  <i class="fas fa-image text-gray-600 text-2xl"></i>
+                </div>
+                <img 
+                  src="${payment.paymentScreenshot}" 
+                  alt="Payment Screenshot" 
+                  class="w-48 h-32 object-cover cursor-pointer hidden"
+                  id="payment-img-${payment.id}"
+                  onload="this.classList.remove('hidden'); document.getElementById('img-placeholder-${payment.id}').classList.add('hidden')"
+                  onerror="this.src='./assets/images/image-error.png'; this.classList.remove('hidden'); document.getElementById('img-placeholder-${payment.id}').classList.add('hidden')"
+                  onclick="openImageModal('${payment.paymentScreenshot}')"
+                >
+              </div>
+            </div>
+
+            <div class="flex justify-between">
+              <button 
+                id="verify-btn-${payment.id}"
+                onclick="verifyPayment('${payment.id}', true, '${eventId}', '${eventName}')" 
+                class="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition"
+              >
+                Verify Payment
+              </button>
+              <button 
+                onclick="verifyPayment('${payment.id}', false, '${eventId}', '${eventName}')" 
+                class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition"
+              >
+                Reject Payment
+              </button>
+            </div>
+          `;
+
+          // Append payment card to list
+          paymentsList.appendChild(paymentCard);
+          eventPaymentsFound = true;
+          processedCount++;
+        } catch (error) {
+          console.error(`Error processing payment ${payment.id}:`, error);
+        }
+      }));
+      
+      // Small delay between batches to keep UI responsive
+      if (i + batchSize < allPayments.length) {
+        await new Promise(resolve => setTimeout(resolve, 10));
+      }
+    }
+
+    // Handle no payments found for event
+    if (!eventPaymentsFound) {
+      paymentsList.innerHTML += `
+        <p class="text-gray-400 text-center py-6">
+          No pending payments for this event
+        </p>
+      `;
+    }
+  } catch (error) {
+    console.error("Error loading event payments:", error);
+
+    const paymentsList = document.getElementById("payments-list");
+    if (paymentsList) {
+      paymentsList.innerHTML = `
+        <div class="text-red-500 text-center py-6">
+          <p>Failed to load payments.</p>
+          <p class="text-sm mt-2">${error.message}</p>
+          <button 
+            onclick="loadEventPayments('${eventId}', '${eventName}')" 
+            class="mt-4 bg-primary-color text-white px-4 py-2 rounded hover:bg-opacity-80 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      `;
+    }
+  }
+}
+
+function openImageModal(imageSrc) {
+  // Create modal container
+  const modalContainer = document.createElement("div");
+  modalContainer.className =
+    "fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center overflow-auto";
+
+  // Create modal content with loading indicator
+  modalContainer.innerHTML = `
+    <div class="relative w-full max-w-[600px] h-full flex flex-col">
+      <!-- Close Button -->
+      <button class="absolute top-4 right-4 z-50 bg-white/30 rounded-full w-10 h-10 flex items-center justify-center text-white close-modal" aria-label="Close">
+        &times;
+      </button>
+      
+      <!-- Image Container -->
+      <div class="flex-grow flex items-center justify-center p-4">
+        <div id="modal-loading" class="text-white">
+          <i class="fas fa-spinner fa-spin fa-2x"></i>
+          <p class="mt-2">Loading image...</p>
+        </div>
+        <img 
+          src="${imageSrc}" 
+          alt="Image" 
+          class="max-w-full max-h-full object-contain hidden"
+          id="modal-image"
+          onload="this.classList.remove('hidden'); document.getElementById('modal-loading').classList.add('hidden')"
+          onerror="this.src='./assets/images/image-error.png'; this.classList.remove('hidden'); document.getElementById('modal-loading').classList.add('hidden')"
+        >
+      </div>
+    </div>
+  `;
+
+  // Append modal to body
+  document.body.appendChild(modalContainer);
+
+  // Close modal on button click
+  const closeButton = modalContainer.querySelector(".close-modal");
+  closeButton.addEventListener("click", () => {
+    document.body.removeChild(modalContainer);
+  });
+
+  // Close modal when clicking on the background
+  modalContainer.addEventListener("click", (event) => {
+    if (event.target === modalContainer) {
+      document.body.removeChild(modalContainer);
+    }
+  });
+
+  // Prevent scrolling on body
+  document.body.style.overflow = "hidden";
+
+  // Restore scrolling when modal is closed
+  modalContainer.addEventListener("remove", () => {
+    document.body.style.overflow = "";
+  });
+}
+
+    // Load Events List
+    async function loadEventsList() {
+      try {
+        const eventsSnapshot = await firestore
+          .collection("chitrosav_events")
+          .where("year", "==", 2025)
+          .get();
+
+        const eventsList = document.getElementById("events-list");
+        eventsList.innerHTML = "";
+
+        if (eventsSnapshot.empty) {
+          eventsList.innerHTML =
+            '<p class="text-gray-400">No events found</p>';
+          return;
+        }
+
+        eventsSnapshot.forEach((doc) => {
+          const event = { id: doc.id, ...doc.data() };
+          const eventCard = `
+                <div class="bg-dark-color p-4 rounded-lg">
+                    <h4 class="text-xl font-bold text-primary-color">${event.name
+            }</h4>
+                    <p class="text-gray-400">${event.type} | ${event.date}</p>
+                    <p class="text-white mt-2">${event.description || "No description"
+            }</p>
+                    <div class="mt-4 flex justify-between">
+                        <span class="text-primary-color">₹${event.price || "Free"
+            }</span>
+                        <div>
+                            <button onclick="editEvent('${event.id
+            }')" class="text-primary-color mr-4">Edit</button>
+                            <button onclick="deleteEvent('${event.id
+            }')" class="text-red-500">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+          eventsList.innerHTML += eventCard;
+        });
+      } catch (error) {
+        console.error("Error loading events:", error);
+        document.getElementById("events-list").innerHTML =
+          '<p class="text-red-500">Failed to load events</p>';
+      }
+    }
+
+    // Edit Event Function
+    async function editEvent(eventId) {
+      try {
+        const eventDoc = await firestore
+          .collection("chitrosav_events")
+          .doc(eventId)
+          .get();
+        const eventData = { id: eventDoc.id, ...eventDoc.data() };
+        createEditEventModal(eventData);
+      } catch (error) {
+        console.error("Error fetching event details:", error);
+        alert("Failed to load event details");
+      }
+    }
+
+    // Delete Event Function
+    async function deleteEvent(eventId) {
+      try {
+        // Delete the event document
+        await firestore.collection("chitrosav_events").doc(eventId).delete();
+
+        // Optionally, you can also delete associated registrations
+        const registrationsSnapshot = await firestore
+          .collection("event_registrations")
+          .where("eventId", "==", eventId)
+          .get();
+
+        // Batch delete registrations
+        const batch = firestore.batch();
+        registrationsSnapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
+        });
+
+        await batch.commit();
+
+        alert("Event and associated registrations deleted");
+        loadEventsList(); // Refresh the events list
+      } catch (error) {
+        console.error("Error deleting event:", error);
+        alert("Failed to delete event");
+      }
+    }
+
+    function createEditEventModal(event) {
+      const modalHtml = `
+    <div id="edit-event-modal" class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
+        <div class="bg-gray-900 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="sticky top-0 bg-gray-900 z-10 border-b border-gray-700 p-4 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-primary-color">Edit Event: ${event.name
+        }</h2>
+                <button id="close-edit-modal" class="text-white hover:text-red-500">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            
+            <form id="edit-event-form" class="p-6 space-y-4">
+                <input type="hidden" id="edit-event-id" value="${event.id}">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-white mb-2">Event Name</label>
+                        <input type="text" id="edit-event-name" value="${event.name
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">Event Type</label>
+                        <select id="edit-event-type" class="w-full p-2 rounded bg-gray-800 text-white">
+                            <option value="workshop" ${event.type === "workshop" ? "selected" : ""
+        }>Workshop</option>
+                            <option value="screening" ${event.type === "screening" ? "selected" : ""
+        }>Screening</option>
+                            <option value="competition" ${event.type === "competition" ? "selected" : ""
+        }>Competition</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">Date</label>
+                        <input type="date" id="edit-event-date" value="${event.date
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">Time</label>
+                        <input type="time" id="edit-event-time" value="${event.time || ""
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">Ticket Price</label>
+                        <input type="number" id="edit-event-price" value="${event.price
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">Available Tickets</label>
+                        <input type="number" id="edit-event-tickets" value="${event.availableTickets
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">UPI ID</label>
+                        <input type="text" id="edit-event-upi-id" value="${event.upiId || ""
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white"
+                               placeholder="Enter UPI ID for event payments">
+                    </div>
+                    <div>
+                        <label class="block text-white mb-2">WhatsApp Group Invite Link</label>
+                        <input type="url" id="edit-event-whatsapp-link" value="${event.whatsappGroupLink || ""
+        }" 
+                               class="w-full p-2 rounded bg-gray-800 text-white"
+                               placeholder="Enter WhatsApp Group Invite Link">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-white mb-2">Description</label>
+                    <textarea id="edit-event-description" 
+                              class="w-full p-2 rounded bg-gray-800 text-white h-24">${event.description || ""
+        }</textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-white mb-2">Venue</label>
+                    <input type="text" id="edit-event-venue" value="${event.venue || ""
+        }" 
+                           class="w-full p-2 rounded bg-gray-800 text-white">
+                </div>
+                
+                <div>
+                    <label class="block text-white mb-2">Prize Pool</label>
+                    <input type="text" id="edit-event-prize-pool" value="${event.prizePool || ""
+        }" 
+                           class="w-full p-2 rounded bg-gray-800 text-white">
+                </div>
+                
+                <div class="sticky bottom-0 bg-gray-900 pt-4 flex justify-between space-x-4">
+                    <button type="submit" class="flex-1 bg-primary-color text-dark-color py-3 rounded hover:bg-opacity-90 transition">
+                        Save Changes
+                    </button>
+                    <button type="button" id="close-edit-modal-bottom" class="flex-1 bg-red-500 text-white py-3 rounded hover:bg-red-600 transition">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    `;
+
+      // Create and append modal
+      const modalContainer = document.createElement("div");
+      modalContainer.innerHTML = modalHtml;
+      document.body.appendChild(modalContainer);
+
+      // Close modal functionality
+      document
+        .getElementById("close-edit-modal")
+        .addEventListener("click", () => {
+          document.body.removeChild(modalContainer);
+        });
+
+      document
+        .getElementById("close-edit-modal-bottom")
+        .addEventListener("click", () => {
+          document.body.removeChild(modalContainer);
+        });
+
+      // Edit form submission
+      document
+        .getElementById("edit-event-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const eventId = document.getElementById("edit-event-id").value;
+
+          const updatedEventData = {
+            // New fields
+            upiId: document.getElementById("edit-event-upi-id").value || null,
+            whatsappGroupLink:
+              document.getElementById("edit-event-whatsapp-link").value ||
+              null,
+            name: document.getElementById("edit-event-name").value,
+            type: document.getElementById("edit-event-type").value,
+            date: document.getElementById("edit-event-date").value,
+            time: document.getElementById("edit-event-time").value,
+            price: parseFloat(
+              document.getElementById("edit-event-price").value
+            ),
+            availableTickets: parseInt(
+              document.getElementById("edit-event-tickets").value
+            ),
+            description: document.getElementById("edit-event-description")
+              .value,
+            venue: document.getElementById("edit-event-venue").value,
+            prizePool: document.getElementById("edit-event-prize-pool").value,
+          };
+
+          try {
+            await firestore
+              .collection("chitrosav_events")
+              .doc(eventId)
+              .update(updatedEventData);
+            alert("Event updated successfully!");
+            document.body.removeChild(modalContainer);
+            loadEventsList(); // Refresh events list
+          } catch (error) {
+            console.error("Error updating event:", error);
+            alert("Failed to update event");
+          }
+        });
+    }
+    async function handlePostVerificationTasks(registrationData, paymentData) {
+      try {
+        // Ensure all required data is present
+        if (!registrationData || !paymentData) {
+          throw new Error("Missing registration or payment data");
+        }
+
+        // Set correct event names for specific events
+        if (registrationData.eventId === "0zwPGSJNrYWDTl4PLyB1") {
+          registrationData.eventName = "Squid Game";
+          console.log("Set event name to Squid Game for event ID:", registrationData.eventId);
+        } else if (registrationData.eventId === "Y2Dzc8tAczubAI25hNnB") {
+          registrationData.eventName = "Chepuko Chudham";
+          console.log("Set event name to Chepuko Chudham for event ID:", registrationData.eventId);
+        }else if (registrationData.eventId === "Qml72NeUJi0RlhlhJh9C") {
+          registrationData.eventName = "CineHunt";
+          console.log("Set event name to CineHunt for event ID:", registrationData.eventId);
+        }else if (registrationData.eventId === "8vX7hoWiF37mhyDBvUys") {
+          registrationData.eventName = "Inevitable Escape";
+          console.log("Set event name to Inevitable Escape for event ID:", registrationData.eventId);
+        }
+
+        // Generate PDF with QR Code
+        const pdfBlob = await generateConfirmationPDF(registrationData, paymentData);
+
+        // Get a reference to Firebase Storage
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+
+        // Create a reference to the PDF file with a unique name
+        const pdfFileName = `confirmations/${registrationData.bookingId}.pdf`;
+        const pdfRef = storageRef.child(pdfFileName);
+
+        // Upload PDF with metadata
+        return new Promise((resolve, reject) => {
+          // Create upload task
+          const uploadTask = pdfRef.put(pdfBlob);
+
+          // Listen for state changes, errors, and completion of the upload
+          uploadTask.on(
+            firebase.storage.TaskEvent.STATE_CHANGED,
+            (snapshot) => {
+              // Get task progress
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+              // Handle unsuccessful uploads
+              console.error("Upload Error:", error);
+              reject(error);
+            },
+            async () => {
+              try {
+                // Get the download URL
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+
+                console.log("File available at", downloadURL);
+
+                // Find the correct document reference
+                const registrationQuery = await firestore
+                  .collection("event_registrations")
+                  .where("bookingId", "==", registrationData.bookingId)
+                  .get();
+
+                if (!registrationQuery.empty) {
+                  const registrationDoc = registrationQuery.docs[0];
+
+                  // Prepare confirmation link data with explicit event name
+                  const confirmationData = {
+                    bookingId: registrationData.bookingId,
+                    eventName: registrationData.eventName, // This should now have the correct event name
+                    eventId: registrationData.eventId, // Store event ID for reference
+                    participantName: registrationData.name,
+                    email: registrationData.email,
+                    phoneNumber: registrationData.phone,
+                    downloadURL: downloadURL,
+                    synced: false,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                  };
+
+                  console.log("Creating confirmation link with event name:", confirmationData.eventName);
+
+                  // Create a new document in confirmation_links collection
+                  const confirmationLinkDoc = await firestore
+                    .collection("confirmation_links")
+                    .add(confirmationData);
+
+                  // Update registration with reference to confirmation link
+                  await registrationDoc.ref.update({
+                    confirmationLinkId: confirmationLinkDoc.id,
+                    confirmationPdfUrl: downloadURL,
+                    // Also update the event name in the registration if it was corrected
+                    eventName: registrationData.eventName
+                  });
+
+                  // Immediately sync to Google Sheets
+                  const linkData = {
+                    docId: confirmationLinkDoc.id,
+                    bookingId: registrationData.bookingId,
+                    eventName: registrationData.eventName,
+                    eventId: registrationData.eventId,
+                    participantName: registrationData.name,
+                    email: registrationData.email,
+                    phoneNumber: registrationData.phone,
+                    downloadURL: downloadURL,
+                  };
+
+                  // Attempt to sync (don't wait or block on this)
+                  syncConfirmationLinksToSheet(linkData)
+                    .then((synced) => {
+                      if (!synced) {
+                        console.warn("Failed to sync link to sheet immediately");
+                      }
+                    })
+                    .catch((syncError) => {
+                      console.error("Sync error:", syncError);
+                    });
+
+                  resolve(downloadURL);
+                } else {
+                  console.warn("No matching registration document found");
+                  resolve(downloadURL);
+                }
+              } catch (updateError) {
+                console.error("Error in post-verification process:", {
+                  message: updateError.message,
+                  code: updateError.code,
+                  stack: updateError.stack,
+                });
+                reject(updateError);
+              }
+            }
+          );
+        });
+      } catch (error) {
+        console.error("Post Verification Tasks Error:", {
+          message: error.message,
+          code: error.code,
+          stack: error.stack,
+        });
+        throw error;
+      }
+    }
+
+    // Function to sync confirmation links to Google Sheets
+    async function syncConfirmationLinksToSheet(linkData) {
+      try {
+        // Validate input
+        if (!linkData || !linkData.email || !linkData.downloadURL) {
+          console.error("Invalid link data for syncing");
+          return false;
+        }
+
+        // Double-check event name based on event ID
+        if (linkData.eventId === "0zwPGSJNrYWDTl4PLyB1" && linkData.eventName !== "Squid Game") {
+          console.log("Correcting event name to Squid Game");
+          linkData.eventName = "Squid Game";
+        } else if (linkData.eventId === "Y2Dzc8tAczubAI25hNnB" && linkData.eventName !== "Chepuko Chudham") {
+          console.log("Correcting event name to Chepuko Chudham");
+          linkData.eventName = "Chepuko Chudham";
+        }
+
+        console.log("Syncing to Google Sheets with event name:", linkData.eventName);
+
+        // Apps Script Web App URL (replace with your deployed URL)
+        const appsScriptWebAppUrl =
+          "https://script.google.com/macros/s/AKfycbx3ctuW6pQZxRDBIu5C9nKyXx8iJ1HjXcdbEDanL7e69ifRiBgItiPw2GSxqmPnvfxPoQ/exec";
+
+        // Send data to Apps Script
+        const response = await fetch(appsScriptWebAppUrl, {
+          method: "POST",
+          mode: "no-cors", // Important for cross-origin requests
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            timestamp: new Date().toISOString(),
+            bookingId: linkData.bookingId || "",
+            eventName: linkData.eventName || "",
+            participantName: linkData.participantName || "",
+            email: linkData.email,
+            phoneNumber: linkData.phoneNumber || "",
+            downloadURL: linkData.downloadURL,
+          }),
+        });
+
+        // Update Firestore to mark as synced and ensure event name is correct
+        await firestore
+          .collection("confirmation_links")
+          .doc(linkData.docId)
+          .update({
+            synced: true,
+            syncedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            eventName: linkData.eventName // Ensure the correct event name is stored
+          });
+
+        console.log("Confirmation link synced successfully with event name:", linkData.eventName);
+        return true;
+      } catch (error) {
+        console.error("Error syncing confirmation link:", {
+          message: error.message,
+          stack: error.stack,
+        });
+
+        // Fallback logging
+        await logFailedSync(linkData, error);
+        return false;
+      }
+    }
+
+    // Fallback logging mechanism
+    async function logFailedSync(linkData, error) {
+      try {
+        await firestore.collection("sync_failures").add({
+          type: "google_sheets_sync",
+          linkData: linkData,
+          error: {
+            message: error.message,
+            stack: error.stack,
+          },
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (logError) {
+        console.error("Failed to log sync failure:", logError);
+      }
+    }
+
+    // Fallback logging mechanism
+    async function logFailedSync(linkData, error) {
+      try {
+        await firestore.collection("sync_failures").add({
+          type: "google_sheets_sync",
+          linkData: linkData,
+          error: {
+            message: error.message,
+            stack: error.stack,
+          },
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (logError) {
+        console.error("Failed to log sync failure:", logError);
+      }
+    }
+
+// PDF Generation Function
+function generateConfirmationPDF(registrationData, paymentData) {
+  return new Promise((resolve, reject) => {
+    try {
+      // Combine registration and payment data
+      const bookingData = {
+        ...registrationData,
+        transactionUid: paymentData.transactionUid,
+        bookingId: registrationData.bookingId || paymentData.bookingId,
+      };
+
+      // Special handling for specific events with fixed details
+      if (bookingData.eventId === "0zwPGSJNrYWDTl4PLyB1") {
+        // Override with fixed event details for Squid Game
+        bookingData.eventName = "Squid Game";
+        bookingData.eventDate = "11-04-2025";
+        bookingData.eventTime = "10:00AM";
+        bookingData.eventVenue = "Go Kart Track";
+      } else if (bookingData.eventId === "Y2Dzc8tAczubAI25hNnB") {
+        // Override with fixed event details for Chepuko Chudham
+        bookingData.eventName = "Chepuko Chudham";
+        bookingData.eventDate = "11-04-2025";
+        bookingData.eventTime = "01:00PM";
+        bookingData.eventVenue = "Seminar Halls (Room Numbers will be shared in whatsapp group)";
+      } else if (bookingData.eventId === "Qml72NeUJi0RlhlhJh9C") {
+        // Override with fixed event details for Cinehunt
+        bookingData.eventName = "Cinehunt";
+        bookingData.eventDate = "12-04-2025";
+        bookingData.eventTime = "10:00AM";
+        bookingData.eventVenue = "College";
+      } else if (bookingData.eventId === "8vX7hoWiF37mhyDBvUys") {
+        // Override with fixed event details for Inevitable Escape
+        bookingData.eventName = "Inevitable Escape";
+        bookingData.eventDate = "12-04-2025";
+        bookingData.eventTime = "11:00AM";
+        bookingData.eventVenue = "Seminar Halls";
+      }
+
+      // Ensure event information is available
+      // If not in registrationData, try to fetch from Firestore
+      if (!bookingData.eventName || !bookingData.eventDate) {
+        console.log(
+          "Missing event information, attempting to fetch from event data"
+        );
+
+        // If eventId is available, fetch event details
+        if (bookingData.eventId) {
+          firestore
+            .collection("events")
+            .doc(bookingData.eventId)
+            .get()
+            .then((eventDoc) => {
+              if (eventDoc.exists) {
+                const eventData = eventDoc.data();
+
+                // Update booking data with event information
+                bookingData.eventName =
+                  bookingData.eventName || eventData.name;
+                bookingData.eventDate =
+                  bookingData.eventDate || eventData.date;
+                bookingData.eventTime =
+                  bookingData.eventTime || eventData.time;
+                bookingData.eventVenue =
+                  bookingData.eventVenue || eventData.venue;
+
+                // Continue with PDF generation
+                generatePDFWithData(bookingData);
+              } else {
+                console.warn(
+                  "Event document not found, proceeding with available data"
+                );
+                generatePDFWithData(bookingData);
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching event data:", error);
+              // Continue with whatever data we have
+              generatePDFWithData(bookingData);
+            });
+        } else {
+          // No eventId, proceed with available data
+          generatePDFWithData(bookingData);
+        }
+      } else {
+        // Event information is available, proceed with PDF generation
+        generatePDFWithData(bookingData);
+      }
+            // Function to generate PDF with the available data
+            function generatePDFWithData(data) {
+        // Create QR Code
+        const qrData = generateSecureQR(data);
+
+        // Use jsPDF for PDF creation
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+        });
+
+        // Colors
+        const primaryColor = "#00EFE1"; // rgb(0, 239, 225)
+        const secondaryColor = "#0A5C57"; // rgb(10, 92, 87)
+        const tertiaryColor = "#4D8F8E"; // rgb(77, 143, 142)
+        const whatsappGreen = "#25D366"; // WhatsApp Green
+        const textColor = "#E0E0E0"; // #e0e0e0
+        const backgroundColor = "#0A1E1E"; // #0a1e1e
+
+        // Check if this is one of the special events that needs two pages
+        const isTeamEvent = data.eventId === "0zwPGSJNrYWDTl4PLyB1"; // Squid Game
+        const isShortFilmEvent = data.eventId === "PaAXzX2C4q24KCghSGoU"; // Short Film
+        const isChepukoEvent = data.eventId === "Y2Dzc8tAczubAI25hNnB"; // Chepuko Chudham
+        const isCinehuntEvent = data.eventId === "Qml72NeUJi0RlhlhJh9C"; // Cinehunt
+        const isInevitableEscapeEvent = data.eventId === "8vX7hoWiF37mhyDBvUys"; // Inevitable Escape
+
+        // Background
+        doc.setFillColor(backgroundColor);
+        doc.rect(0, 0, 210, 297, "F");
+
+        // Logo Placement
+        const img = new Image();
+        img.src = "images/branding.png";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          const dataURL = canvas.toDataURL("image/png");
+
+          // Branding Logo
+          doc.addImage(dataURL, "PNG", 10, 10, 40, 40);
+          doc.setDrawColor(primaryColor);
+          doc.setLineWidth(1);
+          doc.rect(10, 10, 40, 40, "D");
+
+          // QR Code
+          doc.addImage(qrData.qrDataUrl, "PNG", 160, 10, 40, 40);
+          doc.setDrawColor(primaryColor);
+          doc.setLineWidth(1);
+          doc.rect(160, 10, 40, 40, "D");
+
+          // WhatsApp Logo
+          const waImg = new Image();
+          waImg.src = "images/whatsapp.png";
+          waImg.onload = () => {
+            const waCanvas = document.createElement("canvas");
+            waCanvas.width = waImg.width;
+            waCanvas.height = waImg.height;
+            const waCtx = waCanvas.getContext("2d");
+            waCtx.drawImage(waImg, 0, 0);
+            const waDataURL = waCanvas.toDataURL("image/png");
+
+            // Rest of the PDF content
+            generateRestOfPDF(doc, data, waDataURL);
+          };
+        };
+
+        // Function to generate rest of the PDF
+        const generateRestOfPDF = (doc, bookingData, waDataURL) => {
+          // Event Confirmation Title
+          doc.setTextColor(primaryColor);
+          doc.setFontSize(24);
+          doc.text("Event Confirmation", 105, 60, { align: "center" });
+
+          // Function to create artistic sections with dynamic height
+          const createArtisticSection = (title, details, startY) => {
+            // Calculate height based on number of fields (5 points per line + padding)
+            const height = Math.max(30, 20 + details.length * 5);
+
+            doc.setFillColor(secondaryColor);
+            doc.rect(10, startY, 190, height, "F");
+
+            doc.setTextColor(primaryColor);
+            doc.setFontSize(14);
+            doc.text(title, 105, startY + 10, { align: "center" });
+
+            doc.setTextColor(textColor);
+            doc.setFontSize(10);
+            details.forEach((detail, index) => {
+              doc.text(detail, 105, startY + 20 + index * 5, {
+                align: "center",
+              });
+            });
+
+            // Return the height of this section for positioning the next one
+            return height;
+          };
+
+          // Function to add WhatsApp community link
+          const addWhatsAppCommunity = (y) => {
+            doc.addImage(waDataURL, "PNG", 80, y, 10, 10);
+            doc.setTextColor(whatsappGreen);
+            doc.setFontSize(12);
+            doc.text("JOIN OUR COMMUNITY", 95, y + 5);
+
+            const whatsappLink =
+              "https://chat.whatsapp.com/FBOHXCYAbbr9jDNIwO06GJ";
+            doc.setTextColor(tertiaryColor);
+            doc.setFontSize(8);
+            doc.textWithLink("Click to join", 95, y + 15, {
+              url: whatsappLink,
+            });
+          };
+
+          // Function to add footer
+          const addFooter = () => {
+            doc.setDrawColor(primaryColor);
+            doc.setLineWidth(0.5);
+            doc.line(10, 280, 200, 280);
+
+            doc.setTextColor(tertiaryColor);
+            doc.setFontSize(10);
+            doc.text(
+              "© 2025 Chalana Chithram. All rights reserved.",
+              105,
+              290,
+              { align: "center" }
+            );
+          };
+
+          // Check if this is the specific event that needs team details
+          const isTeamEvent =
+            bookingData.eventId === "0zwPGSJNrYWDTl4PLyB1"; // Squid Game
+          const isShortFilmEvent =
+            bookingData.eventId === "PaAXzX2C4q24KCghSGoU"; // Short Film
+          const isChepukoEvent =
+            bookingData.eventId === "Y2Dzc8tAczubAI25hNnB"; // Chepuko Chudham
+          const isCinehuntEvent = 
+            bookingData.eventId === "Qml72NeUJi0RlhlhJh9C"; // Cinehunt
+          const isInevitableEscapeEvent = 
+            bookingData.eventId === "8vX7hoWiF37mhyDBvUys"; // Inevitable Escape
+
+          // Participant Details
+          const participantDetails = [
+            `Name: ${bookingData.name}`,
+            `Email: ${bookingData.email}`,
+            `College: ${bookingData.college || "N/A"}`,
+            `Phone: ${bookingData.phone}`,
+          ];
+
+          if (isTeamEvent || isShortFilmEvent || isChepukoEvent || isCinehuntEvent || isInevitableEscapeEvent) {
+            participantDetails.push(
+              `Team Name: ${bookingData.teamName || "N/A"}`
+            );
+            if (isTeamEvent || isChepukoEvent || isCinehuntEvent || isInevitableEscapeEvent) {
+              participantDetails.push(
+                `Team Size: ${bookingData.teamStrength || "N/A"}`
+              );
+            }
+          }
+
+          // Start positioning sections
+          let currentY = 80;
+
+          // Create participant details section and get its height
+          const participantHeight = createArtisticSection(
+            "Participant Details",
+            participantDetails,
+            currentY
+          );
+          currentY += participantHeight + 10;
+
+          // Event Information Section
+          const eventInfo = [
+            `Event: ${bookingData.eventName || "N/A"}`,
+            `Date: ${bookingData.eventDate || "N/A"}`,
+            `Time: ${bookingData.eventTime || "N/A"}`,
+            `Venue: ${bookingData.eventVenue || "N/A"}`,
+          ];
+          const eventHeight = createArtisticSection(
+            "Event Information",
+            eventInfo,
+            currentY
+          );
+          currentY += eventHeight + 10;
+
+          // For Short Film event, add Film Information on first page
+          if (isShortFilmEvent) {
+            // Film Details Section
+            const filmDetails = [];
+
+            // Add film details
+            if (bookingData.filmDetails) {
+              filmDetails.push(
+                `Title: ${bookingData.filmDetails.title || "N/A"}`
+              );
+              filmDetails.push(
+                `Genre: ${bookingData.filmDetails.genre || "N/A"}`
+              );
+              filmDetails.push(
+                `Duration: ${bookingData.filmDetails.duration || "N/A"
+                } minutes`
+              );
+            } else {
+              filmDetails.push("No film details available");
+            }
+
+            const filmHeight = createArtisticSection(
+              "Film Information",
+              filmDetails,
+              currentY
+            );
+            currentY += filmHeight + 10;
+          }
+
+          // Payment Details Section - add to first page for all events except Short Film
+          if (!isShortFilmEvent) {
+            const paymentDetails = [
+              `Amount: ${bookingData.eventPrice || "N/A"}`,
+              `Transaction ID: ${bookingData.transactionUid || "N/A"}`,
+              `Payment Status: Verified`,
+            ];
+            const paymentHeight = createArtisticSection(
+              "Payment Details",
+              paymentDetails,
+              currentY
+            );
+            currentY += paymentHeight + 10;
+          }
+
+          // Add WhatsApp community link just above footer
+          addWhatsAppCommunity(260);
+
+          // Add footer to first page
+          addFooter();
+
+          // For special events that need two pages
+          if (isTeamEvent || isShortFilmEvent || isChepukoEvent || isCinehuntEvent || isInevitableEscapeEvent) {
+            // Add second page
+            doc.addPage();
+
+            // Background for second page
+            doc.setFillColor(backgroundColor);
+            doc.rect(0, 0, 210, 297, "F");
+
+            // Add branding logo to second page
+            const img = new Image();
+            img.src = "images/branding.png";
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            const dataURL = canvas.toDataURL("image/png");
+
+            doc.addImage(dataURL, "PNG", 10, 10, 40, 40);
+            doc.setDrawColor(primaryColor);
+            doc.setLineWidth(1);
+            doc.rect(10, 10, 40, 40, "D");
+
+            // Title for second page
+            doc.setTextColor(primaryColor);
+            doc.setFontSize(24);
+            doc.text("Additional Information", 105, 60, {
+              align: "center",
+            });
+
+            // Start positioning sections on second page
+            let secondPageY = 80;
+
+            // For Short Film event, add Payment Details on second page
+            if (isShortFilmEvent) {
+              const paymentDetails = [
+                `Amount: ${bookingData.eventPrice || "N/A"}`,
+                `Transaction ID: ${bookingData.transactionUid || "N/A"}`,
+                `Payment Status: Verified`,
+              ];
+              const paymentHeight = createArtisticSection(
+                "Payment Details",
+                paymentDetails,
+                secondPageY
+              );
+              secondPageY += paymentHeight + 10;
+            }
+
+            if (isTeamEvent || isCinehuntEvent || isInevitableEscapeEvent) {
+              // Team Members Section for Squid Game, Cinehunt, and Inevitable Escape
+              const teamMemberDetails = [];
+
+              // Add team members to the details
+              if (
+                bookingData.teamMembers &&
+                bookingData.teamMembers.length > 0
+              ) {
+                teamMemberDetails.push("Team Members:");
+                bookingData.teamMembers.forEach((member, index) => {
+                  teamMemberDetails.push(
+                    `${index + 1}. ${member.name} (${member.college || "N/A"
+                    })`
+                  );
+                });
+              } else {
+                teamMemberDetails.push("No team members listed");
+              }
+
+              const teamHeight = createArtisticSection(
+                "Team Information",
+                teamMemberDetails,
+                secondPageY
+              );
+              secondPageY += teamHeight + 10;
+            } else if (isShortFilmEvent) {
+              // Crew Information Section for Short Film
+              const crewDetails = [];
+
+              // Add crew members
+              if (bookingData.crewDetails) {
+                const crewRoles = {
+                  director: "Director",
+                  writer: "Writer",
+                  cinematographer: "Cinematographer",
+                  editor: "Editor",
+                  leadActor: "Lead Actor",
+                };
+
+                Object.entries(crewRoles).forEach(([role, title]) => {
+                  if (bookingData.crewDetails[role]) {
+                    crewDetails.push(
+                      `${title}: ${bookingData.crewDetails[role]}`
+                    );
+                  }
+                });
+              } else {
+                crewDetails.push("No crew details available");
+              }
+
+              const crewHeight = createArtisticSection(
+                "Crew Information",
+                crewDetails,
+                secondPageY
+              );
+              secondPageY += crewHeight + 10;
+            } else if (isChepukoEvent) {
+              // Team Members Section for Chepuko Chudham
+              const teamMemberDetails = [];
+
+              // Add team members from teamDetails structure
+              if (bookingData.teamDetails) {
+                teamMemberDetails.push("Team Members:");
+
+                if (bookingData.teamDetails.member1) {
+                  const member1 = bookingData.teamDetails.member1;
+                  teamMemberDetails.push(`1. ${member1.name || "N/A"}`);
+                  teamMemberDetails.push(
+                    `   College: ${member1.college || "N/A"}`
+                  );
+                  teamMemberDetails.push(
+                    `   Year: ${member1.year || "N/A"}`
+                  );
+                  teamMemberDetails.push(
+                    `   Roll Number: ${member1.rollNumber || "N/A"}`
+                  );
+                }
+
+                if (bookingData.teamDetails.member2) {
+                  const member2 = bookingData.teamDetails.member2;
+                  teamMemberDetails.push(`2. ${member2.name || "N/A"}`);
+                  teamMemberDetails.push(
+                    `   College: ${member2.college || "N/A"}`
+                  );
+                  teamMemberDetails.push(
+                    `   Year: ${member2.year || "N/A"}`
+                  );
+                  teamMemberDetails.push(
+                    `   Roll Number: ${member2.rollNumber || "N/A"}`
+                  );
+                }
+              } else {
+                teamMemberDetails.push("No team members listed");
+              }
+
+              const teamHeight = createArtisticSection(
+                "Team Information",
+                teamMemberDetails,
+                secondPageY
+              );
+              secondPageY += teamHeight + 10;
+            }
+
+            // Add WhatsApp community link on second page below the last section
+            addWhatsAppCommunity(260);
+
+            // Add footer to second page
+            addFooter();
+          }
+
+          // Create PDF Blob
+          const pdfBlob = new Blob([doc.output("arraybuffer")], {
+            type: "application/pdf",
+          });
+
+          resolve(pdfBlob);
+        };
+      }
+    } catch (error) {
+      console.error("PDF Generation Error:", error);
+      reject(error);
+    }
+  });
+}
+    // Function to log confirmation details
+    async function logConfirmationDetails(registrationData, pdfDownloadUrl) {
+      try {
+        // Extract necessary information
+        const emailId = registrationData.email;
+        const bookingId = registrationData.bookingId;
+        const eventName = registrationData.eventName;
+
+        // Append to Google Sheet
+        const sheetLogged = await appendToGoogleSheet(
+          emailId,
+          pdfDownloadUrl
+        );
+
+        if (sheetLogged) {
+          console.log("Confirmation details logged successfully");
+          return true;
+        } else {
+          console.warn("Failed to log confirmation details");
+          return false;
+        }
+      } catch (error) {
+        console.error("Error logging confirmation details:", error);
+        return false;
+      }
+    }
+
+    // Secure QR Generation
+    function generateSecureQR(bookingData) {
+      // Create a unique, encrypted payload
+      const payload = JSON.stringify({
+        bookingId: bookingData.bookingId,
+        eventId: bookingData.eventId,
+        email: bookingData.email,
+        timestamp: Date.now(),
+        secretKey: generateSecretKey(bookingData),
+      });
+
+      // Encrypt the payload
+      const encryptedPayload = btoa(payload);
+
+      // Generate QR code
+      const qr = qrcode(0, "M");
+      qr.addData(encryptedPayload);
+      qr.make();
+
+      return {
+        qrDataUrl: qr.createDataURL(10),
+        encryptedPayload: encryptedPayload,
+      };
+    }
+
+    // Secret Key Generation
+    function generateSecretKey(bookingData) {
+      const secretSalt = "YOUR_UNIQUE_SERVER_SECRET";
+      const rawKey = `${bookingData.bookingId}${bookingData.email}${secretSalt}`;
+
+      let hash = 0;
+      for (let i = 0; i < rawKey.length; i++) {
+        const char = rawKey.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+        hash = hash & hash;
+      }
+
+      return Math.abs(hash).toString(36);
+    }
+
+    // Upload PDF to Firebase Storage
+    async function uploadConfirmationPDF(registrationData, paymentData) {
+      try {
+        // Generate PDF as a Blob
+        const pdfBlob = await generateConfirmationPDF(
+          registrationData,
+          paymentData
+        );
+
+        // Debugging: Log blob details
+        console.log("PDF Blob Details:", {
+          size: pdfBlob.size,
+          type: pdfBlob.type,
+        });
+
+        // Initialize Firebase Storage
+        const storage = firebase.storage();
+        const storageRef = storage.ref();
+
+        // Create a unique PDF file name
+        const pdfFileName = `confirmations/${registrationData.bookingId}.pdf`;
+        const pdfRef = storageRef.child(pdfFileName);
+
+        // Upload PDF file
+        const uploadTask = pdfRef.put(pdfBlob);
+
+        return new Promise((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+              // Track upload progress
+              const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              console.log(`Upload is ${progress.toFixed(2)}% done`);
+            },
+            (error) => {
+              console.error("Upload Error:", error);
+              reject(error);
+            },
+            async () => {
+              try {
+                // Get the download URL after upload completes
+                const downloadURL =
+                  await uploadTask.snapshot.ref.getDownloadURL();
+                console.log("File available at:", downloadURL);
+
+                // Store download URL in Firestore
+                await firestore
+                  .collection("event_registrations")
+                  .doc(registrationData.id)
+                  .update({ confirmationPdfUrl: downloadURL });
+
+                resolve(downloadURL);
+              } catch (updateError) {
+                console.error("Error updating Firestore:", updateError);
+                reject(updateError);
+              }
+            }
+          );
+        });
+      } catch (error) {
+        console.error("Error in uploadConfirmationPDF:", error);
+        throw error;
+      }
+    }
+
+    // Add Event Functionality
+    document
+      .getElementById("add-event-form")
+      .addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Prepare event data with all new fields
+        const eventData = {
+          name: document.getElementById("event-name").value,
+          type: document.getElementById("event-type").value,
+          date: document.getElementById("event-date").value,
+          time: document.getElementById("event-time").value,
+          venue: document.getElementById("event-venue").value,
+          prizePool: document.getElementById("event-prize-pool").value,
+          price:
+            parseFloat(document.getElementById("event-price").value) || 0,
+          availableTickets:
+            parseInt(document.getElementById("event-tickets").value) || 0,
+          description: document.getElementById("event-description").value,
+          totalTickets:
+            parseInt(document.getElementById("event-tickets").value) || 0,
+          year: 2025, // Consistent with previous implementation
+
+          upiId: document.getElementById("event-upi-id").value || null,
+          whatsappGroupLink:
+            document.getElementById("event-whatsapp-link").value || null,
+
+          temporarilyReservedTickets: 0,
+        };
+
+        try {
+          // Handle poster upload
+          const posterFile = document.getElementById("event-poster").files[0];
+          if (posterFile) {
+            const reader = new FileReader();
+            reader.readAsDataURL(posterFile);
+            reader.onloadend = async () => {
+              eventData.posterBase64 = reader.result;
+
+              // Add event to Firestore
+              const docRef = await firestore
+                .collection("chitrosav_events")
+                .add(eventData);
+
+              alert("Event added successfully!");
+              e.target.reset(); // Reset form
+              loadEventsList(); // Refresh events list
+              loadDashboardStats(); // Update dashboard
+            };
+          } else {
+            // Add event without poster
+            const docRef = await firestore
+              .collection("chitrosav_events")
+              .add(eventData);
+
+            alert("Event added successfully!");
+            e.target.reset(); // Reset form
+            loadEventsList(); // Refresh events list
+            loadDashboardStats(); // Update dashboard
+          }
+        } catch (error) {
+          console.error("Error adding event:", error);
+          alert("Failed to add event");
+        }
+      });
+
+    // Authentication State Observer
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        document.getElementById(
+          "admin-email"
+        ).textContent = `Welcome, ${user.email}`;
+        loadDashboardStats();
+        loadEventsList();
+      } else {
+        // No user is signed in, redirect to login
+        window.location.href = "admin-login.html";
+      }
+    });
+
+    // Logout Functionality
+    document
+      .getElementById("logout-btn")
+      .addEventListener("click", async () => {
+        try {
+          await auth.signOut();
+        } catch (error) {
+          console.error("Logout error:", error);
+        }
+      });
+
+    // Section Navigation
+    document.querySelectorAll(".sidebar-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        // Remove active class from all items
+        document
+          .querySelectorAll(".sidebar-item")
+          .forEach((i) => i.classList.remove("active"));
+
+        // Add active to clicked item
+        item.classList.add("active");
+
+        // Hide all sections
+        document.querySelectorAll(".admin-section").forEach((section) => {
+          section.classList.add("hidden");
+        });
+
+        // Show selected section
+        const sectionId = `${item.dataset.section}-section`;
+        document.getElementById(sectionId).classList.remove("hidden");
+      });
+    });
+
+    // QR Scanner Functionality
+    let scannerInstance;
+    let currentScannedBooking = null;
+    // At the top with your other variables
+    let isScanning = false;
+
+    function initQRScanner() {
+      if (isScanning) return; // Prevent multiple scanner instances
+
+      if (scannerInstance) {
+        isScanning = true;
+        scannerInstance
+          .stop()
+          .then(() => {
+            console.log("Scanner stopped successfully");
+            scannerInstance = null;
+            isScanning = false;
+            startScanner();
+          })
+          .catch((err) => {
+            console.warn("Scanner already stopped or error occurred", err);
+            scannerInstance = null;
+            isScanning = false;
+            startScanner();
+          });
+      } else {
+        startScanner();
+      }
+    }
+
+    function startScanner() {
+      scannerInstance = new Html5Qrcode("scanner-video");
+      scannerInstance
+        .start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          handleScanSuccess,
+          handleScanError
+        )
+        .catch((err) => console.error("Error starting scanner:", err));
+    }
+
+    function handleScanSuccess(decodedText) {
+      try {
+        const verificationResult = verifyQRCode(decodedText);
+        if (!verificationResult.valid) {
+          showScanResult("Invalid QR Code", "error");
+          return;
+        }
+
+        firestore
+          .collection("event_registrations")
+          .where("bookingId", "==", verificationResult.bookingId)
+          .get()
+          .then((snapshot) => {
+            if (snapshot.empty) {
+              showScanResult("Booking not found", "error");
+              return;
+            }
+
+            const bookingData = snapshot.docs[0].data();
+            currentScannedBooking = {
+              ...bookingData,
+              docId: snapshot.docs[0].id,
+            };
+
+            displayParticipantDetails(bookingData);
+
+            if (scannerInstance) {
+              setTimeout(() => scannerInstance.pause(), 300); // Ensure scanner exists before pausing
+            }
+          })
+          .catch((err) => {
+            console.error("Database Error:", err);
+            showScanResult("Error fetching booking", "error");
+          });
+      } catch (error) {
+        console.error("Scanning error:", error);
+        showScanResult("Error processing QR Code", "error");
+      }
+    }
+
+    function handleScanError(errorMessage) {
+      console.log(`Scan error: ${errorMessage}`);
+    }
+
+    function verifyQRCode(scannedPayload) {
+      try {
+        if (!scannedPayload) throw new Error("Empty QR Code");
+
+        const decryptedPayload = JSON.parse(atob(scannedPayload));
+
+        if (!decryptedPayload.bookingId)
+          throw new Error("Invalid QR Code Data");
+
+        const expectedSecretKey = generateSecretKey({
+          bookingId: decryptedPayload.bookingId,
+          email: decryptedPayload.email,
+        });
+
+        if (decryptedPayload.secretKey !== expectedSecretKey) {
+          throw new Error("Invalid QR Code");
+        }
+
+        return {
+          valid: true,
+          bookingId: decryptedPayload.bookingId,
+          eventId: decryptedPayload.eventId,
+          name: decryptedPayload.name,
+        };
+      } catch (error) {
+        console.error("QR Verification Failed:", error.message);
+        return { valid: false };
+      }
+    }
+
+    // Display Participant Details
+    // Update the displayParticipantDetails function to handle team members and crew details
+    function displayParticipantDetails(bookingData) {
+      const participantDetails = document.getElementById(
+        "participant-details"
+      );
+      const participantInfo = document.getElementById("participant-info");
+      const verificationActions = document.getElementById(
+        "verification-actions"
+      );
+
+      if (!participantInfo || !participantDetails || !verificationActions) {
+        console.error(
+          "Participant details elements are missing in the HTML."
+        );
+        return;
+      }
+
+      // Clear previous content
+      participantInfo.innerHTML = "";
+      verificationActions.innerHTML = "";
+
+      // Basic participant info
+      let infoHTML = `
+    <p><strong>Name:</strong> ${bookingData.name}</p>
+    <p><strong>College:</strong> ${bookingData.college}</p>
+    <p><strong>Email:</strong> ${bookingData.email}</p>
+    <p><strong>Booking ID:</strong> ${bookingData.bookingId}</p>
+  `;
+
+      // Special handling for Squid Game team event
+      if (
+        bookingData.eventId === "0zwPGSJNrYWDTl4PLyB1" &&
+        bookingData.teamMembers &&
+        bookingData.teamMembers.length > 0
+      ) {
+        infoHTML += `
+      <p><strong>Team Name:</strong> ${bookingData.teamName || "N/A"}</p>
+      <p><strong>Team Size:</strong> ${bookingData.teamSize || bookingData.teamMembers.length
+          }</p>
+      <div class="mt-4">
+        <h5 class="text-lg font-semibold">Team Members:</h5>
+        <div id="team-members-verification" class="mt-2">
+          <div class="team-member-main mb-3 p-2 border-b border-gray-600">
+            <p><strong>Team Lead:</strong> ${bookingData.name}</p>
+            <div class="flex space-x-2 mt-2">
+              <button class="team-entry-btn flex-1 bg-green-500 text-white py-1 px-2 rounded text-sm" 
+                data-member="lead" ${bookingData.entryConfirmed ? "disabled" : ""
+          }>
+                ${bookingData.entryConfirmed ? "Entry Verified" : "Verify Entry"
+          }
+              </button>
+              <button class="team-participation-btn flex-1 bg-blue-500 text-white py-1 px-2 rounded text-sm" 
+                data-member="lead" ${bookingData.participationConfirmed ? "disabled" : ""
+          }>
+                ${bookingData.participationConfirmed
+            ? "Participation Verified"
+            : "Verify Participation"
+          }
+              </button>
+            </div>
+          </div>
+    `;
+
+        // Add each team member with verification buttons
+        bookingData.teamMembers.forEach((member, index) => {
+          const memberEntryKey = `teamMember_${index}_entryConfirmed`;
+          const memberParticipationKey = `teamMember_${index}_participationConfirmed`;
+
+          infoHTML += `
+        <div class="team-member mb-3 p-2 border-b border-gray-600">
+          <p><strong>Member ${index + 1}:</strong> ${member.name} (${member.college
+            })</p>
+          <div class="flex space-x-2 mt-2">
+            <button class="team-entry-btn flex-1 bg-green-500 text-white py-1 px-2 rounded text-sm" 
+              data-member="${index}" ${bookingData[memberEntryKey] ? "disabled" : ""
+            }>
+              ${bookingData[memberEntryKey] ? "Entry Verified" : "Verify Entry"}
+            </button>
+            <button class="team-participation-btn flex-1 bg-blue-500 text-white py-1 px-2 rounded text-sm" 
+              data-member="${index}" ${bookingData[memberParticipationKey] ? "disabled" : ""
+            }>
+              ${bookingData[memberParticipationKey]
+              ? "Participation Verified"
+              : "Verify Participation"
+            }
+            </button>
+          </div>
+        </div>
+      `;
+        });
+
+        infoHTML += `</div></div>`;
+
+        // No need for the default verification buttons
+        verificationActions.classList.add("hidden");
+      }
+      // Special handling for Short Film Contest
+      else if (
+        bookingData.eventId === "PaAXzX2C4q24KCghSGoU" &&
+        bookingData.crewDetails
+      ) {
+        infoHTML += `
+      <p><strong>Team Name:</strong> ${bookingData.teamName || "N/A"}</p>
+      <p><strong>Film Title:</strong> ${bookingData.filmDetails?.title || "N/A"
+          }</p>
+      <p><strong>Genre:</strong> ${bookingData.filmDetails?.genre || "N/A"}</p>
+      <p><strong>Duration:</strong> ${bookingData.filmDetails?.duration || "N/A"
+          } minutes</p>
+      <div class="mt-4">
+        <h5 class="text-lg font-semibold">Crew Details:</h5>
+        <div id="crew-members-verification" class="mt-2">
+          <div class="crew-member-main mb-3 p-2 border-b border-gray-600">
+            <p><strong>Team Lead:</strong> ${bookingData.name}</p>
+            <div class="flex space-x-2 mt-2">
+              <button class="crew-entry-btn flex-1 bg-green-500 text-white py-1 px-2 rounded text-sm" 
+                data-role="lead" ${bookingData.entryConfirmed ? "disabled" : ""
+          }>
+                ${bookingData.entryConfirmed ? "Entry Verified" : "Verify Entry"
+          }
+              </button>
+              <button class="crew-participation-btn flex-1 bg-blue-500 text-white py-1 px-2 rounded text-sm" 
+                data-role="lead" ${bookingData.participationConfirmed ? "disabled" : ""
+          }>
+                ${bookingData.participationConfirmed
+            ? "Participation Verified"
+            : "Verify Participation"
+          }
+              </button>
+            </div>
+          </div>
+    `;
+
+        // Add each crew member with verification buttons
+        const crewRoles = [
+          "director",
+          "writer",
+          "cinematographer",
+          "editor",
+          "leadActor",
+        ];
+        crewRoles.forEach((role) => {
+          if (bookingData.crewDetails[role]) {
+            const roleEntryKey = `crew_${role}_entryConfirmed`;
+            const roleParticipationKey = `crew_${role}_participationConfirmed`;
+
+            infoHTML += `
+          <div class="crew-member mb-3 p-2 border-b border-gray-600">
+            <p><strong>${role.charAt(0).toUpperCase() + role.slice(1)
+              }:</strong> ${bookingData.crewDetails[role]}</p>
+            <div class="flex space-x-2 mt-2">
+              <button class="crew-entry-btn flex-1 bg-green-500 text-white py-1 px-2 rounded text-sm" 
+                data-role="${role}" ${bookingData[roleEntryKey] ? "disabled" : ""
+              }>
+                ${bookingData[roleEntryKey] ? "Entry Verified" : "Verify Entry"}
+              </button>
+              <button class="crew-participation-btn flex-1 bg-blue-500 text-white py-1 px-2 rounded text-sm" 
+                data-role="${role}" ${bookingData[roleParticipationKey] ? "disabled" : ""
+              }>
+                ${bookingData[roleParticipationKey]
+                ? "Participation Verified"
+                : "Verify Participation"
+              }
+              </button>
+            </div>
+          </div>
+        `;
+          }
+        });
+
+        infoHTML += `</div></div>`;
+
+        // No need for the default verification buttons
+        verificationActions.classList.add("hidden");
+      }
+      // Default handling for regular participants
+      else {
+        // Show standard verification buttons
+        verificationActions.innerHTML = `
+      <div class="flex space-x-4">
+        <button id="entry-verify-btn" class="flex-1 bg-green-500 text-white py-2 rounded" 
+          ${bookingData.entryConfirmed ? "disabled" : ""}>
+          ${bookingData.entryConfirmed ? "Entry Verified" : "Verify Entry"}
+        </button>
+        <button id="participation-verify-btn" class="flex-1 bg-blue-500 text-white py-2 rounded" 
+          ${bookingData.participationConfirmed ? "disabled" : ""}>
+          ${bookingData.participationConfirmed
+            ? "Participation Verified"
+            : "Verify Participation"
+          }
+        </button>
+      </div>
+    `;
+        verificationActions.classList.remove("hidden");
+
+        // Add event listeners for standard buttons
+        document
+          .getElementById("entry-verify-btn")
+          .addEventListener("click", () => confirmVerification("entry"));
+        document
+          .getElementById("participation-verify-btn")
+          .addEventListener("click", () =>
+            confirmVerification("participation")
+          );
+      }
+
+      // Update the participant info
+      participantInfo.innerHTML = infoHTML;
+      participantDetails.classList.remove("hidden");
+
+      // Add event listeners for team member verification
+      if (bookingData.eventId === "0zwPGSJNrYWDTl4PLyB1") {
+        document.querySelectorAll(".team-entry-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const memberIndex = e.target.dataset.member;
+            confirmTeamMemberVerification(memberIndex, "entry");
+          });
+        });
+
+        document
+          .querySelectorAll(".team-participation-btn")
+          .forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              const memberIndex = e.target.dataset.member;
+              confirmTeamMemberVerification(memberIndex, "participation");
+            });
+          });
+      }
+
+      // Add event listeners for crew member verification
+      if (bookingData.eventId === "PaAXzX2C4q24KCghSGoU") {
+        document.querySelectorAll(".crew-entry-btn").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const role = e.target.dataset.role;
+            confirmCrewMemberVerification(role, "entry");
+          });
+        });
+
+        document
+          .querySelectorAll(".crew-participation-btn")
+          .forEach((btn) => {
+            btn.addEventListener("click", (e) => {
+              const role = e.target.dataset.role;
+              confirmCrewMemberVerification(role, "participation");
+            });
+          });
+      }
+    }
+
+    // Updated function to handle team member verification
+    async function confirmTeamMemberVerification(
+      memberIndex,
+      verificationType
+    ) {
+      if (!currentScannedBooking) {
+        showScanResult("No booking scanned", "error");
+        return;
+      }
+
+      try {
+        let updateData = {};
+
+        if (memberIndex === "lead") {
+          // For team lead, use the standard fields that the dashboard looks for
+          updateData[`${verificationType}Confirmed`] = true;
+          updateData[`${verificationType}Timestamp`] =
+            firebase.firestore.FieldValue.serverTimestamp();
+        } else {
+          // For team members, use custom fields but ALSO update the main counters
+          // This ensures the dashboard statistics will count these verifications
+          updateData[
+            `teamMember_${memberIndex}_${verificationType}Confirmed`
+          ] = true;
+          updateData[
+            `teamMember_${memberIndex}_${verificationType}Timestamp`
+          ] = firebase.firestore.FieldValue.serverTimestamp();
+
+          // Also update the main counters if they're not already confirmed
+          if (!currentScannedBooking[`${verificationType}Confirmed`]) {
+            updateData[`${verificationType}Confirmed`] = true;
+            updateData[`${verificationType}Timestamp`] =
+              firebase.firestore.FieldValue.serverTimestamp();
+          }
+        }
+
+        // Update booking document
+        await firestore
+          .collection("event_registrations")
+          .doc(currentScannedBooking.docId)
+          .update(updateData);
+
+        // Update UI
+        const btn = document.querySelector(
+          `.team-${verificationType}-btn[data-member="${memberIndex}"]`
+        );
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = `${verificationType.charAt(0).toUpperCase() +
+            verificationType.slice(1)
+            } Verified`;
+        }
+
+        // Show success message
+        showScanResult(
+          `${verificationType.charAt(0).toUpperCase() +
+          verificationType.slice(1)
+          } Verified for ${memberIndex === "lead"
+            ? "Team Lead"
+            : "Team Member " + (parseInt(memberIndex) + 1)
+          }`,
+          "success"
+        );
+
+        // Update the current scanned booking object to reflect changes
+        if (memberIndex === "lead") {
+          currentScannedBooking[`${verificationType}Confirmed`] = true;
+        } else {
+          currentScannedBooking[
+            `teamMember_${memberIndex}_${verificationType}Confirmed`
+          ] = true;
+          // Also update the main counter in the local object
+          currentScannedBooking[`${verificationType}Confirmed`] = true;
+        }
+      } catch (error) {
+        console.error(
+          `Error confirming ${verificationType} for team member:`,
+          error
+        );
+        showScanResult(
+          `Failed to verify ${verificationType} for team member`,
+          "error"
+        );
+      }
+    }
+
+    // Updated function to handle crew member verification
+    async function confirmCrewMemberVerification(role, verificationType) {
+      if (!currentScannedBooking) {
+        showScanResult("No booking scanned", "error");
+        return;
+      }
+
+      try {
+        let updateData = {};
+
+        if (role === "lead") {
+          // For team lead, use the standard fields that the dashboard looks for
+          updateData[`${verificationType}Confirmed`] = true;
+          updateData[`${verificationType}Timestamp`] =
+            firebase.firestore.FieldValue.serverTimestamp();
+        } else {
+          // For crew members, use custom fields but ALSO update the main counters
+          // This ensures the dashboard statistics will count these verifications
+          updateData[`crew_${role}_${verificationType}Confirmed`] = true;
+          updateData[`crew_${role}_${verificationType}Timestamp`] =
+            firebase.firestore.FieldValue.serverTimestamp();
+
+          // Also update the main counters if they're not already confirmed
+          if (!currentScannedBooking[`${verificationType}Confirmed`]) {
+            updateData[`${verificationType}Confirmed`] = true;
+            updateData[`${verificationType}Timestamp`] =
+              firebase.firestore.FieldValue.serverTimestamp();
+          }
+        }
+
+        // Update booking document
+        await firestore
+          .collection("event_registrations")
+          .doc(currentScannedBooking.docId)
+          .update(updateData);
+
+        // Update UI
+        const btn = document.querySelector(
+          `.crew-${verificationType}-btn[data-role="${role}"]`
+        );
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = `${verificationType.charAt(0).toUpperCase() +
+            verificationType.slice(1)
+            } Verified`;
+        }
+
+        // Show success message
+        const roleName =
+          role === "lead"
+            ? "Team Lead"
+            : role.charAt(0).toUpperCase() + role.slice(1);
+        showScanResult(
+          `${verificationType.charAt(0).toUpperCase() +
+          verificationType.slice(1)
+          } Verified for ${roleName}`,
+          "success"
+        );
+
+        // Update the current scanned booking object to reflect changes
+        if (role === "lead") {
+          currentScannedBooking[`${verificationType}Confirmed`] = true;
+        } else {
+          currentScannedBooking[
+            `crew_${role}_${verificationType}Confirmed`
+          ] = true;
+          // Also update the main counter in the local object
+          currentScannedBooking[`${verificationType}Confirmed`] = true;
+        }
+      } catch (error) {
+        console.error(
+          `Error confirming ${verificationType} for crew member:`,
+          error
+        );
+        showScanResult(
+          `Failed to verify ${verificationType} for crew member`,
+          "error"
+        );
+      }
+    }
+
+    function startScanner() {
+      // Clear the scanner container first
+      const scannerContainer = document.getElementById("scanner-video");
+      scannerContainer.innerHTML = "";
+
+      scannerInstance = new Html5Qrcode("scanner-video");
+      scannerInstance
+        .start(
+          { facingMode: "environment" },
+          { fps: 10, qrbox: { width: 250, height: 250 } },
+          handleScanSuccess,
+          handleScanError
+        )
+        .catch((err) => console.error("Error starting scanner:", err));
+    }
+
+    // Verify QR Code
+    function verifyQRCode(scannedPayload) {
+      try {
+        if (!scannedPayload) throw new Error("Empty QR Code");
+
+        // Decrypt the payload
+        const decryptedPayload = JSON.parse(atob(scannedPayload));
+
+        // Ensure bookingId exists
+        if (!decryptedPayload.bookingId)
+          throw new Error("Invalid QR Code Data");
+
+        // Verify secret key
+        const expectedSecretKey = generateSecretKey({
+          bookingId: decryptedPayload.bookingId,
+          email: decryptedPayload.email,
+        });
+
+        if (decryptedPayload.secretKey !== expectedSecretKey) {
+          throw new Error("Invalid QR Code");
+        }
+
+        return {
+          valid: true,
+          bookingId: decryptedPayload.bookingId,
+          eventId: decryptedPayload.eventId,
+          name: decryptedPayload.name, // Ensure name is included
+        };
+      } catch (error) {
+        console.error("QR Verification Failed:", error.message);
+        return { valid: false };
+      }
+    }
+
+    // Excluded Events Management
+    document.addEventListener('DOMContentLoaded', () => {
+      // Only initialize if we're on the admin page with the excluded events section
+      const excludedEventsSection = document.getElementById('excluded-events-section');
+      if (!excludedEventsSection) return;
+
+      loadExcludedEvents();
+      loadAvailableEvents();
+
+      // Add event listener for the add button
+      document.getElementById('add-excluded-event-btn').addEventListener('click', addExcludedEvent);
+    });
+
+    // Load excluded events from Firestore
+    async function loadExcludedEvents() {
+      try {
+        const excludedEventsDoc = await firebase.firestore()
+          .collection('admin_settings')
+          .doc('excluded_events')
+          .get();
+
+        const excludedEventsList = document.getElementById('excluded-events-list');
+
+        if (!excludedEventsDoc.exists || !excludedEventsDoc.data().eventIds || excludedEventsDoc.data().eventIds.length === 0) {
+          excludedEventsList.innerHTML = '<p class="text-gray-400 text-center">No events are currently excluded.</p>';
+          return;
+        }
+
+        const excludedEventIds = excludedEventsDoc.data().eventIds;
+
+        // Fetch event details for each excluded event ID
+        const eventsPromises = excludedEventIds.map(eventId =>
+          firebase.firestore().collection('chitrosav_events').doc(eventId).get()
+        );
+
+        const eventDocs = await Promise.all(eventsPromises);
+
+        // Create HTML for each excluded event
+        let html = '<ul class="space-y-2">';
+
+        eventDocs.forEach((doc, index) => {
+          if (doc.exists) {
+            const eventData = doc.data();
+            html += `
+                    <li class="flex justify-between items-center bg-[rgba(4,34,32,0.5)] p-3 rounded">
+                        <div>
+                            <span class="text-white">${eventData.name || 'Unknown Event'}</span>
+                            <span class="text-xs text-gray-400 ml-2">(ID: ${excludedEventIds[index]})</span>
+                        </div>
+                        <button class="remove-excluded-event-btn text-red-400 hover:text-red-300" 
+                                data-event-id="${excludedEventIds[index]}">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </li>
+                `;
+          } else {
+            html += `
+                    <li class="flex justify-between items-center bg-[rgba(4,34,32,0.5)] p-3 rounded">
+                        <div>
+                            <span class="text-gray-400">Event not found</span>
+                            <span class="text-xs text-gray-500 ml-2">(ID: ${excludedEventIds[index]})</span>
+                        </div>
+                        <button class="remove-excluded-event-btn text-red-400 hover:text-red-300" 
+                                data-event-id="${excludedEventIds[index]}">
+                            <i class="fas fa-times"></i> Remove
+                        </button>
+                    </li>
+                `;
+          }
+        });
+
+        html += '</ul>';
+        excludedEventsList.innerHTML = html;
+
+        // Add event listeners to remove buttons
+        document.querySelectorAll('.remove-excluded-event-btn').forEach(button => {
+          button.addEventListener('click', removeExcludedEvent);
+        });
+
+      } catch (error) {
+        console.error("Error loading excluded events:", error);
+        document.getElementById('excluded-events-list').innerHTML =
+          '<p class="text-red-400 text-center">Error loading excluded events. Please try again.</p>';
+      }
+    }
+
+    // Load available events for the dropdown
+    async function loadAvailableEvents() {
+      try {
+        // Get all events
+        const eventsSnapshot = await firebase.firestore()
+          .collection('chitrosav_events')
+          .get();
+
+        // Get current excluded events
+        const excludedEventsDoc = await firebase.firestore()
+          .collection('admin_settings')
+          .doc('excluded_events')
+          .get();
+
+        const excludedEventIds = excludedEventsDoc.exists ?
+          (excludedEventsDoc.data().eventIds || []) : [];
+
+        // Filter to only show events that aren't already excluded
+        const availableEvents = [];
+        eventsSnapshot.forEach(doc => {
+          if (!excludedEventIds.includes(doc.id)) {
+            availableEvents.push({
+              id: doc.id,
+              name: doc.data().name || 'Unnamed Event'
+            });
+          }
+        });
+
+        // Populate dropdown
+        const dropdown = document.getElementById('available-events-dropdown');
+
+        if (availableEvents.length === 0) {
+          dropdown.innerHTML = '<option value="">No events available to exclude</option>';
+          document.getElementById('add-excluded-event-btn').disabled = true;
+          return;
+        }
+
+        let options = '<option value="">Select an event to exclude</option>';
+        availableEvents.forEach(event => {
+          options += `<option value="${event.id}">${event.name}</option>`;
+        });
+
+        dropdown.innerHTML = options;
+
+      } catch (error) {
+        console.error("Error loading available events:", error);
+        document.getElementById('available-events-dropdown').innerHTML =
+          '<option value="">Error loading events</option>';
+      }
+    }
+
+    // Add an event to the excluded list
+    async function addExcludedEvent() {
+      const eventId = document.getElementById('available-events-dropdown').value;
+
+      if (!eventId) {
+        alert('Please select an event to exclude');
+        return;
+      }
+
+      try {
+        // Get current excluded events
+        const excludedEventsRef = firebase.firestore()
+          .collection('admin_settings')
+          .doc('excluded_events');
+
+        const excludedEventsDoc = await excludedEventsRef.get();
+
+        // Update the excluded events list
+        if (excludedEventsDoc.exists) {
+          const currentExcludedIds = excludedEventsDoc.data().eventIds || [];
+
+          // Check if already excluded
+          if (currentExcludedIds.includes(eventId)) {
+            alert('This event is already excluded');
+            return;
+          }
+
+          // Add to the list
+          await excludedEventsRef.update({
+            eventIds: [...currentExcludedIds, eventId],
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        } else {
+          // Create new document
+          await excludedEventsRef.set({
+            eventIds: [eventId],
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+        }
+
+        // Refresh the lists
+        loadExcludedEvents();
+        loadAvailableEvents();
+
+      } catch (error) {
+        console.error("Error adding excluded event:", error);
+        alert('Failed to add event to excluded list. Please try again.');
+      }
+    }
+
+    // Remove an event from the excluded list
+    async function removeExcludedEvent(e) {
+      const eventId = e.currentTarget.dataset.eventId;
+
+      if (!eventId) {
+        alert('Event ID not found');
+        return;
+      }
+
+      try {
+        // Get current excluded events
+        const excludedEventsRef = firebase.firestore()
+          .collection('admin_settings')
+          .doc('excluded_events');
+
+        const excludedEventsDoc = await excludedEventsRef.get();
+
+        if (!excludedEventsDoc.exists) {
+          alert('Excluded events list not found');
+          return;
+        }
+
+        const currentExcludedIds = excludedEventsDoc.data().eventIds || [];
+
+        // Remove the event ID
+        const updatedExcludedIds = currentExcludedIds.filter(id => id !== eventId);
+
+        // Update Firestore
+        await excludedEventsRef.update({
+          eventIds: updatedExcludedIds,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Refresh the lists
+        loadExcludedEvents();
+        loadAvailableEvents();
+
+      } catch (error) {
+        console.error("Error removing excluded event:", error);
+        alert('Failed to remove event from excluded list. Please try again.');
+      }
+    }
+
+    // Confirm Verification
+    async function confirmVerification(verificationType) {
+      if (!currentScannedBooking) {
+        showScanResult("No booking scanned", "error");
+        return;
+      }
+
+      try {
+        // Prepare update data
+        const updateData = {
+          [`${verificationType}Confirmed`]: true,
+          [`${verificationType}Timestamp`]:
+            firebase.firestore.FieldValue.serverTimestamp(),
+        };
+
+        // Update booking document
+        await firestore
+          .collection("event_registrations")
+          .doc(currentScannedBooking.docId)
+          .update(updateData);
+
+        // Update UI
+        const btn = document.getElementById(`${verificationType}-verify-btn`);
+        btn.disabled = true;
+        btn.textContent = `${verificationType.charAt(0).toUpperCase() + verificationType.slice(1)
+          } Verified`;
+
+        // Show success message
+        showScanResult(
+          `${verificationType.charAt(0).toUpperCase() +
+          verificationType.slice(1)
+          } Verified`,
+          "success"
+        );
+
+        // Restart scanner after verification
+        if (scannerInstance) {
+          setTimeout(() => scannerInstance.resume(), 500); // Add a slight delay to ensure it's ready
+        }
+      } catch (error) {
+        console.error(`Error confirming ${verificationType}:`, error);
+        showScanResult(`Failed to verify ${verificationType}`, "error");
+      }
+    }
+
+    // Show Scan Result
+    function showScanResult(message, type = "info") {
+      const resultDiv = document.getElementById("scan-result");
+      resultDiv.innerHTML = `
+        <div class="${type === "error"
+          ? "bg-red-100 text-red-800"
+          : "bg-green-100 text-green-800"
+        } p-3 rounded mb-3">
+            ${message}
+        </div>
+        ${type === "success"
+          ? `<button id="back-to-scanner-btn" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">Scan Another</button>`
+          : ""
+        }
+    `;
+
+      // Add event listener for the new button
+      if (type === "success") {
+        document
+          .getElementById("back-to-scanner-btn")
+          .addEventListener("click", () => {
+            localStorage.setItem("goToScanner", "true"); // Store flag
+            location.reload(); // Refresh the page
+          });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Scanner section navigation
+      const scannerNavItem = document.querySelector(
+        '.sidebar-item[data-section="scanner"]'
+      );
+      if (scannerNavItem) {
+        scannerNavItem.addEventListener("click", () => {
+          // First ensure any existing scanner is stopped
+          if (scannerInstance) {
+            isScanning = true;
+            scannerInstance
+              .stop()
+              .then(() => {
+                console.log("Scanner stopped successfully");
+                scannerInstance = null;
+                isScanning = false;
+                // Initialize scanner when scanner section is selected
+                initQRScanner();
+              })
+              .catch((err) => {
+                console.warn("Error stopping scanner:", err);
+                scannerInstance = null;
+                isScanning = false;
+                // Initialize scanner when scanner section is selected
+                initQRScanner();
+              });
+          } else {
+            // Initialize scanner when scanner section is selected
+            initQRScanner();
+          }
+
+          // Add verification button listeners
+          document
+            .getElementById("entry-verify-btn")
+            .addEventListener("click", () => confirmVerification("entry"));
+          document
+            .getElementById("participation-verify-btn")
+            .addEventListener("click", () =>
+              confirmVerification("participation")
+            );
+        });
+      }
+    });
+
+    document
+      .getElementById("refresh-scanner-btn")
+      .addEventListener("click", () => {
+        localStorage.setItem("goToScanner", "true"); // Store flag
+        location.reload(); // Refresh the page
+      });
+
+    // Check if we should go to scanner after reload
+    window.addEventListener("load", () => {
+      if (localStorage.getItem("goToScanner") === "true") {
+        localStorage.removeItem("goToScanner"); // Remove flag
+        document
+          .querySelector('.sidebar-item[data-section="scanner"]')
+          .click(); // Navigate to scanner
+      }
+    });
+    // Call this when the admin dashboard loads or when switching to payments section
+    document.addEventListener("DOMContentLoaded", () => {
+      // Find the payments section navigation item
+      const paymentsNavItem = document.querySelector(
+        '.sidebar-item[data-section="verify-payments"]'
+      );
+
+      const exportButton = document.getElementById(
+        "export-short-film-registrations"
+      );
+      exportButton.addEventListener("click", exportShortFilmRegistrations);
+
+      if (paymentsNavItem) {
+        paymentsNavItem.addEventListener("click", loadPaymentVerifications);
+      }
+    });
+
+    // Event Listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      // Scanner section navigation
+      const scannerNavItem = document.querySelector(
+        '.sidebar-item[data-section="scanner"]'
+      );
+      if (scannerNavItem) {
+        scannerNavItem.addEventListener("click", () => {
+          // Initialize scanner when scanner section is selected
+          scannerInstance = initQRScanner();
+
+          // Add verification button listeners
+          document
+            .getElementById("entry-verify-btn")
+            .addEventListener("click", () => confirmVerification("entry"));
+          document
+            .getElementById("participation-verify-btn")
+            .addEventListener("click", () =>
+              confirmVerification("participation")
+            );
+        });
+      }
+    });
+
+    function exportShortFilmRegistrations() {
+      // Use a flag to prevent multiple downloads
+      if (window.isExporting) {
+        console.warn("Export already in progress");
+        return Promise.resolve();
+      }
+
+      window.isExporting = true;
+
+      return new Promise(async (resolve, reject) => {
+        try {
+          // Show loading indicator
+          const exportButton = document.getElementById(
+            "export-short-film-registrations"
+          );
+          if (exportButton) {
+            exportButton.disabled = true;
+            exportButton.innerHTML =
+              'Exporting... <i class="fas fa-spinner fa-spin"></i>';
+          }
+
+          // Fetch all short film registrations
+          const registrationsSnapshot = await firebase
+            .firestore()
+            .collection("event_registrations")
+            .where("registrationType", "==", "short-film")
+            .get();
+
+          if (registrationsSnapshot.empty) {
+            alert("No short film registrations found");
+            window.isExporting = false;
+            resolve([]);
+            return;
+          }
+
+          // Prepare data for Excel
+          const registrationsData = [];
+          for (const doc of registrationsSnapshot.docs) {
+            const registration = doc.data();
+
+            // Fetch payment verification details
+            const paymentSnapshot = await firebase
+              .firestore()
+              .collection("payment_verifications")
+              .where("bookingId", "==", registration.bookingId)
+              .limit(1)
+              .get();
+
+            if (
+              paymentSnapshot.empty ||
+              paymentSnapshot.docs[0].data().verificationStatus !== "verified"
+            ) {
+              continue; // Skip unverified payments
+            }
+
+            const paymentDetails = paymentSnapshot.docs[0].data();
+
+            // Prepare ID Card URL
+            let idCardUrl = "N/A";
+            try {
+              // Check if ID card is a base64 string
+              if (
+                registration.idCard &&
+                registration.idCard.startsWith("data:")
+              ) {
+                // Upload to Firebase Storage if not already uploaded
+                const storageRef = firebase
+                  .storage()
+                  .ref(`id_cards/${registration.bookingId}`);
+                const snapshot = await storageRef.putString(
+                  registration.idCard,
+                  "data_url"
+                );
+                idCardUrl = await snapshot.ref.getDownloadURL();
+              } else if (registration.idCard) {
+                // If it's already a URL, use it directly
+                idCardUrl = registration.idCard;
+              }
+            } catch (uploadError) {
+              console.error("ID Card Upload Error:", uploadError);
+            }
+
+            // Prepare comprehensive registration details
+            registrationsData.push({
+              "Booking ID": registration.bookingId,
+              "Event Name": registration.eventName,
+              "Registration Date": registration.registeredAt
+                ? new Date(
+                  registration.registeredAt.toMillis()
+                ).toLocaleString()
+                : "N/A",
+              "Team Name": registration.teamName || "N/A",
+              "Team Leader Name": registration.name || "N/A",
+              College: registration.college || "N/A",
+              Email: registration.email || "N/A",
+              "Phone Number": registration.phone || "N/A",
+              "Director Name": registration.crewDetails?.director || "N/A",
+              "Writer Name": registration.crewDetails?.writer || "N/A",
+              "Lead Actor": registration.crewDetails?.leadActor || "N/A",
+              Cinematographer:
+                registration.crewDetails?.cinematographer || "N/A",
+              Editor: registration.crewDetails?.editor || "N/A",
+              "Film Title": registration.filmDetails?.title || "N/A",
+              "Film Genre": registration.filmDetails?.genre || "N/A",
+              "Film Duration": registration.filmDetails?.duration
+                ? `${registration.filmDetails.duration} minutes`
+                : "N/A",
+              "Film Link": registration.filmDetails?.link || "N/A",
+              "Payment Status": registration.paymentStatus || "N/A",
+              "Event Price": registration.eventPrice
+                ? `₹${registration.eventPrice}`
+                : "N/A",
+              "Transaction UID": paymentDetails.transactionUid || "N/A",
+              "Payment Verification Status":
+                paymentDetails.verificationStatus || "N/A",
+              "ID Card URL": idCardUrl,
+            });
+          }
+
+          if (registrationsData.length === 0) {
+            alert("No verified payments found.");
+            window.isExporting = false;
+            resolve([]);
+            return;
+          }
+
+          // Create Excel Workbook
+          const workbook = XLSX.utils.book_new();
+          const worksheet = XLSX.utils.json_to_sheet(registrationsData);
+
+          // Custom column widths
+          worksheet["!cols"] = [
+            { wch: 15 }, // Booking ID
+            { wch: 25 }, // Event Name
+            { wch: 20 }, // Registration Date
+            { wch: 20 }, // Team Name
+            { wch: 20 }, // Team Leader Name
+            { wch: 25 }, // College
+            { wch: 25 }, // Email
+            { wch: 15 }, // Phone Number
+            { wch: 20 }, // Director Name
+            { wch: 20 }, // Writer Name
+            { wch: 20 }, // Lead Actor
+            { wch: 20 }, // Cinematographer
+            { wch: 20 }, // Editor
+            { wch: 25 }, // Film Title
+            { wch: 15 }, // Film Genre
+            { wch: 15 }, // Film Duration
+            { wch: 40 }, // Film Link
+            { wch: 15 }, // Payment Status
+            { wch: 15 }, // Event Price
+            { wch: 20 }, // Transaction UID
+            { wch: 25 }, // Payment Verification Status
+            { wch: 50 }, // ID Card URL
+          ];
+
+          XLSX.utils.book_append_sheet(
+            workbook,
+            worksheet,
+            "Short Film Registrations"
+          );
+
+          // Generate Excel file and trigger download using Blob
+          const excelBuffer = XLSX.write(workbook, {
+            bookType: "xlsx",
+            type: "array",
+          });
+
+          const blob = new Blob([excelBuffer], {
+            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          });
+
+          // Create download link
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = `Short_Film_Registrations_${new Date().toISOString().split("T")[0]
+            }.xlsx`;
+
+          // Append to body, click, and remove
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+
+          // Revoke the object URL
+          URL.revokeObjectURL(link.href);
+
+          // Reset export button
+          if (exportButton) {
+            exportButton.disabled = false;
+            exportButton.innerHTML = "Export Short Film Registrations";
+          }
+
+          // Reset export flag
+          window.isExporting = false;
+
+          resolve(registrationsData);
+        } catch (error) {
+          console.error("Export Error:", error);
+          alert("Failed to export registrations. Please try again.");
+
+          // Reset export button
+          const exportButton = document.getElementById(
+            "export-short-film-registrations"
+          );
+          if (exportButton) {
+            exportButton.disabled = false;
+            exportButton.innerHTML = "Export Short Film Registrations";
+          }
+
+          // Reset export flag
+          window.isExporting = false;
+
+          reject(error);
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

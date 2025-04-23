@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: rgb(0, 239, 225);
+    --secondary-color: rgb(10, 92, 87);
+    --tertiary-color: rgb(77, 143, 142);
+    --dark-color: rgb(4, 34, 32);
+}
+
+body {
+    font-family: 'League Spartan', sans-serif;
+    background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.admin-card {
+    background: rgba(4, 34, 32, 0.7);
+    border: 2px solid var(--tertiary-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 239, 225, 0.1);
+}
+
+#error-container {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid red;
+    color: var(--primary-color);
+}

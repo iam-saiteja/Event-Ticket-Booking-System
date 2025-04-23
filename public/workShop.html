@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/branding.png">
+    <title>Exclusive Writing Workshop with Hasith Goli</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: rgb(0, 239, 225);
+            --secondary-color: rgb(10, 92, 87);
+            --tertiary-color: rgb(77, 143, 142);
+            --dark-color: rgb(4, 34, 32);
+            --text-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .main-content {
+            padding: 3rem 0;
+        }
+        
+        .workshop-details {
+            background-color: rgba(10, 92, 87, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .benefits {
+            margin: 2rem 0;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .benefit-icon {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .benefit-text {
+            flex-grow: 1;
+        }
+        
+        .benefit-text h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-section {
+            background-color: rgba(77, 143, 142, 0.3);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .highlight {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .about-section {
+            background-color: rgba(10, 92, 87, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+        
+        .author-image {
+            width: 100%;
+            border-radius: 10px;
+            border: 3px solid var(--primary-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .ticket-info {
+            background-color: rgba(0, 239, 225, 0.1);
+            border: 2px dashed var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .author-image {
+                max-width: 300px;
+                margin: 0 auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="film-navbar">
+        <div class="container mx-auto flex justify-between items-center py-4">
+          <div class="logo flex items-center">
+            <a href="index.html" class="mr-4 text-white hover:text-primary-color">
+              <!-- Using HTML entity for left arrow instead of Font Awesome -->
+              <span style="font-size: 24px;">&#8592;</span>
+            </a>
+            <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+            <h1 class="text-2xl font-bold text-primary-color">
+              Chalana Chithram
+            </h1>
+          </div>
+        </div>
+      </nav>
+    <header>
+        <div class="container">
+            <h1>Exclusive Writing Workshop</h1>
+            <div class="tagline">with Hasith Goli</div>
+        </div>
+    </header>
+    
+    <div class="container main-content">
+        <section class="workshop-details">
+            <h2>Unlock the Secrets of Storytelling</h2>
+            <p>Join Hasith Goli, the mastermind behind compelling narratives, for an exclusive writing workshop designed to transform your storytelling abilities. This workshop is your chance to refine your writing skills, master story structure, and unleash your creativity under expert guidance.</p>
+            
+            <div class="benefits">
+                <h2>Why Attend?</h2>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">1</div>
+                    <div class="benefit-text">
+                        <h3>Learn from Hasith Goli</h3>
+                        <p>Gain direct insights from an industry expert with years of experience crafting engaging narratives. Benefit from personalized guidance and professional tips that can elevate your writing to the next level.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">2</div>
+                    <div class="benefit-text">
+                        <h3>Master Storytelling & Structure</h3>
+                        <p>Build compelling narratives with a strong foundation. Learn the essential elements of story structure, character development, and pacing that keep readers engaged from beginning to end.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item">
+                    <div class="benefit-icon">3</div>
+                    <div class="benefit-text">
+                        <h3>Interactive & Hands-On</h3>
+                        <p>This isn't just a lecture—it's a workshop! Work on your ideas in real-time, participate in writing exercises, and receive valuable feedback on your work directly from Hasith and fellow participants.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="ticket-info">
+            <h2>Event Tickets</h2>
+            <p>Tickets are available for <strong>FREE</strong> at the box office on the event day.</p>
+            <p class="highlight">Limited Seats – First Come, First Serve!</p>
+            <p>Arrive early to secure your spot before they're all gone!</p>
+        </section>
+        
+        <section class="cta-section">
+            <h2>Don't Miss This Opportunity!</h2>
+            <p>Stay updated on our page for registration details and secure your spot before it's gone!</p>
+            <p class="highlight">Limited seats available for this transformative experience!</p>
+        </section>
+        
+        <section class="about-section">
+            <h2>About Hasith Goli</h2>
+            <div class="about-grid">
+                <div>
+                    <img src="https://via.placeholder.com/400x500" alt="Hasith Goli" class="author-image">
+                </div>
+                <div>
+                    <p>Hasith Goli is a renowned storyteller, author, and writing coach with over a decade of experience in crafting compelling narratives across various mediums. His unique approach to storytelling has helped countless writers find their voice and develop their craft.</p>
+                    
+                    <p>With a background in literature and creative writing, Hasith has published several acclaimed works and has been featured in prestigious literary journals. His workshops are known for their practical approach, combining theoretical knowledge with hands-on exercises that produce immediate results.</p>
+                    
+                    <p>Hasith believes that everyone has a story worth telling, and his mission is to help writers of all levels unlock their potential and share their unique perspectives with the world. His teaching style is engaging, supportive, and tailored to meet the needs of each participant.</p>
+                    
+                    <p>When not writing or teaching, Hasith enjoys hiking, photography, and exploring new cultures for inspiration. He brings this wealth of experience and passion to every workshop, creating an environment where creativity flourishes.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 Chalana Chithram. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

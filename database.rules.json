@@ -1,0 +1,14 @@
+{
+  "rules": {
+    ".read": "true",
+    ".write": "true",
+    "tickets": {
+      ".read": "true",
+      ".write": "true"
+    },
+    "bookings": {
+      ".read": "true",
+      ".write": "true"
+    }
+  }
+}

@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: rgb(0, 239, 225);
+    --secondary-color: rgb(10, 92, 87);
+    --tertiary-color: rgb(77, 143, 142);
+    --dark-color: rgb(4, 34, 32);
+    --text-color: #e0e0e0;
+}
+
+body {
+    font-family: 'League Spartan', sans-serif;
+    background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+    color: var(--text-color);
+    line-height: 1.6;
+}
+@media (max-width: 768px) {
+    .flex {
+        flex-direction: column;
+    }
+    #predefined-college, 
+    #college-name {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Remove Tailwind's default blue and replace with custom styles */
+input, 
+select, 
+textarea,
+button {
+    background-color: rgba(20, 50, 50, 0.7) !important;
+    border: 2px solid var(--tertiary-color) !important;
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+    outline: none !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 10px rgba(0, 239, 225, 0.3) !important;
+}
+
+.bg-film-background {
+    background: linear-gradient(
+        135deg, 
+        rgba(4, 34, 32, 0.95), 
+        rgba(10, 92, 87, 0.95)
+    );
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.film-navbar {
+    background: rgba(4, 34, 32, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--tertiary-color);
+}
+
+.bg-dark-color {
+    background-color: rgba(10, 30, 30, 0.7) !important;
+    border: 2px solid var(--tertiary-color);
+}
+
+.text-primary-color {
+    color: var(--primary-color);
+}
+
+.bg-primary-color {
+    background-color: var(--tertiary-color);
+    color: var(--dark-color);
+}
+
+.hover\:bg-tertiary-color:hover {
+    background-color: var(--primary-color);
+}
+
+/* Additional custom styles for registration page */
+.event-poster-container img {
+    object-fit: contain;
+    max-height: 100%;
+    width: auto;
+}
+
+/* Button styles */
+button {
+    background-color: var(--tertiary-color) !important;
+    color: var(--dark-color) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--primary-color) !important;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background-color: rgba(100, 100, 100, 0.5) !important;
+    cursor: not-allowed;
+    transform: none;
+}

@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Short Film Contest Registration - Chalana Chithram</title>
+    <link rel="icon" href="images/branding.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        .carousel-title {
+            font-size: 24px;
+            /* Adjust font size as needed */
+            color: rgb(0, 239, 225);
+            /* Match the color scheme */
+            text-align: center;
+            margin-bottom: 10px;
+            /* Space between title and carousel */
+        }
+
+        /* Optional: Style to make the layout more responsive */
+        @media (max-width: 768px) {
+            .flex {
+                flex-direction: column;
+            }
+
+            #predefined-college,
+            #leader-college {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        .film-carousel {
+            overflow: hidden;
+            margin: 0 auto;
+            /* Center the carousel */
+        }
+
+        :root {
+            --primary-color: rgb(0, 239, 225);
+            --secondary-color: rgb(10, 92, 87);
+            --tertiary-color: rgb(77, 143, 142);
+            --dark-color: rgb(4, 34, 32);
+            --text-color: #e0e0e0;
+        }
+
+        .squid-game-bg {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+        }
+
+        .team-member-card {
+            background: rgba(10, 92, 87, 0.3);
+            border: 1px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .team-member-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px rgba(0, 239, 225, 0.5);
+        }
+
+        .glow-button {
+            background: var(--primary-color);
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.3),
+                    transparent);
+            transition: all 0.5s ease;
+        }
+
+        .glow-button:hover::before {
+            left: 100%;
+        }
+
+        .glow-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+        }
+
+        .number-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+
+        @media (min-width: 1024px) {
+            .carousel-title-lap {
+                display: block;
+                /* Show on laptop screens and larger */
+            }
+
+            .film-carousel {
+                position: absolute;
+                left: 75%;
+                top: 110%;
+                transform: translate(-50%, -50%);
+                width: 300px;
+                height: 1100px;
+                /* Adjust for visible area */
+                overflow: hidden;
+            }
+
+            .film-slides {
+                display: flex;
+                flex-direction: column;
+                animation: verticalUpwardScroll 20s linear infinite;
+            }
+
+            @keyframes verticalUpwardScroll {
+                0% {
+                    transform: translateY(0);
+                }
+
+                100% {
+                    transform: translateY(-50%);
+                }
+
+                /* Adjust to your slide height */
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .film-carousel {
+                overflow: hidden;
+                position: relative;
+                width: 100%;
+                height: 300px;
+                /* Adjust for visible area */
+            }
+
+            .film-slides {
+                flex-direction: row;
+                animation: horizontalScroll 3s linear infinite;
+            }
+
+            @keyframes horizontalScroll {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(-50%);
+                }
+
+                /* Adjust to your slide width */
+            }
+        }
+
+        .film-slides {
+            display: flex;
+        }
+
+        .film-slide {
+            flex: 0 0 auto;
+            width: 300px;
+            background: rgb(10, 92, 87);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 239, 225, 0.2);
+            transition: transform 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .film-slide:hover {
+            transform: scale(1.03);
+        }
+
+        /* Ensure form inputs have black text */
+        #short-film-registration-form input,
+        #short-film-registration-form select,
+        #short-film-registration-form textarea {
+            color: black !important;
+            background-color: white !important;
+        }
+
+        :root {
+            --primary-color: rgb(0, 239, 225);
+            --secondary-color: rgb(10, 92, 87);
+            --tertiary-color: rgb(77, 143, 142);
+            --dark-color: rgb(4, 34, 32);
+            --text-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'League Spartan', sans-serif;
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .terms-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .terms-content {
+            background-color: rgba(10, 92, 87, 0.7);
+            border: 2px solid rgb(0, 239, 225);
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 80vh;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .film-slide:first-child {
+            opacity: 1;
+            position: relative;
+        }
+
+        .terms-scroll {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 20px;
+            flex-grow: 1;
+            scrollbar-width: thin;
+            scrollbar-color: rgb(0, 239, 225) rgba(10, 30, 30, 0.5);
+        }
+
+        .terms-footer {
+            padding: 15px 20px;
+            background-color: rgba(10, 30, 30, 0.5);
+            border-top: 1px solid rgb(77, 143, 142);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terms-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terms-scroll::-webkit-scrollbar-track {
+            background: rgba(10, 30, 30, 0.5);
+        }
+
+        .terms-scroll::-webkit-scrollbar-thumb {
+            background-color: rgb(0, 239, 225);
+            border-radius: 20px;
+        }
+
+        .gradient-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right,
+                    rgb(0, 239, 225),
+                    rgb(10, 92, 87));
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Terms and Conditions Modal -->
+    <div id="terms-modal" class="terms-modal">
+        <div class="terms-content shadow-2xl">
+            <div class="gradient-border"></div>
+            <div class="p-6">
+                <h2 class="text-3xl text-[rgb(0,239,225)] mb-4 text-center border-b border-[rgb(77,143,142)] pb-3">
+                    National-Level Short Film Contest
+                    <span class="block text-lg text-[rgb(77,143,142)] mt-2">Rules & Regulations</span>
+                </h2>
+
+                <div class="terms-scroll text-[#e0e0e0]">
+                    <p class="text-center font-bold text-[rgb(0,239,225)] mb-4">
+                        Organized by Chalana Chitram BVRIT
+                    </p>
+
+                    <div class="space-y-4">
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                1. Eligibility
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>The competition is open to all College students across India.</li>
+                                <li>Participants may register individually or as a team.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                2. Film Guidelines
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>The short film must be original and must not infringe on any copyrights.</li>
+                                <li>No specific theme is required—participants are free to explore any genre and subject matter within the given guidelines.</li>
+                                <li>Duration: Minimum 3 minutes, Maximum 20 minutes (including credits).</li>
+                                <li>The film may be in any language, but English subtitles are mandatory.</li>
+                                <li>All genres are allowed except adult content, explicit violence, or politically
+                                    sensitive themes.</li>
+                                <li>The use of AI-generated content is strictly prohibited, including AI-generated
+                                    scripts, visuals, and voiceovers.</li>
+                                <li>Licensed stock music may be used, provided proper attribution is given if required.
+                                </li>
+                                <li>Minimum resolution: 1080p (Full HD) with a 16:9 aspect ratio.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                3. Submission Guidelines
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>Films must be submitted in MP4 or MOV format.</li>
+                                <li>Upload the film to Google Drive or YouTube (as an Unlisted video) and share the link
+                                    in the registration form.</li>
+                                <li>Submission deadline: April 9, 2025. Late submissions will not be accepted.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                4. Judging Criteria
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>Films will be evaluated based on the following criteria:</li>
+                                <li>Story & Screenplay</li>
+                                <li>Direction</li>
+                                <li>Acting</li>
+                                <li>Cinematography</li>
+                                <li>Editing</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                5. Screening & Selection
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>The top 10 films will be officially selected and screened at Chitrotsav 2.0 on April 11, 2025, at BV Raju Institute of Technology (BVRIT) Auditorium.</li>
+                                <li>Shortlisted participants will be informed prior to the screenings.</li>
+                                <li>The selected films will compete for various awards.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                6. Campus Entry Rules
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li class="bg-[rgba(0,239,225,0.15)] p-3 border-l-4 border-[rgb(0,239,225)] font-bold">
+                                    To ensure smooth event operations and effective crowd management, entry with this pass is limited to two members per team.
+                                </li>
+                                <li class="bg-[rgba(0,239,225,0.15)] p-3 border-l-4 border-[rgb(0,239,225)] font-bold">
+                                    The two individuals must be from the registered Crew & Cast, including roles such as Director, Story Writer, Lead Actor, Cinematographer, or Editor.
+                                </li>
+                                <li class="bg-[rgba(0,239,225,0.15)] p-3 border-l-4 border-[rgb(0,239,225)] font-bold">
+                                    Any additional team members beyond these two can join by paying an entry fee of ₹100 per person on the day of the visit.
+                                </li>
+                            </ul>
+                        </section>
+                        
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                7. General Rules
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>The organizing team reserves the right to disqualify any film that violates contest
+                                    rules.</li>
+                                <li>Plagiarism or the use of unlicensed content will lead to immediate disqualification.
+                                </li>
+                                <li>Films containing offensive, defamatory, or politically sensitive content will not be
+                                    considered.</li>
+                                <li>By submitting their films, participants grant the organizers the right to showcase
+                                    their films and use clips for promotional purposes.</li>
+                            </ul>
+                        </section>
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-4 border-b border-[rgb(77,143,142)] pb-2">
+                                8. Awards & Prizes
+                            </h3>
+                            <div class="flex items-center bg-gradient-to-r from-[rgb(0,239,225,0.2)] to-[rgb(77,143,142,0.2)] p-6 rounded-xl shadow-xl">
+                                <div class="flex flex-col items-center w-48">
+                                    <img src="images/vivek-athreya.jpg" 
+                                         alt="Director Vivek Athreya" 
+                                         class="w-40 h-40 rounded-full border-4 border-[rgb(0,239,225)] shadow-lg object-cover">
+                                    <p class="mt-3 text-lg font-semibold text-[rgb(0,239,225)]">Vivek Athreya</p>
+                                </div>
+                                <div class="ml-6">
+                                    <p class="text-lg leading-relaxed text-gray-100">
+                                        Winning teams will receive <b class="text-[rgb(0,239,225)]">certificates and cash prizes</b>. 
+                                        Additionally, winners will have an exclusive <b class="text-[rgb(77,143,142)]">30-minute interactive discussion</b> 
+                                        with renowned director <b class="text-[rgb(0,239,225)]">Vivek Athreya Garu</b>, known for his exceptional storytelling 
+                                        in films like <i class="text-yellow-300">Brochevarevarura</i>, <i class="text-yellow-300">Ante Sundaraniki</i>, 
+                                        <i class="text-yellow-300">Mental Madhilo</i>, and <i class="text-yellow-300">Saripodhaa Sanivaaram</i>.
+                                    </p>
+                                </div>
+                            </div>
+                            <ul class="list-disc pl-6 space-y-2 mt-6 text-gray-100">
+                                <li class="font-semibold text-[rgb(0,239,225)]">Awards will be presented in the following categories:</li>
+                                <li>🎬 Best Story</li>
+                                <li>🏆 Best Film</li>
+                                <li>📜 Best Screenplay</li>
+                                <li>🎥 Best Cinematography</li>
+                                <li>✂️ Best Editing</li>
+                                <li>🎭 Best Acting</li>
+                                <li>🎬 Best Direction</li>
+                            </ul>
+                        </section>
+                                           
+
+                        <section>
+                            <h3 class="text-xl text-[rgb(0,239,225)] mb-2 border-b border-[rgb(77,143,142)] pb-1">
+                                For Any Queries, Contact:
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-2 mt-2">
+                                <li>📞 Karthik: 7416746326</li>
+                                <li>📞 Vikram: 9000337504</li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <div class="terms-footer">
+                        <label class="flex items-center">
+                            <input type="checkbox" id="terms-checkbox"
+                                class="mr-3 form-checkbox h-5 w-5 text-[rgb(0,239,225)] rounded" />
+                            <span class="text-[#e0e0e0]">I have read and agree to the terms and conditions.</span>
+                        </label>
+
+                        <button id="accept-terms"
+                            class="px-6 py-2 rounded transition-all duration-300 bg-[rgb(0,239,225)] text-[rgb(4,34,32)] opacity-50 cursor-not-allowed"
+                            disabled>
+                            Accept and Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="film-navbar">
+        <div class="container mx-auto flex justify-between items-center py-4">
+          <div class="logo flex items-center">
+            <button onclick="window.history.back()" class="mr-4 text-white hover:text-primary-color">
+              <i class="fas fa-arrow-left text-2xl"></i>
+            </button>
+            <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+            <h1 class="text-2xl font-bold text-primary-color">
+              Chalana Chithram
+            </h1>
+          </div>
+        </div>
+      </nav>
+    <!-- Registration Container (Initially Hidden) -->
+    <div id="registration-container" class="container mx-auto px-4 py-8 hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Registration Form (Left Side) -->
+            <div class="squid-game-bg rounded-2xl overflow-hidden p-8">
+                <h2 class="text-4xl font-bold text-[rgb(0,239,225)] text-center mb-6">
+                    Short Film Contest Registration
+                </h2>
+
+                <form id="short-film-registration-form" class="space-y-6">
+                    <!-- Hidden input to store event ID -->
+                    <input type="hidden" id="event-id" name="eventId" />
+
+                    <!-- Team Information -->
+                    <div class="team-member-card p-6 relative">
+                        <div class="number-circle">1</div>
+                        <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">
+                            Team Information
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Team Name</label>
+                                <input type="text" id="team-name" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Enter Team Name" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Leader Details -->
+                    <div class="team-member-card p-6 relative">
+                        <div class="number-circle">2</div>
+                        <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">
+                            Team Leader Details
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Full Name</label>
+                                <input type="text" id="leader-name" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Team Leader's Full Name" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Phone Number</label>
+                                <input type="tel" id="leader-phone" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Contact Number" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Email ID</label>
+                                <input type="email" id="leader-email" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Email Address" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">College</label>
+                                <div class="flex space-x-2">
+                                    <select id="predefined-college"
+                                        class="w-1/2 p-3 rounded bg-black text-white border border-[rgb(0,239,225)]">
+                                        <option value="">Select College</option>
+                                        <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                        <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <input type="text" id="leader-college" required placeholder="Enter College Name"
+                                        class="w-1/2 p-3 rounded bg-black text-white border border-[rgb(0,239,225)]" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Crew & Cast Details -->
+                    <div class="team-member-card p-6 relative">
+                        <div class="number-circle">3</div>
+                        <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">
+                            Crew & Cast Details
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Director Name</label>
+                                <input type="text" id="director-name" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Film Director" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Story Writer Name</label>
+                                <input type="text" id="writer-name" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Story Writer" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Lead Actor(s) Name</label>
+                                <input type="text" id="lead-actor" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Lead Actor(s)" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Cinematographer Name</label>
+                                <input type="text" id="cinematographer" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Cinematographer" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Editor Name</label>
+                                <input type="text" id="editor-name" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Film Editor" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Film Details -->
+                    <div class="team-member-card p-6 relative">
+                        <div class="number-circle">4</div>
+                        <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">
+                            Film Details
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Film Title</label>
+                                <input type="text" id="film-title" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Film Title" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Film Genre</label>
+                                <input type="text" id="film-genre" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Film Genre" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Film Duration (minutes)</label>
+                                <input type="number" id="film-duration" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]"
+                                    placeholder="Film Duration" min="3" max="20" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Uploads -->
+                    <div class="team-member-card p-6 relative">
+                        <div class="number-circle">5</div>
+                        <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">
+                            File Uploads
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">ID Card (College/Student Proof)</label>
+                                <input type="file" id="id-card" accept="image/*,.pdf" required
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)] file:mr-4 file:rounded-full file:border-0 file:bg-[rgb(0,239,225)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-black hover:file:bg-opacity-80" />
+                            </div>
+                            <div>
+                                <label class="block text-[#e0e0e0] mb-2">Short Film Link</label>
+                                <input type="url" id="film-link" required
+                                    placeholder="Google Drive/YouTube Unlisted Link"
+                                    class="w-full p-3 rounded bg-black text-white border border-[rgb(0,239,225)]" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full glow-button py-4 rounded text-xl font-bold">
+                        Proceed to Payment
+                    </button>
+                </form>
+            </div>
+
+            <h2 class="carousel-title">Our Works</h2>
+            <div class="film-carousel padding-4 bg-[rgb(10,30,30)] rounded-lg shadow-lg">
+                <div class="film-slides">
+                    <!-- Original Slides -->
+                    <div class="film-slide padding-10">
+                        <img src="https://img.youtube.com/vi/MwPDnUUYd1g/maxresdefault.jpg" alt="Short Film 1"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Stranger</h4>
+                            <button data-video-id="MwPDnUUYd1g"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/bSo78Uw3FQ0/maxresdefault.jpg" alt="Short Film 2"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">The Door</h4>
+                            <button data-video-id="bSo78Uw3FQ0"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/GioeRu10pDg/maxresdefault.jpg" alt="Short Film 3"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Marinade</h4>
+                            <button data-video-id="GioeRu10pDg"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/bYKhdcyZhJw/maxresdefault.jpg" alt="Short Film 4"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Run Chod Das</h4>
+                            <button data-video-id="bYKhdcyZhJw"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/uqwbXvtDBwc/maxresdefault.jpg" alt="Short Film 5"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Canvas</h4>
+                            <button data-video-id="uqwbXvtDBwc"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Duplicate Slides for Infinite Loop -->
+                    <div class="film-slide padding-10">
+                        <img src="https://img.youtube.com/vi/MwPDnUUYd1g/maxresdefault.jpg" alt="Short Film 1"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Stranger</h4>
+                            <button data-video-id="MwPDnUUYd1g"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/bSo78Uw3FQ0/maxresdefault.jpg" alt="Short Film 2"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">The Door</h4>
+                            <button data-video-id="bSo78Uw3FQ0"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/GioeRu10pDg/maxresdefault.jpg" alt="Short Film 3"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Marinade</h4>
+                            <button data-video-id="GioeRu10pDg"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/bYKhdcyZhJw/maxresdefault.jpg" alt="Short Film 4"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Run Chod Das</h4>
+                            <button data-video-id="bYKhdcyZhJw"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/uqwbXvtDBwc/maxresdefault.jpg" alt="Short Film 5"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Canvas</h4>
+                            <button data-video-id="uqwbXvtDBwc"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/GioeRu10pDg/maxresdefault.jpg" alt="Short Film 3"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Marinade</h4>
+                            <button data-video-id="GioeRu10pDg"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/bYKhdcyZhJw/maxresdefault.jpg" alt="Short Film 4"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Run Chod Das</h4>
+                            <button data-video-id="bYKhdcyZhJw"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                    <div class="film-slide">
+                        <img src="https://img.youtube.com/vi/uqwbXvtDBwc/maxresdefault.jpg" alt="Short Film 5"
+                            class="w-full h-[250px] object-cover">
+                        <div class="p-4">
+                            <h4 class="text-[rgb(0,239,225)] font-bold mb-2">Canvas</h4>
+                            <button data-video-id="uqwbXvtDBwc"
+                                class="play-video bg-[rgb(0,239,225)] text-dark-color px-4 py-2 rounded">
+                                Watch Film
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Existing Video Modal Code Remains the Same -->
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const playButtons = document.querySelectorAll('.play-video');
+                    const filmSlidesContainer = document.querySelector('.film-slides');
+
+                    if (!filmSlidesContainer) {
+                        console.error('The film slides container is missing from the DOM.');
+                        return;
+                    }
+
+                    playButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const videoId = button.getAttribute('data-video-id');
+                            const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                            window.location.href = youtubeUrl; // Redirect to YouTube
+                        });
+                    });
+
+                    // Pause on hover
+                    filmSlidesContainer.addEventListener('mouseenter', () => {
+                        filmSlidesContainer.style.animationPlayState = 'paused';
+                    });
+
+                    filmSlidesContainer.addEventListener('mouseleave', () => {
+                        filmSlidesContainer.style.animationPlayState = 'running';
+                    });
+
+                    // Add this code to the DOMContentLoaded event handler
+                    document.getElementById('id-card').addEventListener('change', function(e) {
+                        const file = this.files[0];
+                        if (file) {
+                            // Check if file size exceeds 5MB
+                            if (file.size > 5 * 1024 * 1024) {
+                                alert('File size exceeds 5MB limit. Please select a smaller file or compress it before uploading.');
+                                this.value = ''; // Clear the input
+                            } else {
+                                // Show file size in a user-friendly way
+                                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                                const fileInfo = document.createElement('div');
+                                fileInfo.className = 'mt-1 text-sm text-[rgb(0,239,225)]';
+                                fileInfo.textContent = `Selected file: ${file.name} (${fileSizeMB} MB)`;
+                                
+                                // Remove any existing file info
+                                const existingInfo = this.parentNode.querySelector('.text-sm');
+                                if (existingInfo) {
+                                    this.parentNode.removeChild(existingInfo);
+                                }
+                                
+                                this.parentNode.appendChild(fileInfo);
+                            }
+                        }
+                    });
+                });
+            </script>
+
+
+
+            <!-- Firebase Scripts -->
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+            <script>
+                // Firebase Configuration
+                const firebaseConfig = {
+                    apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+                    authDomain: "screenings-663cf.firebaseapp.com",
+                    databaseURL:
+                        "https://screenings-663cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+                    projectId: "screenings-663cf",
+                    storageBucket: "screenings-663cf.firebasestorage.app",
+                    messagingSenderId: "75644576041",
+                    appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+                    measurementId: "G-TVB3Z3CH96",
+                };
+
+                document.addEventListener('DOMContentLoaded', () => {
+                    const predefinedCollegeSelect = document.getElementById('predefined-college');
+                    const leaderCollegeInput = document.getElementById('leader-college');
+
+                    // Initially disable custom college input
+                    leaderCollegeInput.disabled = true;
+
+                    // Event listener for predefined college dropdown
+                    predefinedCollegeSelect.addEventListener('change', (e) => {
+                        if (e.target.value === 'Other') {
+                            // Enable custom college input when 'Other' is selected
+                            leaderCollegeInput.disabled = false;
+                            leaderCollegeInput.value = ''; // Clear previous value
+                            leaderCollegeInput.focus();
+                        } else if (e.target.value) {
+                            // Set college name to selected predefined college
+                            leaderCollegeInput.value = e.target.value;
+                            leaderCollegeInput.disabled = true;
+                        } else {
+                            // Reset when no selection is made
+                            leaderCollegeInput.value = '';
+                            leaderCollegeInput.disabled = true;
+                        }
+                    });
+
+                    // Event listener for custom college input
+                    leaderCollegeInput.addEventListener('input', () => {
+                        // When user types, unselect predefined college
+                        predefinedCollegeSelect.value = 'Other';
+                    });
+                });
+
+                // Initialize Firebase
+                firebase.initializeApp(firebaseConfig);
+                const firestore = firebase.firestore();
+                const storage = firebase.storage();
+
+                // Load Event Details on Page Load
+                document.addEventListener("DOMContentLoaded", () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const eventId = urlParams.get("eventId");
+
+                    if (!eventId) {
+                        alert("No event selected");
+                        window.location.href = "index.html";
+                        return;
+                    }
+
+                    // Set event ID in hidden input
+                    document.getElementById("event-id").value = eventId;
+
+                    // Fetch and display event details if needed
+                    firestore
+                        .collection("chitrosav_events")
+                        .doc(eventId)
+                        .get()
+                        .then((doc) => {
+                            if (!doc.exists) {
+                                throw new Error("Event not found");
+                            }
+                            const eventData = doc.data();
+                            // You can use eventData to pre-fill or display event information
+                        })
+                        .catch((error) => {
+                            console.error("Error loading event:", error);
+                        });
+                });
+
+                // Form Submission Handler
+                document.addEventListener("DOMContentLoaded", () => {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const eventId = urlParams.get("eventId");
+
+                    if (!eventId) {
+                        alert("No event selected");
+                        window.location.href = "index.html";
+                        return;
+                    }
+
+                    // Set event ID in hidden input
+                    document.getElementById("event-id").value = eventId;
+                });
+
+                // File to Base64 Conversion
+                function convertFileToBase64(file) {
+                    return new Promise((resolve, reject) => {
+                        if (!file) {
+                            resolve(null);
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.readAsDataURL(file);
+                        reader.onload = () => resolve(reader.result);
+                        reader.onerror = (error) => reject(error);
+                    });
+                }
+
+                let isSubmitting = false;
+
+                // Form Submission Handler
+                document.getElementById("short-film-registration-form").addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const submitButton = e.target.querySelector('button[type="submit"]');
+
+                    if (isSubmitting) return;
+
+                    try {
+                        // Disable submit button and show processing state
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = 'Processing <i class="fas fa-spinner fa-spin"></i>';
+
+                        isSubmitting = true;
+
+                        // Disable submit button and show processing state
+                        submitButton.disabled = true;
+                        submitButton.innerHTML = 'Processing <i class="fas fa-spinner fa-spin"></i>';
+
+                        // Validate required fields
+                        const requiredFields = [
+                            'team-name', 'leader-name', 'leader-phone', 'leader-email', 'leader-college',
+                            'director-name', 'writer-name', 'lead-actor', 'cinematographer', 'editor-name',
+                            'film-title', 'film-genre', 'film-duration', 'film-link', 'id-card'
+                        ];
+
+                        for (let fieldId of requiredFields) {
+                            const field = document.getElementById(fieldId);
+                            if (!field.value.trim()) {
+                                throw new Error(`Please fill in the ${field.previousElementSibling.textContent}`);
+                            }
+                        }
+
+                        // Validate ID Card upload
+                        const idCardInput = document.getElementById("id-card");
+                        if (!idCardInput.files || idCardInput.files.length === 0) {
+                            throw new Error("Please upload your ID Card");
+                        }
+
+                        // Fetch event details
+                        const eventId = document.getElementById("event-id").value;
+                        const eventSnapshot = await firestore.collection("chitrosav_events").doc(eventId).get();
+
+                        if (!eventSnapshot.exists) {
+                            throw new Error("Event not found");
+                        }
+
+                        const eventData = eventSnapshot.data();
+
+                        // Generate unique booking ID
+                        const bookingId = `CCF-${Date.now().toString(36).toUpperCase()}`;
+
+                        // Upload ID Card
+                        const idCardFile = idCardInput.files[0];
+                        const idCardBase64 = await convertFileToBase64(idCardFile);
+
+                        // Prepare registration data
+                        const registrationData = {
+                            eventId: eventId,
+                            eventName: eventData.name,
+                            bookingId: bookingId,
+
+                            // Team Information
+                            teamName: document.getElementById("team-name").value,
+
+                            // Team Leader Details
+                            name: document.getElementById("leader-name").value,
+                            phone: document.getElementById("leader-phone").value,
+                            email: document.getElementById("leader-email").value,
+                            college: document.getElementById("leader-college").value,
+
+                            // Crew Details
+                            crewDetails: {
+                                director: document.getElementById("director-name").value,
+                                writer: document.getElementById("writer-name").value,
+                                leadActor: document.getElementById("lead-actor").value,
+                                cinematographer: document.getElementById("cinematographer").value,
+                                editor: document.getElementById("editor-name").value
+                            },
+
+                            // Film Details
+                            filmDetails: {
+                                title: document.getElementById("film-title").value,
+                                genre: document.getElementById("film-genre").value,
+                                duration: document.getElementById("film-duration").value,
+                                link: document.getElementById("film-link").value
+                            },
+
+                            // Additional Metadata
+                            idCard: idCardBase64,
+                            registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            paymentStatus: 'pending',
+                            eventPrice: eventData.price || 500, // Default price for short film contest
+                            eventDate: eventData.date,
+                            eventVenue: eventData.venue,
+                            eventTime: eventData.time,
+
+                            // Short Film Specific Flags
+                            registrationType: 'short-film'
+                        };
+
+                        // Save registration
+                        const registrationRef = await firestore.collection('event_registrations').add(registrationData);
+
+                        // Redirect to payment page with all necessary details
+                        window.location.href = `payments.html?eventId=${eventId}&bookingId=${bookingId}&registrationType=short-film`;
+
+                    } catch (error) {
+                        console.error('Registration error:', error);
+                        alert(error.message);
+                    } finally {
+                        // Reset submit button
+                        // Reset submission flag and button only on error
+                        isSubmitting = false;
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = 'Proceed to Payment';
+                    }
+                });
+
+                // Optional: Add form validation on input
+                document.getElementById("short-film-registration-form").addEventListener("input", (e) => {
+                    const field = e.target;
+                    if (field.value.trim() === "") {
+                        field.classList.add('border-red-500');
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+
+                document.addEventListener("DOMContentLoaded", () => {
+                    const termsModal = document.getElementById("terms-modal");
+                    const registrationContainer = document.getElementById(
+                        "registration-container"
+                    );
+                    const termsCheckbox = document.getElementById("terms-checkbox");
+                    const acceptTermsBtn = document.getElementById("accept-terms");
+
+                    // Checkbox Toggle
+                    termsCheckbox.addEventListener("change", () => {
+                        if (termsCheckbox.checked) {
+                            acceptTermsBtn.disabled = false;
+                            acceptTermsBtn.classList.remove("opacity-50", "cursor-not-allowed");
+                            acceptTermsBtn.classList.add("hover:bg-opacity-90");
+                        } else {
+                            acceptTermsBtn.disabled = true;
+                            acceptTermsBtn.classList.add("opacity-50", "cursor-not-allowed");
+                            acceptTermsBtn.classList.remove("hover:bg-opacity-90");
+                        }
+                    });
+
+                    // Accept Terms
+                    acceptTermsBtn.addEventListener("click", () => {
+                        // Completely remove the terms modal from the DOM
+                        document.body.removeChild(termsModal);
+
+                        // Show registration container
+                        registrationContainer.classList.remove("hidden");
+
+                        // Load event ID
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const eventId = urlParams.get("eventId");
+
+                        if (!eventId) {
+                            alert("No event selected");
+                            window.location.href = "index.html";
+                            return;
+                        }
+
+                        document.getElementById("event-id").value = eventId;
+                    });
+                });
+
+                // File to Base64 Conversion
+                async function convertFileToBase64(file) {
+    return new Promise(async (resolve, reject) => {
+        if (!file) {
+            resolve(null);
+            return;
+        }
+
+        // Check file size
+        if (file.size > 5 * 1024 * 1024) {
+            reject(new Error("File size exceeds 5MB limit"));
+            return;
+        }
+
+        // For images (excluding GIFs), try compression
+        if (file.type.startsWith('image/') && file.type !== 'image/gif') {
+            try {
+                // Only compress if bigger than 800KB
+                if (file.size > 800 * 1024) {
+                    const compressedFile = await compressImage(file);
+                    if (compressedFile && compressedFile.size < file.size) {
+                        file = compressedFile; // Use the compressed file
+                    } else {
+                        console.warn("Image compression didn't reduce size, using original.");
+                    }
+                }
+            } catch (err) {
+                console.warn("Image compression failed, using original file:", err);
+            }
+        }
+
+        // Convert to Base64 (using the original or compressed file)
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
+}
+
+async function compressImage(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = URL.createObjectURL(file);
+        img.onload = async () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+
+            // Maintain aspect ratio, max 1000x1000
+            const maxSize = 1000;
+            if (width > height && width > maxSize) {
+                height = Math.round((height * maxSize) / width);
+                width = maxSize;
+            } else if (height > width && height > maxSize) {
+                width = Math.round((width * maxSize) / height);
+                height = maxSize;
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob(async (blob) => {
+                if (blob) {
+                    const compressedFile = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
+                    resolve(compressedFile);
+                } else {
+                    reject(new Error("Compression failed"));
+                }
+            }, 'image/jpeg', 0.7); // Adjust quality as needed
+        };
+        img.onerror = () => reject(new Error("Failed to load image for compression"));
+    });
+}
+            </script>
+</body>
+
+</html>

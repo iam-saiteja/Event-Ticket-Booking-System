@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="images/branding.png" type="image/png" />
+    <title>Download Confirmation - Chalana Chithram</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link href="indexStyle.css" rel="stylesheet" />
+  </head>
+
+  <body class="bg-film-background min-h-screen">
+    <nav class="film-navbar">
+      <div class="container mx-auto flex justify-between items-center py-4">
+        <div class="flex items-center">
+          <!-- Go Back Button -->
+          <a href="index.html" class="mr-4 text-white hover:text-primary-color">
+            <i class="fas fa-arrow-left text-2xl"></i>
+          </a>
+          
+          <div class="logo flex items-center">
+            <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+            <h1 class="text-2xl font-bold text-primary-color">
+              Chalana Chithram
+            </h1>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+      <div
+        class="max-w-2xl mx-auto bg-[rgb(10,30,30)] rounded-lg shadow-lg p-8"
+      >
+        <h2 class="text-3xl text-[rgb(0,239,225)] text-center mb-6">
+          Payment Confirmation
+        </h2>
+
+        <div id="email-verification-section">
+          <div class="mb-4">
+            <label class="block text-[rgb(0,239,225)] mb-2"
+              >Email Address</label
+            >
+            <input
+              type="email"
+              id="email-input"
+              class="w-full p-3 rounded bg-[rgb(10,92,87)] text-black placeholder-[rgba(0,239,225,0.7)] "
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <button
+            id="fetch-bookings-btn"
+            class="w-full bg-[rgb(77,143,142)] text-[rgb(4,34,32)] py-3 rounded hover:bg-[rgb(0,239,225)] transition"
+          >
+            Fetch Bookings
+          </button>
+
+          <div id="verification-message" class="mt-4 text-center hidden"></div>
+        </div>
+
+        <div id="bookings-list-section" class="hidden mt-4">
+          <h3 class="text-2xl text-[rgb(0,239,225)] mb-4">Your Bookings</h3>
+          <div id="bookings-container" class="space-y-4">
+            <!-- Bookings will be dynamically loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+      // Firebase Configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+        authDomain: "screenings-663cf.firebaseapp.com",
+        databaseURL:
+          "https://screenings-663cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "screenings-663cf",
+        storageBucket: "screenings-663cf.firebasestorage.app",
+        messagingSenderId: "75644576041",
+        appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+        measurementId: "G-TVB3Z3CH96",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const firestore = firebase.firestore();
+
+      // Global variables to store current booking context
+      let currentBooking = null;
+
+      // Fetch Bookings
+      async function fetchBookings() {
+        const email = document.getElementById("email-input").value.trim();
+        const verificationMessage = document.getElementById(
+          "verification-message"
+        );
+        const bookingsListSection = document.getElementById(
+          "bookings-list-section"
+        );
+        const bookingsContainer = document.getElementById("bookings-container");
+
+        // Validate email
+        if (!email) {
+          showMessage("Please enter an email address", "text-red-500");
+          return;
+        }
+
+        try {
+          // Fetch all registrations for this email
+          const registrationsSnapshot = await firestore
+            .collection("event_registrations")
+            .where("email", "==", email)
+            .get();
+
+          // Clear previous bookings
+          bookingsContainer.innerHTML = "";
+
+          if (registrationsSnapshot.empty) {
+            showMessage("No bookings found for this email", "text-red-500");
+            bookingsListSection.classList.add("hidden");
+            return;
+          }
+
+          // Process and display bookings
+          registrationsSnapshot.docs.forEach((doc) => {
+            const booking = { id: doc.id, ...doc.data() };
+            createBookingCard(booking);
+          });
+
+          // Show bookings section
+          bookingsListSection.classList.remove("hidden");
+          document
+            .getElementById("email-verification-section")
+            .classList.add("hidden");
+        } catch (error) {
+          console.error("Booking fetch error:", error);
+          showMessage("Error fetching bookings", "text-red-500");
+        }
+      }
+
+      // Create Booking Card
+      function createBookingCard(booking) {
+        const bookingsContainer = document.getElementById("bookings-container");
+        const card = document.createElement("div");
+        card.className = "bg-[rgb(10,92,87)] p-4 rounded-lg";
+
+        // Determine status color and message
+        let statusColor = "text-red-500";
+        let statusMessage = "Payment Declined";
+
+        if (booking.paymentStatus === "paid") {
+          statusColor = "text-green-500";
+          statusMessage = "Payment Verified";
+        } else if (booking.paymentStatus === "pending") {
+          statusColor = "text-yellow-500";
+          statusMessage = "Payment Pending";
+        }
+
+        card.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <h4 class="text-xl text-[rgb(0,239,225)]">${
+                      booking.eventName
+                    }</h4>
+                    <span class="${statusColor} font-bold">
+                        ${statusMessage}
+                    </span>
+                </div>
+                <div class="text-white">
+                    <p><strong>Date:</strong> ${booking.eventDate}</p>
+                    <p><strong>Booking ID:</strong> ${booking.bookingId}</p>
+                </div>
+                ${
+                  booking.paymentStatus === "paid"
+                    ? `
+                    <p 
+                       class="mt-2 w-full bg-[rgb(0,239,225)] text-[rgb(4,34,32)] py-2 rounded"
+                    >
+                        Check Your Mail For The Confirmation.
+                    </p>
+                `
+                    : ""
+                }
+            `;
+
+        bookingsContainer.appendChild(card);
+      }
+
+      // Show Message
+      function showMessage(message, className) {
+        const verificationMessage = document.getElementById(
+          "verification-message"
+        );
+        verificationMessage.textContent = message;
+        verificationMessage.className = `${className} text-center`;
+        verificationMessage.classList.remove("hidden");
+      }
+
+      // Event Listeners
+      document
+        .getElementById("fetch-bookings-btn")
+        .addEventListener("click", fetchBookings);
+    </script>
+  </body>
+</html>

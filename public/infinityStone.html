@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inevitable Escape - Chalana Chithram</title>
+    <link rel="icon" href="images/branding.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap");
+
+      :root {
+        --primary-color: rgb(0, 239, 225);
+        --secondary-color: rgb(10, 92, 87);
+        --tertiary-color: rgb(77, 143, 142);
+        --dark-color: rgb(4, 34, 32);
+        --text-color: #e0e0e0;
+        
+        /* Infinity Stone Colors with Teal Theme */
+        --power-stone: #9b59b6;
+        --space-stone: #3498db;
+        --reality-stone: #e74c3c;
+        --soul-stone: #f39c12;
+        --time-stone: #2ecc71;
+        --mind-stone: #f1c40f;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          var(--dark-color),
+          var(--secondary-color)
+        );
+        color: var(--text-color);
+        font-family: "Montserrat", sans-serif;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+
+      .content-wrapper {
+        padding-top: 100px; /* Space for fixed navbar */
+        min-height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Aquatic/cosmic background with bubbles */
+      .bubbles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .bubble {
+        position: absolute;
+        border-radius: 50%;
+        border: 2px solid rgba(0, 239, 225, 0.2);
+        background: rgba(0, 239, 225, 0.05);
+        animation: float var(--duration) infinite ease-in-out;
+        opacity: var(--opacity);
+      }
+
+      @keyframes float {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-100px) rotate(180deg); }
+        100% { transform: translateY(0) rotate(360deg); }
+      }
+
+      .film-navbar {
+        background-color: rgba(4, 34, 32, 0.95);
+        border-bottom: 1px solid var(--primary-color);
+        box-shadow: 0 2px 10px rgba(0, 239, 225, 0.3);
+      }
+
+      .infinity-bg {
+        background: rgba(4, 34, 32, 0.7);
+        backdrop-filter: blur(10px);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .infinity-bg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,239,225,0.1)" stroke-width="2"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(0,239,225,0.1)" stroke-width="2"/><circle cx="50" cy="50" r="20" fill="none" stroke="rgba(0,239,225,0.1)" stroke-width="2"/></svg>');
+        background-size: 100px 100px;
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .team-member-card {
+        background: rgba(10, 92, 87, 0.3);
+        border: 1px solid var(--primary-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .team-member-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, transparent 70%, rgba(0, 239, 225, 0.1) 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+
+      .team-member-card:hover::after {
+        opacity: 1;
+      }
+
+      .team-member-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(0, 239, 225, 0.5);
+      }
+
+      .glow-button {
+        background: var(--primary-color);
+        color: var(--dark-color);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        font-weight: bold;
+      }
+
+      .glow-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all 0.5s ease;
+      }
+
+      .glow-button:hover::before {
+        left: 100%;
+      }
+
+      .glow-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+      }
+
+      /* Infinity Stone Number Indicators */
+      .stone-number {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 1.2rem;
+        z-index: 10;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(255, 255, 255, 0.5);
+      }
+
+      .stone-1 { 
+        background-color: var(--primary-color); 
+        box-shadow: 0 0 15px var(--primary-color);
+      }
+      
+      .stone-2 { 
+        background-color: var(--power-stone); 
+        box-shadow: 0 0 15px var(--power-stone);
+      }
+      
+      .stone-3 { 
+        background-color: var(--space-stone); 
+        box-shadow: 0 0 15px var(--space-stone);
+      }
+      
+      .stone-4 { 
+        background-color: var(--reality-stone); 
+        box-shadow: 0 0 15px var(--reality-stone);
+      }
+      
+      .stone-5 { 
+        background-color: var(--soul-stone); 
+        box-shadow: 0 0 15px var(--soul-stone);
+      }
+      
+      .stone-6 { 
+        background-color: var(--mind-stone); 
+        box-shadow: 0 0 15px var(--mind-stone);
+      }
+
+      /* Floating Infinity Stones */
+      .floating-stone {
+        position: fixed;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        filter: blur(1px);
+        box-shadow: 0 0 10px currentColor;
+        z-index: 0;
+        opacity: 0.6;
+        animation: float-stone 10s infinite ease-in-out;
+      }
+
+      @keyframes float-stone {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(10px, -10px) rotate(90deg); }
+        50% { transform: translate(0, 15px) rotate(180deg); }
+        75% { transform: translate(-10px, -5px) rotate(270deg); }
+      }
+
+      /* Energy waves */
+      .energy-wave {
+        position: fixed;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(0, 239, 225, 0.1) 0%, transparent 70%);
+        filter: blur(5px);
+        z-index: 0;
+        animation: pulse 8s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.3; }
+        50% { transform: scale(1.2); opacity: 0.5; }
+      }
+
+      /* Infinity gauntlet */
+      .gauntlet {
+        position: fixed;
+        bottom: 5%;
+        right: 5%;
+        width: 200px;
+        height: 200px;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="rgba(0,239,225,0.1)" d="M50,10 L60,20 L70,15 L65,30 L80,40 L65,45 L60,60 L50,50 L40,60 L35,45 L20,40 L35,30 L30,15 L40,20 Z"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.2;
+        z-index: 0;
+      }
+
+      /* Glowing circuit lines */
+      .circuit-lines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="none" stroke="rgba(0,239,225,0.1)" stroke-width="1" d="M10,10 L30,10 L30,30 L50,30 L50,10 L70,10 L70,50 L90,50 L90,70 L70,70 L70,90 L50,90 L50,70 L30,70 L30,50 L10,50 Z"/></svg>');
+        background-size: 200px 200px;
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bubbles background -->
+    <div class="bubbles" id="bubbles"></div>
+    
+    <!-- Circuit lines -->
+    <div class="circuit-lines"></div>
+
+    <!-- Energy waves -->
+    <div class="energy-wave" style="top: 20%; left: 10%;"></div>
+    <div class="energy-wave" style="bottom: 10%; right: 5%;"></div>
+    
+    <!-- Floating Infinity Stones -->
+    <div class="floating-stone" style="top: 15%; left: 20%; color: var(--power-stone); animation-delay: 0s;"></div>
+    <div class="floating-stone" style="top: 40%; right: 15%; color: var(--space-stone); animation-delay: 1s;"></div>
+    <div class="floating-stone" style="bottom: 30%; left: 10%; color: var(--reality-stone); animation-delay: 2s;"></div>
+    <div class="floating-stone" style="top: 25%; right: 30%; color: var(--soul-stone); animation-delay: 3s;"></div>
+    <div class="floating-stone" style="bottom: 20%; right: 25%; color: var(--time-stone); animation-delay: 4s;"></div>
+    <div class="floating-stone" style="top: 60%; left: 30%; color: var(--mind-stone); animation-delay: 5s;"></div>
+    
+    <!-- Gauntlet -->
+    <div class="gauntlet"></div>
+
+    <!-- Navbar -->
+    <nav class="film-navbar fixed top-0 left-0 w-full shadow-lg z-50">
+      <div class="container mx-auto flex justify-between items-center py-4 px-4">
+        <div class="logo flex items-center">
+          <button onclick="window.history.back()" class="mr-4 text-white hover:text-[var(--primary-color)]">
+            <i class="fas fa-arrow-left text-2xl"></i>
+          </button>
+          <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+          <h1 class="text-2xl font-bold text-[var(--primary-color)]">
+            Chalana Chithram
+          </h1>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content-wrapper flex items-center justify-center py-12">
+      <div class="container mx-auto px-4">
+        <div
+          class="grid md:grid-cols-2 gap-8 infinity-bg rounded-2xl overflow-hidden"
+        >
+          <!-- Event Poster Section -->
+          <div class="flex justify-center items-center p-8">
+            <div class="w-full max-w-[500px] relative group">
+              <img
+                id="poster-image"
+                class="w-full h-full object-contain rounded-2xl shadow-2xl"
+                alt="Infinity Quest: Race for the Stones Poster"
+              />
+              <div class="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-2xl">
+                <div class="text-white text-center p-4">
+                  <i class="fas fa-gem text-4xl mb-2 text-[var(--primary-color)]"></i>
+                  <p class="text-lg">Answer questions, collect stones, win the race!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Registration Form -->
+          <div class="p-8 relative">
+            <h2
+              id="event-name"
+              class="text-4xl font-bold text-[var(--primary-color)] mb-6 text-center"
+            >
+              Inevitable Escape
+            </h2>
+
+            <form id="infinity-quest-registration-form" class="space-y-6">
+              <input type="hidden" id="event-id" />
+              <input type="hidden" id="event-price" value="0" />
+              <!-- Hidden input for event price -->
+
+              <!-- Team Details -->
+              <div class="team-member-card p-6 relative">
+                <div class="stone-number stone-1">1</div>
+                <h3 class="text-2xl text-[var(--primary-color)] mb-4">
+                  Team Details
+                </h3>
+
+                <div class="grid grid-cols-1 gap-4">
+                  <div>
+                    <label class="block text-white mb-2">Team Name</label>
+                    <input
+                      type="text"
+                      id="team-name"
+                      required
+                      class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                      placeholder="Enter Your Team Name"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-white mb-2"
+                      >Team Size (2-4 members)</label
+                    >
+                    <select
+                      id="team-size"
+                      required
+                      class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    >
+                      <option value="">Select Team Size</option>
+                      <option value="2">2 Members</option>
+                      <option value="3">3 Members</option>
+                      <option value="4">4 Members</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+                            <!-- Team Leader Details -->
+                            <div class="team-member-card p-6 relative">
+                              <div class="stone-number stone-2">2</div>
+                              <h3 class="text-2xl text-[var(--primary-color)] mb-4">
+                                Team Leader Details
+                              </h3>
+              
+                              <div class="grid grid-cols-1 gap-4">
+                                <div>
+                                  <label class="block text-white mb-2">Team Leader Name <span class="text-red-500">*</span></label>
+                                  <input
+                                    type="text"
+                                    id="team-leader-name"
+                                    required
+                                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                    placeholder="Enter Team Leader Name"
+                                  />
+                                </div>
+              
+                                <div>
+                                  <label class="block text-white mb-2">College <span class="text-red-500">*</span></label>
+                                  <div class="flex space-x-2">
+                                    <select
+                                      id="team-leader-college-select"
+                                      required
+                                      class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                    >
+                                      <option value="">Select College</option>
+                                      <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                      <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                      <option value="other">Other</option>
+                                    </select>
+                                    <input
+                                      type="text"
+                                      id="team-leader-college-other"
+                                      placeholder="Enter College Name"
+                                      class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                      style="display: none"
+                                    />
+                                  </div>
+                                </div>
+              
+                                <div>
+                                  <label class="block text-white mb-2">Contact Email <span class="text-red-500">*</span></label>
+                                  <input
+                                    type="email"
+                                    id="team-leader-email"
+                                    required
+                                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                    placeholder="Enter Email"
+                                  />
+                                </div>
+              
+                                <div>
+                                  <label class="block text-white mb-2">Phone Number <span class="text-red-500">*</span></label>
+                                  <input
+                                    type="tel"
+                                    id="team-leader-phone"
+                                    required
+                                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                    placeholder="Enter Phone Number"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+              
+                            <!-- Dynamic Team Members Container -->
+                            <div id="team-members-container" class="space-y-4">
+                              <!-- Dynamic team member inputs will appear here -->
+                            </div>
+              
+                            <button
+                              type="submit"
+                              class="w-full glow-button py-4 rounded text-xl font-bold"
+                            >
+                              <i class="fas fa-gem mr-2"></i> Proceed to Payment
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Firebase Scripts -->
+                  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+                  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+              
+                  <script>
+                    // Create bubbles background
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const bubblesContainer = document.getElementById('bubbles');
+                      const bubbleCount = 30;
+                      
+                      for (let i = 0; i < bubbleCount; i++) {
+                        const bubble = document.createElement('div');
+                        bubble.classList.add('bubble');
+                        
+                        // Random size between 20-80px
+                        const size = Math.random() * 60 + 20;
+                        bubble.style.width = `${size}px`;
+                        bubble.style.height = `${size}px`;
+                        
+                        // Random position
+                        const posX = Math.random() * 100;
+                        const posY = Math.random() * 100;
+                        bubble.style.left = `${posX}%`;
+                        bubble.style.top = `${posY}%`;
+                        
+                        // Random opacity and float duration
+                        const opacity = Math.random() * 0.3 + 0.1;
+                        const duration = Math.random() * 20 + 10;
+                        bubble.style.setProperty('--opacity', opacity);
+                        bubble.style.setProperty('--duration', `${duration}s`);
+                        
+                        bubblesContainer.appendChild(bubble);
+                      }
+                    });
+              
+                    // Firebase Configuration
+                    const firebaseConfig = {
+                      apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+                      authDomain: "screenings-663cf.firebaseapp.com",
+                      projectId: "screenings-663cf",
+                      storageBucket: "screenings-663cf.firebasestorage.app",
+                      messagingSenderId: "75644576041",
+                      appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+                    };
+              
+                    // Initialize Firebase
+                    firebase.initializeApp(firebaseConfig);
+                    const firestore = firebase.firestore();
+                    document.addEventListener("DOMContentLoaded", () => {
+        const teamSizeSelect = document.getElementById("team-size");
+        const teamMembersContainer = document.getElementById(
+          "team-members-container"
+        );
+        const teamLeaderCollegeSelect = document.getElementById(
+          "team-leader-college-select"
+        );
+        const teamLeaderCollegeOther = document.getElementById(
+          "team-leader-college-other"
+        );
+
+        // College Selection Logic
+        teamLeaderCollegeSelect.addEventListener("change", (e) => {
+          if (e.target.value === "other") {
+            teamLeaderCollegeOther.style.display = "block";
+            teamLeaderCollegeOther.required = true;
+          } else {
+            teamLeaderCollegeOther.style.display = "none";
+            teamLeaderCollegeOther.required = false;
+            teamLeaderCollegeOther.value = "";
+          }
+        });
+
+        // Dynamic Team Members Generation
+        teamSizeSelect.addEventListener("change", () => {
+          const teamSize = parseInt(teamSizeSelect.value);
+          teamMembersContainer.innerHTML = ""; // Clear existing members
+
+          for (let i = 1; i < teamSize; i++) {
+            const memberDiv = document.createElement("div");
+            memberDiv.classList.add("team-member-card", "p-6", "relative");
+            
+            // Assign different infinity stone colors to each member
+            const stoneClass = `stone-${i + 2}`;
+            
+            memberDiv.innerHTML = `
+                <div class="stone-number ${stoneClass}">${i + 2}</div>
+                <h3 class="text-2xl text-[var(--primary-color)] mb-4">Team Member ${i}</h3>
+                
+                <div class="grid grid-cols-1 gap-4">
+                    <div>
+                        <label class="block text-white mb-2">Member Name <span class="text-red-500">*</span></label>
+                        <input 
+                            type="text" 
+                            name="member-name-${i}" 
+                            required 
+                            class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                            placeholder="Enter Member Name"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-white mb-2">College <span class="text-red-500">*</span></label>
+                        <div class="flex space-x-2">
+                            <select 
+                                name="member-college-select-${i}" 
+                                required
+                                class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-select"
+                            >
+                                <option value="">Select College</option>
+                                <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input 
+                                type="text" 
+                                name="member-college-other-${i}" 
+                                placeholder="Enter College Name" 
+                                class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-other"
+                                style="display:none;"
+                            />
+                        </div>
+                    </div>
+                </div>
+            `;
+            teamMembersContainer.appendChild(memberDiv);
+
+            // Add event listeners for dynamic college selection
+            const memberCollegeSelect = memberDiv.querySelector(
+              ".member-college-select"
+            );
+            const memberCollegeOther = memberDiv.querySelector(
+              ".member-college-other"
+            );
+
+            memberCollegeSelect.addEventListener("change", (e) => {
+              if (e.target.value === "other") {
+                memberCollegeOther.style.display = "block";
+                memberCollegeOther.required = true;
+              } else {
+                memberCollegeOther.style.display = "none";
+                memberCollegeOther.required = false;
+                memberCollegeOther.value = "";
+              }
+            });
+          }
+        });
+
+        // Form Submission Logic
+        document
+          .getElementById("infinity-quest-registration-form")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            try {
+              // Validate team size is selected
+              const teamSizeSelect = document.getElementById("team-size");
+              if (!teamSizeSelect.value) {
+                alert("Please select team size");
+                teamSizeSelect.focus();
+                return;
+              }
+
+              const teamSize = parseInt(teamSizeSelect.value);
+
+              // Validate all team member fields
+              let allFieldsValid = true;
+
+              // Validate team leader college
+              const teamLeaderCollegeSelect = document.getElementById(
+                "team-leader-college-select"
+              );
+              const teamLeaderCollegeOther = document.getElementById(
+                "team-leader-college-other"
+              );
+
+              if (!teamLeaderCollegeSelect.value) {
+                alert("Please select team leader college");
+                teamLeaderCollegeSelect.focus();
+                allFieldsValid = false;
+                return;
+              }
+
+              if (
+                teamLeaderCollegeSelect.value === "other" &&
+                !teamLeaderCollegeOther.value.trim()
+              ) {
+                alert("Please enter team leader college name");
+                teamLeaderCollegeOther.focus();
+                allFieldsValid = false;
+                return;
+              }
+
+              // Prepare team members data and validate
+              const teamMembers = [];
+              for (let i = 1; i < teamSize; i++) {
+                const nameInput = document.querySelector(
+                  `input[name="member-name-${i}"]`
+                );
+                const collegeSelect = document.querySelector(
+                  `select[name="member-college-select-${i}"]`
+                );
+                const collegeOtherInput = document.querySelector(
+                  `input[name="member-college-other-${i}"]`
+                );
+
+                // Validate member name
+                if (!nameInput.value.trim()) {
+                  alert(`Please enter name for Team Member ${i}`);
+                  nameInput.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                // Validate member college
+                if (!collegeSelect.value) {
+                  alert(`Please select college for Team Member ${i}`);
+                  collegeSelect.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                // Validate other college if selected
+                if (
+                  collegeSelect.value === "other" &&
+                  !collegeOtherInput.value.trim()
+                ) {
+                  alert(`Please enter college name for Team Member ${i}`);
+                  collegeOtherInput.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                teamMembers.push({
+                  name: nameInput.value.trim(),
+                  college:
+                    collegeSelect.value === "other"
+                      ? collegeOtherInput.value.trim()
+                      : collegeSelect.value,
+                });
+              }
+
+              if (!allFieldsValid) return;
+
+              // Get event price from hidden input
+              const eventPrice = parseFloat(
+                document.getElementById("event-price").value
+              );
+
+              // Prepare registration data
+              const registrationData = {
+                eventId: document.getElementById("event-id").value,
+                teamName: document.getElementById("team-name").value.trim(),
+                teamSize: teamSize,
+
+                // Team Leader Details
+                name: document.getElementById("team-leader-name").value.trim(),
+                email: document
+                  .getElementById("team-leader-email")
+                  .value.trim(),
+                phone: document
+                  .getElementById("team-leader-phone")
+                  .value.trim(),
+                college:
+                  teamLeaderCollegeSelect.value === "other"
+                    ? teamLeaderCollegeOther.value.trim()
+                    : teamLeaderCollegeSelect.value,
+
+                // Team Members
+                teamMembers: teamMembers,
+
+                registrationType: "infinity-quest",
+                registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                paymentStatus: "pending",
+                eventPrice: eventPrice,
+                year: 2025,
+              };
+
+              // Generate booking ID
+              const bookingId = `CCF-${Date.now().toString(36).toUpperCase()}`;
+              registrationData.bookingId = bookingId;
+
+              // Save registration
+              const registrationRef = await firebase
+                .firestore()
+                .collection("event_registrations")
+                .add(registrationData);
+
+              // Show countdown popup
+              showCountdownPopup(
+                registrationData.eventId,
+                bookingId,
+                eventPrice
+              );
+            } catch (error) {
+              console.error("Registration error:", error);
+              alert("Registration failed. Please try again.");
+            }
+          });
+
+        // Countdown Popup Function
+        function showCountdownPopup(eventId, bookingId, amount) {
+          // Create popup container
+          const popupContainer = document.createElement("div");
+          popupContainer.className =
+            "fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4";
+
+          popupContainer.innerHTML = `
+            <div class="bg-[rgba(4,34,32,0.9)] border-2 border-[var(--primary-color)] rounded-lg p-6 max-w-md w-full text-center relative overflow-hidden">
+                <div class="absolute -top-4 -right-4 w-8 h-8 bg-[var(--power-stone)] rounded-full flex items-center justify-center">
+                    <i class="fas fa-gem text-white"></i>
+                </div>
+                <div class="absolute -top-4 -left-4 w-8 h-8 bg-[var(--space-stone)] rounded-full flex items-center justify-center">
+                    <i class="fas fa-globe text-white"></i>
+                </div>
+                
+                <!-- Teal energy background for popup -->
+                <div class="absolute inset-0 z-0 opacity-20">
+                    <div class="absolute top-0 left-0 w-full h-full" style="background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <h2 class="text-2xl text-[var(--primary-color)] mb-4">Your Quest Begins!</h2>
+                    
+                    <p class="text-white mb-6">To complete your registration, you need to make a payment of ₹${amount}.</p>
+                    
+                    <div class="mb-6">
+                        <p class="text-white mb-2">Redirecting to payment page in:</p>
+                        <div class="text-4xl text-[var(--primary-color)] font-bold" id="countdown">3</div>
+                    </div>
+                    
+                    <div class="flex space-x-4 justify-center">
+                        <button id="pay-now-btn" class="bg-[var(--primary-color)] text-[var(--dark-color)] px-6 py-2 rounded font-bold hover:bg-[var(--tertiary-color)] transition-colors">
+                            Pay Now
+                        </button>
+                        <button id="cancel-btn" class="bg-gray-700 text-white px-6 py-2 rounded hover:bg-gray-600 transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+          `;
+
+          // Add popup to body
+          document.body.appendChild(popupContainer);
+
+          // Set up countdown
+          let countdown = 3;
+          const countdownElement = document.getElementById("countdown");
+
+          const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+
+            if (countdown <= 0) {
+              clearInterval(countdownInterval);
+              redirectToPayment();
+            }
+          }, 1000);
+
+          // Button actions
+          document
+            .getElementById("pay-now-btn")
+            .addEventListener("click", () => {
+              clearInterval(countdownInterval);
+              redirectToPayment();
+            });
+
+          document
+            .getElementById("cancel-btn")
+            .addEventListener("click", () => {
+              clearInterval(countdownInterval);
+              document.body.removeChild(popupContainer);
+              // Optionally redirect to home or another page
+              // window.location.href = 'index.html';
+            });
+
+          // Redirect function
+          function redirectToPayment() {
+            window.location.href = `payments.html?eventId=${eventId}&bookingId=${bookingId}&registrationType=infinity-quest&amount=${amount}`;
+          }
+        }
+
+        // Load Event Details
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get("eventId");
+
+        if (eventId) {
+          document.getElementById("event-id").value = eventId;
+
+          // Fetch event details
+          firestore
+            .collection("chitrosav_events")
+            .doc(eventId)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                const eventData = doc.data();
+                document.getElementById("poster-image").src =
+                  eventData.posterBase64 || "default-poster.jpg";
+                document.getElementById("event-name").textContent =
+                  "Infinity Quest: Race for the Stones";
+                document.getElementById("event-price").value = eventData.price; // Set the event price in hidden input
+              }
+            });
+        }
+      });
+    </script>
+  </body>
+</html>

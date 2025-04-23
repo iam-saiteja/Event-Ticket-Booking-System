@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chitrotsav 2025 - Chalana Chithram Film Festival</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="indexStyle.css" rel="stylesheet">
+    <link rel="icon" href="images/branding.png" type="image/png">
+</head>
+<body class="bg-film-background">
+    <nav class="film-navbar">
+        <div class="container mx-auto flex justify-between items-center py-4">
+            <div class="logo flex items-center">
+                <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4">
+                <h1 class="text-2xl font-bold text-primary-color">Chalana Chithram BVRIT</h1>
+            </div>
+            <div class="nav-links flex items-center">
+                <a href="https://chalanachitramtickets.web.app/" class="mx-4 text-white hover:text-primary-color">Home</a>
+                <a href="https://chalanachithrambvrit.club" class="mx-4 text-white hover:text-primary-color">About Us</a>
+                <a href="checkConfirmation.html" class="mx-4 text-white hover:text-primary-color">
+                    Check Payment Status
+                </a>
+                <a href="terms.html" class="mx-4 text-white hover:text-primary-color">Terms And Conditions</a>
+            </div>
+            
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-menu-toggle md:hidden">
+                <button id="mobile-menu-btn" class="text-white text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+        
+        <!-- Mobile Menu Overlay -->
+<!-- Mobile Menu Overlay -->
+<div id="mobile-menu" class="position-absolute w-100 bg-dark text-white p-4 shadow-lg" 
+     style="top: 64px; height: auto; border-top-left-radius: 45px; border-top-right-radius: 45px;">
+
+    <!-- Close Button -->
+    <button id="close-mobile-menu" class="absolute top-5 right-5 text-white text-3xl">
+        <i class="fas fa-times"></i>
+    </button>
+
+    <!-- Navigation Links -->
+    <nav class="flex flex-col items-center space-y-6">
+        <a href="#" class="text-xl text-white hover:text-primary-color transition duration-300">Home</a>
+        <a href="https://chalanachithrambvrit.club" class="text-xl text-white hover:text-primary-color transition duration-300">About Us</a>
+        <a href="checkConfirmation.html" class="text-xl text-white hover:text-primary-color transition duration-300">
+            Check Payment Status
+        </a>
+        <a href="terms.html" class="text-xl text-white hover:text-primary-color transition duration-300">Terms And Conditions</a>
+    </nav>
+</div>
+
+    <div class="container mx-auto px-4">
+
+<header class="page-header text-center my-12 w-full">
+    <!-- Chitrosav Logo (Centered) -->
+    <div class="w-full flex items-center justify-center mb-6">
+        <div class="bg-black rounded-full inline-flex items-center justify-center">
+            <img src="images/chitroLogo.png" alt="Chitrosav Logo" class="h-32 w-32 object-contain">
+        </div>
+    </div>
+
+    <h2 class="text-4xl font-bold text-white mb-4">Chitrotsav 2025</h2>
+    <p class="text-xl text-primary-color">Chalana Chithram's Annual Film Festival</p>
+</header>
+
+
+        <!-- Official Notice Section -->
+        <div class="terms-section bg-[#0e302f] border-2 border-[#4d8f8e] rounded-lg p-6 mb-6">
+            <h3 class="text-2xl text-[rgb(0,239,225)] mb-4 border-b-2 border-[#4d8f8e] pb-2 flex items-center">
+                <i class="fas fa-bell mr-3 text-[rgb(0,239,225)]"></i>
+                Important Notice
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-[rgb(10,92,87)] p-4 rounded-lg hover:bg-[rgb(15,110,100)] transition-colors group">
+                    <h4 class="text-[rgb(0,239,225)] mb-2 flex items-center">
+                        <i class="fas fa-envelope-open-text mr-2 group-hover:text-white transition"></i>
+                        Confirmation
+                    </h4>
+                    <p class="text-white text-sm">
+                        Event confirmation will be sent to your registered email within 24 hours.
+                    </p>
+                </div>
+                
+                <div class="bg-[rgb(10,92,87)] p-4 rounded-lg hover:bg-[rgb(15,110,100)] transition-colors group">
+                    <h4 class="text-[rgb(0,239,225)] mb-2 flex items-center">
+                        <i class="fas fa-money-check-alt mr-2 group-hover:text-white transition"></i>
+                        Payment Verification
+                    </h4>
+                    <p class="text-white text-sm">
+                        Manual verification by our team takes 6-12 hours.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="search-filter-section mb-8">
+            <div class="flex items-center">
+                <input 
+                    type="text" 
+                    id="event-search" 
+                    placeholder="Search events, workshops, screenings..." 
+                    class="w-full p-3 rounded-lg bg-gray-800 text-white"
+                >
+                <select id="event-type-filter" class="ml-4 p-3 rounded-lg bg-gray-800 text-white">
+                    <option value="">All Events</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="screening">Screening</option>
+                    <option value="competition">Competition</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Events will be dynamically loaded here -->
+        </div>
+    </div>
+
+    
+
+    <footer class="film-footer bg-dark-color py-8 mt-12">
+        <!-- Contact Section -->
+        <div class="contact-section bg-[rgb(10,30,30)] border-2 border-transparent rounded-lg p-6">
+            <h3 class="text-2xl text-[rgb(0,239,225)] mb-4 border-b-2 border-[#062624] pb-2 flex items-center">
+      <i class="fas fa-headset mr-3 text-[rgb(0,239,225)]"></i>
+      Need Help?
+    </h3>
+    
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="bg-[rgb(10,92,87)] p-3 rounded-lg text-center group hover:bg-[rgb(0,239,225)] transition">
+        <i class="fas fa-phone text-[rgb(0,239,225)] text-xl mb-2 group-hover:text-[rgb(10,92,87)]"></i>
+        <p class="text-white text-xs group-hover:text-[rgb(10,92,87)]" id="contact-1">+91 XXXXXXXXXX</p>
+      </div>
+      <div class="bg-[rgb(10,92,87)] p-3 rounded-lg text-center group hover:bg-[rgb(0,239,225)] transition">
+        <i class="fas fa-phone text-[rgb(0,239,225)] text-xl mb-2 group-hover:text-[rgb(10,92,87)]"></i>
+        <p class="text-white text-xs group-hover:text-[rgb(10,92,87)]" id="contact-2">+91 XXXXXXXXXX</p>
+      </div>
+      <div class="bg-[rgb(10,92,87)] p-3 rounded-lg text-center group hover:bg-[rgb(0,239,225)] transition">
+        <i class="fas fa-phone text-[rgb(0,239,225)] text-xl mb-2 group-hover:text-[rgb(10,92,87)]"></i>
+        <p class="text-white text-xs group-hover:text-[rgb(10,92,87)]" id="contact-3">+91 XXXXXXXXXX</p>
+      </div>
+      <div class="bg-[rgb(10,92,87)] p-3 rounded-lg text-center group hover:bg-[rgb(0,239,225)] transition">
+        <i class="fas fa-phone text-[rgb(0,239,225)] text-xl mb-2 group-hover:text-[rgb(10,92,87)]"></i>
+        <p class="text-white text-xs group-hover:text-[rgb(10,92,87)]" id="contact-4">+91 XXXXXXXXXX</p>
+      </div>
+    </div>
+    
+    <div class="mt-3 bg-[rgb(10,92,87)] p-3 rounded-lg text-center group hover:bg-[rgb(0,239,225)] transition">
+      <i class="fas fa-envelope text-[rgb(0,239,225)] mr-2 group-hover:text-[rgb(10,92,87)]"></i>
+      <span class="text-white text-xs group-hover:text-[rgb(10,92,87)]">chalanachithrambvrit@bvrit.ac.in</span>
+    </div>
+</div>
+
+        <div class="container mx-auto text-center">
+            <div class="social-links mb-4">
+                <a href="https://www.instagram.com/chalana.chithram.bvrit" class="mx-2 text-white hover:text-primary-color"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@ChalanaChithrambvrit" class="mx-2 text-white hover:text-primary-color"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-gray-400">&copy; 2025 Chalana Chithram. Chitrotsav Film Festival</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+// Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+    authDomain: "screenings-663cf.firebaseapp.com",
+    databaseURL: "https://screenings-663cf-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "screenings-663cf",
+    storageBucket: "screenings-663cf.firebasestorage.app",
+    messagingSenderId: "75644576041",
+    appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+    measurementId: "G-TVB3Z3CH96"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const firestore = firebase.firestore();
+
+function updateContactNumbers() {
+  const contacts = [
+    { name: 'Vikram', number: '+91 9000337504' },
+    { name: 'Ananya', number: '+91 7416773524' },
+    { name: 'Ushasri', number: '+91 8247029890' },
+    { name: 'Sai Teja', number: '+91 9133708990' }
+  ];
+
+  contacts.forEach((contact, index) => {
+    const contactElement = document.getElementById(`contact-${index + 1}`);
+    if (contactElement) {
+      contactElement.innerHTML = `
+        <a href="tel:${contact.number}" class="block text-white text-xs group-hover:text-[rgb(10,92,87)] underline">
+          ${contact.number}
+        </a>
+        <span class="block mt-1 text-[rgb(200,255,255)] text-[11px] group-hover:text-[rgb(10,92,87)]">
+          ${contact.name}
+        </span>
+      `;
+    }
+  });
+}
+
+
+async function fetchEvents() {
+    const eventsContainer = document.getElementById('events-container');
+    const searchInput = document.getElementById('event-search');
+    const eventTypeFilter = document.getElementById('event-type-filter');
+    const BATCH_SIZE = 3; // Number of events to load initially
+
+    // Show skeleton loading state
+    eventsContainer.innerHTML = generateSkeletonLoading();
+
+    try {
+        // Implement retry logic for fetching events
+        const fetchEventsWithRetry = async () => {
+            const eventsRef = firestore.collection('chitrosav_events');
+            let query = eventsRef.where('year', '==', 2025);
+            return await query.get();
+        };
+
+        const snapshot = await fetchWithRetry(fetchEventsWithRetry);
+        const events = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        // Clear skeleton loading
+        eventsContainer.innerHTML = '';
+
+        // Initial render with first batch
+        const initialBatch = events.slice(0, BATCH_SIZE);
+        renderEvents(initialBatch);
+
+        // Load remaining events in background
+        setTimeout(() => {
+            renderEvents(events);
+        }, 100);
+
+        // Search and filter functionality (preserved from original)
+        searchInput.addEventListener('input', () => filterEvents(events));
+        eventTypeFilter.addEventListener('change', () => filterEvents(events));
+
+        // Initialize lazy loading for images
+        observeImages();
+
+    } catch (error) {
+        eventsContainer.innerHTML = `
+            <div class="col-span-full text-center text-red-500">
+                Unable to load events. Please try again later.
+                ${error.message}
+            </div>
+        `;
+    }
+}
+
+// Helper function for retry logic
+async function fetchWithRetry(operation, maxRetries = 3) {
+    for (let i = 0; i < maxRetries; i++) {
+        try {
+            return await operation();
+        } catch (error) {
+            if (i === maxRetries - 1) throw error;
+            await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+        }
+    }
+}
+
+// Generate skeleton loading HTML
+function generateSkeletonLoading() {
+    const skeletons = Array(6).fill().map(() => `
+        <div class="skeleton-card skeleton">
+            <div class="skeleton-image"></div>
+            <div class="skeleton-text w-3/4"></div>
+            <div class="skeleton-text w-1/2"></div>
+            <div class="skeleton-text w-2/3"></div>
+        </div>
+    `).join('');
+
+    return skeletons;
+}
+
+// Lazy loading observer
+function observeImages() {
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+}
+
+async function renderEvents(events) {
+    try {
+        // Fetch excluded event IDs from Firestore
+        const excludedEventsDoc = await firebase.firestore()
+            .collection('admin_settings')
+            .doc('excluded_events')
+            .get();
+        
+        // Get the excluded event IDs array or use an empty array if document doesn't exist
+        const excludedEventIds = excludedEventsDoc.exists ? 
+            (excludedEventsDoc.data().eventIds || []) : [];
+        
+        // Filter out the excluded events
+        const filteredEvents = events.filter(event => !excludedEventIds.includes(event.id));
+        
+        const eventsContainer = document.getElementById('events-container');
+        
+        eventsContainer.innerHTML = filteredEvents.length ? 
+            filteredEvents.map(createEventCard).join('') : 
+            `<div class="col-span-full text-center text-gray-400">No events available for Chitrotsav 2025</div>`;
+    } catch (error) {
+        // Fallback to showing all events if there's an error
+        const eventsContainer = document.getElementById('events-container');
+        eventsContainer.innerHTML = events.length ? 
+            events.map(createEventCard).join('') : 
+            `<div class="col-span-full text-center text-gray-400">No events available for Chitrotsav 2025</div>`;
+    }
+}
+
+function openPosterModal(eventId) {
+    // Find the event in the events array
+    const event = events.find(e => e.id === eventId);
+    if (!event || !event.posterBase64) return;
+
+    // Create modal
+    const modalHtml = `
+        <div id="poster-modal" class="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4">
+            <div class="relative max-w-md max-h-[90vh] w-full">
+                <button id="close-poster-modal" class="absolute -top-10 right-0 text-white text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img 
+                    src="${event.posterBase64}" 
+                    alt="${event.name} Poster" 
+                    class="w-full h-full object-contain"
+                >
+            </div>
+        </div>
+    `;
+
+    // Append modal to body
+    const modalContainer = document.createElement('div');
+    modalContainer.innerHTML = modalHtml;
+    document.body.appendChild(modalContainer);
+
+    // Close modal functionality
+    document.getElementById('close-poster-modal').addEventListener('click', () => {
+        document.body.removeChild(modalContainer);
+    });
+}
+function createEventCard(event) {
+    // Use default poster if no Base64 image
+    const posterSrc = event.posterBase64 || 'default-poster.jpg';
+
+    // Check if the event ID should show "Show Details" instead of "Book Now"
+    const showDetailsEventIds = ['dqhjfVJBZHQ1eI4lL72X', 'B5YGPJzzseyGnDWbI1Jx', 'ERV21FXkZ8Ok4so7pu4U'];
+    const isShowDetails = showDetailsEventIds.includes(event.id);
+
+    return `
+<div class="event-card p-5 bg-gray-900 rounded-lg shadow-lg relative" data-event-id="${event.id}">
+    <!-- Event Poster -->
+    <div class="event-poster h-[500px] rounded-lg overflow-hidden mb-4 relative">
+        <img 
+            src="${posterSrc}" 
+            alt="${event.name}" 
+            class="w-full h-full object-cover rounded-lg cursor-pointer transition-all duration-300
+                ${event.availableTickets <= 0 ? 'grayscale opacity-50' : ''}"
+            onclick="openPosterModal('${event.id}')"
+        >
+        <!-- Sold Out Overlay -->
+        ${event.availableTickets <= 0 ? `
+            <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
+                <span class="text-3xl font-bold text-white">Sold Out</span>
+            </div>` : ''}
+    </div>
+
+    <!-- Event Details -->
+    <div class="event-details">
+        <!-- Event Name -->
+        <h3 class="text-3xl font-extrabold text-white mb-3">${event.name}</h3>
+
+        <!-- Date -->
+        <div class="text-lg text-gray-300 font-medium mb-4">📅 ${event.date}</div>
+
+        <!-- Venue & Prize Pool -->
+        <div class="event-info grid grid-cols-2 gap-4 mb-3">
+            <div class="p-3 rounded-lg" style="background: rgba(10, 92, 87, 0.95);">
+                <strong class="text-gray-100 block mb-1">📍 Venue</strong>
+                <p class="text-sm text-gray-200">${event.venue || 'TBA'}</p>
+            </div>
+            <div class="p-3 rounded-lg" style="background: rgba(10, 92, 87, 0.95);">
+                <strong class="text-gray-100 block mb-1">🏆 Prize Pool</strong>
+                <p class="text-sm text-gray-200">${event.prizePool || 'TBA'}</p>
+            </div>
+        </div>
+
+        <!-- Description (Now inside a Box) -->
+<div class="event-description p-3 rounded-lg mb-4" style="
+    background: rgba(10, 92, 87, 0.95);
+    max-height: 200px; /* Set a maximum height to trigger scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: var(--primary-color) var(--dark-color); /* For Firefox */
+">
+    <strong class="text-gray-100 block mb-1">📜 Description</strong>
+    <p class="text-sm text-gray-200">${event.description || 'No description available'}</p>
+</div>
+
+        <!-- Ticket Pricing & Availability -->
+        <div class="event-pricing mt-5 flex justify-between items-center p-4 rounded-lg" style="background: rgba(10, 92, 87, 0.95);">
+            <span class="text-2xl font-bold text-white">₹${event.price || 'Free'}</span>
+            <div class="text-right">
+                <button 
+                    onclick="bookEvent('${event.id}')" 
+                    class="px-5 py-2 rounded-lg text-white text-lg font-semibold transition-all
+                    ${event.availableTickets <= 0 ? 'bg-gray-500 cursor-not-allowed' : ''}"
+                    style="background: ${event.availableTickets <= 0 ? '#555' : '#0d2928'};"
+                    onmouseover="if(this.getAttribute('disabled') === null) this.style.background='#15403d'"
+                    onmouseout="if(this.getAttribute('disabled') === null) this.style.background='#0d2928'"
+                    ${event.availableTickets <= 0 ? 'disabled' : ''}
+                >
+                    ${isShowDetails ? 'Show Details' : (event.availableTickets <= 0 ? 'Sold Out' : 'Book Now')}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+    `;
+}
+
+function filterEvents(events) {
+    const searchTerm = document.getElementById('event-search').value.toLowerCase();
+    const eventTypeFilter = document.getElementById('event-type-filter').value;
+
+    const filteredEvents = events.filter(event => 
+        event.name.toLowerCase().includes(searchTerm) &&
+        (eventTypeFilter === '' || event.type.toLowerCase() === eventTypeFilter)
+    );
+
+    renderEvents(filteredEvents);
+}
+
+function bookEvent(eventId) {
+    window.location.href = `/booking.html?eventId=${eventId}`;
+    if(eventId == "PaAXzX2C4q24KCghSGoU"){
+        window.location.href = `/shortFilmPage.html?eventId=${eventId}`;
+    }
+    else if(eventId == "Y2Dzc8tAczubAI25hNnB"){
+        window.location.href = `/chepukoChudam.html?eventId=${eventId}`;
+    } else if(eventId == "0zwPGSJNrYWDTl4PLyB1"){
+        window.location.href = `/squidGame.html?eventId=${eventId}`;
+    }else if(eventId == "dqhjfVJBZHQ1eI4lL72X"){
+        window.location.href = `/masterClass.html?eventId=${eventId}`;
+    }else if(eventId == "B5YGPJzzseyGnDWbI1Jx"){
+        window.location.href = `/workShop.html?eventId=${eventId}`;
+    }else if(eventId == "ERV21FXkZ8Ok4so7pu4U"){
+        window.location.href = `/cosplay.html?eventId=${eventId}`;
+    }else if(eventId == "Qml72NeUJi0RlhlhJh9C"){
+        window.location.href = `/murderMystery.html?eventId=${eventId}`;
+    }else if (eventId == "8vX7hoWiF37mhyDBvUys"){
+        window.location.href = `/infinityStone.html?eventId=${eventId}`;
+    }
+}
+
+// Initialize events when DOM is loaded
+document.addEventListener('DOMContentLoaded', fetchEvents);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const menu = document.getElementById("mobile-menu");
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const closeBtn = document.getElementById("close-mobile-menu");
+
+    // Ensure menu is hidden on page load
+    menu.style.display = "none"; 
+    menuBtn.style.display = "block"; 
+
+    menuBtn.addEventListener("click", function () {
+        menu.style.display = "block";  // Show menu
+        menuBtn.style.display = "none"; // Hide button
+    });
+
+    closeBtn.addEventListener("click", function () {
+        menu.style.display = "none";  // Hide menu
+        menuBtn.style.display = "block"; // Show button
+    });
+});
+document.addEventListener('DOMContentLoaded', updateContactNumbers);
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["https://chalanachitramtickets.web.app", "http://localhost:5000"],
+    "method": ["GET", "HEAD", "OPTIONS", "POST", "PUT"],
+    "maxAgeSeconds": 3600
+  }
+]

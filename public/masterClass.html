@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass with Vivek Athreya Garu | Decoding a Film</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="images/branding.png">
+    <style>
+        :root {
+            --primary-color: rgb(0, 239, 225);
+            --secondary-color: rgb(10, 92, 87);
+            --tertiary-color: rgb(77, 143, 142);
+            --dark-color: rgb(4, 34, 32);
+            --text-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .parallax-header {
+            height: 100vh;
+            background: linear-gradient(rgba(4, 34, 32, 0.7), rgba(4, 34, 32, 0.9)), url('https://placeholder.pics/svg/1920x1080/0A5C57-4D8F8E/FFFFFF/Cinema%20Background') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+        
+        .event-type {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(0, 239, 225, 0.3);
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+        
+        .tagline {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-color);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+        
+        .event-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin: 4rem 0;
+            align-items: center;
+        }
+        
+        .poster {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            transform: perspective(1000px) rotateY(5deg);
+            transition: transform 0.5s;
+        }
+        
+        .poster::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 239, 225, 0.3), transparent);
+            z-index: 1;
+        }
+        
+        .poster:hover {
+            transform: perspective(1000px) rotateY(0);
+        }
+        
+        .poster img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .highlight {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        
+        .expect-section {
+            margin: 3rem 0;
+            background: linear-gradient(135deg, rgba(10, 92, 87, 0.2), rgba(4, 34, 32, 0.8));
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .expect-title {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .expect-list {
+            list-style: none;
+        }
+        
+        .expect-item {
+            display: flex;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+        
+        .expect-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            background: rgba(0, 239, 225, 0.1);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .expect-content {
+            flex: 1;
+        }
+        
+        .expect-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .director-section {
+            background: linear-gradient(135deg, rgba(10, 92, 87, 0.9), rgba(4, 34, 32, 0.95)), url('https://placeholder.pics/svg/1920x1080/4D8F8E-0A5C57/FFFFFF/Film%20Background') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 6rem 0;
+            margin: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .director-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, var(--dark-color) 150%);
+        }
+        
+        .director-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .director-photo-container {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            position: relative;
+        }
+        
+        .director-photo {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 3px solid var(--primary-color);
+            transition: transform 0.5s;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .director-photo-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 15px;
+            top: 15px;
+            left: 15px;
+            z-index: 1;
+        }
+        
+        .director-photo-container:hover .director-photo {
+            transform: translate(-5px, -5px);
+        }
+        
+        .director-bio {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .director-name {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .director-title {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-style: italic;
+            opacity: 0.9;
+        }
+        
+        .director-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .filmography {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .film {
+            background: rgba(77, 143, 142, 0.2);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 239, 225, 0.3);
+        }
+        
+        .film:hover {
+            background: rgba(0, 239, 225, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .ticket-section {
+            background: linear-gradient(to right, var(--secondary-color), var(--tertiary-color));
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ticket-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://placeholder.pics/svg/500x500/FFFFFF-FFFFFF/FFFFFF/ticket-pattern') repeat;
+            opacity: 0.05;
+        }
+        
+        .ticket-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .ticket-info {
+            background-color: rgba(4, 34, 32, 0.7);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 239, 225, 0.2);
+            position: relative;
+        }
+        
+        .ticket-info::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px dashed var(--primary-color);
+            border-radius: 25px;
+            opacity: 0.5;
+            z-index: -1;
+            animation: rotate 120s linear infinite;
+        }
+        
+        .ticket-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+        
+        .ticket-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+        }
+        
+        .ticket-detail {
+            text-align: center;
+        }
+        
+        .ticket-detail-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .ticket-detail-label {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        .ticket-detail-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .why-attend {
+            padding: 5rem 0;
+            background: linear-gradient(to bottom, var(--dark-color), rgba(4, 34, 32, 0.9));
+        }
+        
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(10, 92, 87, 0.3), rgba(4, 34, 32, 0.9));
+            border-radius: 15px;
+            overflow: hidden;
+            width: 300px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(77, 143, 142, 0.3);
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .card-content {
+            padding: 0 1.5rem 2rem;
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--tertiary-color);
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+                /* Navbar Styles */
+                .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .navbar.scrolled {
+            background-color: rgba(4, 34, 32, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .back-btn:hover {
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+        
+        .back-btn i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .nav-logo {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Adjust header for navbar */
+        .parallax-header {
+            height: 100vh;
+            background: linear-gradient(rgba(4, 34, 32, 0.7), rgba(4, 34, 32, 0.9)), url('https://placeholder.pics/svg/1920x1080/0A5C57-4D8F8E/FFFFFF/Cinema%20Background') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding-top: 80px; /* Add padding for navbar */
+        }
+        
+        .social-link {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+        
+        .social-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .director-photo-container {
+                margin: 0 auto;
+            }
+            
+            .ticket-details {
+                gap: 2rem;
+            }
+            
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+        <!-- Navbar -->
+        <nav class="navbar" id="navbar">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+            <div class="nav-links">
+                <a href="cosplay.html" class="nav-link">Cosplay</a>
+                <a href="masterClass.html" class="nav-link">Masterclass</a>
+                <a href="workShop.html" class="nav-link">Workshop</a>
+            </div>
+        </nav>
+    <header class="parallax-header">
+        <div class="header-content">
+            <span class="event-type">Exclusive Masterclass</span>
+            <h1>Masterclass with Vivek Athreya Garu</h1>
+            <p class="tagline">Decoding a Film</p>
+        </div>
+        <a href="#about" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </header>
+    
+    <div class="container" id="about">
+        <h2 class="section-title">About the Masterclass</h2>
+        
+        <div class="event-details">
+            <div class="poster">
+                <!-- Replace with actual event poster URL -->
+                <img src="images/masterClass.png">
+            </div>
+            
+            <div class="info">
+                <p class="intro-text">Ever wondered what goes on inside a director's mind? Join us for an exclusive Masterclass with <span class="highlight">Vivek Athreya Garu</span>, the visionary filmmaker behind Ante Sundaraniki, Brochevarevarura, Mental Madhilo, and  Saripodhaa Sanivaaram</p>
+                
+                <div class="expect-section">
+                    <h3 class="expect-title">What to Expect?</h3>
+                    <ul class="expect-list">
+                        <li class="expect-item">
+                            <div class="expect-icon">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div class="expect-content">
+                                <h4>In-depth Film Analysis</h4>
+                                <p>Decode his films, uncover hidden details, and explore storytelling techniques that make his work unique and impactful.</p>
+                            </div>
+                        </li>
+                        <li class="expect-item">
+                            <div class="expect-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="expect-content">
+                                <h4>Behind-the-Scenes Insights</h4>
+                                <p>Learn about the creative process, challenges, and decisions that shape a film from concept to screen.</p>
+                            </div>
+                        </li>
+                        <li class="expect-item">
+                            <div class="expect-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="expect-content">
+                                <h4>Interactive Discussion</h4>
+                                <p>Engage in a thought-provoking conversation with the host, Ram Venkat Srikar, and get your questions answered.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="director-section">
+        <div class="director-container">
+            <div class="director-photo-container">
+                <div class="director-photo-bg"></div>
+                <!-- Replace with actual director photo URL -->
+                <img class="director-photo" src="images/vivekAthreya.jpg" alt="Director Vivek Athreya">
+            </div>
+            
+            <div class="director-bio">
+                <h2 class="director-name">Vivek Athreya</h2>
+                <p class="director-title">Visionary Filmmaker & Storyteller</p>
+                
+                <p class="director-description">Vivek Athreya Garu is a visionary filmmaker known for his unique storytelling approach and character-driven narratives. His films have garnered critical acclaim and commercial success in Telugu cinema, establishing him as one of the most promising directors in contemporary Indian cinema.</p>
+                
+                <p class="director-description">With a keen eye for detail and a natural ability to blend humor with emotional depth, Vivek creates stories that resonate with audiences while pushing creative boundaries.</p>
+                
+                <h3 style="color: var(--primary-color); margin: 1.5rem 0 1rem;">Notable Filmography</h3>
+                <div class="filmography">
+                    <span class="film">Ante Sundaraniki (2022)</span>
+                    <span class="film">Brochevarevarura (2019)</span>
+                    <span class="film">Mental Madhilo (2017)</span>
+                    <span class="film">Saripodhaa Sanivaaram (2024)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="ticket-section">
+        <div class="ticket-container">
+            <div class="ticket-info">
+                <h2 class="ticket-title">Ticket Information</h2>
+                
+                <div class="ticket-details">
+                    <div class="ticket-detail">
+                        <div class="ticket-detail-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <p class="ticket-detail-label">Price</p>
+                        <p class="ticket-detail-value">FREE</p>
+                    </div>
+                    
+                    <div class="ticket-detail">
+                        <div class="ticket-detail-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <p class="ticket-detail-label">Availability</p>
+                        <p class="ticket-detail-value">500 Tickets</p>
+                    </div>
+                    
+                    <div class="ticket-detail">
+                        <div class="ticket-detail-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <p class="ticket-detail-label">Where to Get</p>
+                        <p class="ticket-detail-value">Box Office</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 2rem;">Tickets will be available at the box office at the event location. Arrive early to secure your spot!</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="why-attend container">
+        <h2 class="section-title">Why Attend This Masterclass?</h2>
+        
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Creative Insights</h3>
+                    <p>Gain valuable insights into the creative process of filmmaking from one of the industry's most innovative directors.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Industry Knowledge</h3>
+                    <p>Learn about the challenges and realities of the film industry from someone who has navigated it successfully.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Magical Experience</h3>
+                    <p>Witness this magical collaboration and gain insights directly from the Master Himself – Vivek Athreya.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Masterclass with Vivek Athreya Garu</div>
+            <p>If you love cinema, this masterclass is an experience you don't want to miss!</p>
+            
+            <p>© 2025 Chalana Chithram. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

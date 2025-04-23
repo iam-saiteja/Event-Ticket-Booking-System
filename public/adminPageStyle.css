@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&display=swap');
+
+:root {
+    --primary-color: rgb(0, 239, 225);
+    --secondary-color: rgb(10, 92, 87);
+    --tertiary-color: rgb(77, 143, 142);
+    --dark-color: rgb(4, 34, 32);
+    --text-color: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'League Spartan', sans-serif;
+    background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.sidebar {
+    background: rgba(4, 34, 32, 0.8);
+    border-right: 2px solid var(--tertiary-color);
+    backdrop-filter: blur(10px);
+}
+
+.sidebar-item a {
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+.sidebar-item.active a,
+.sidebar-item a:hover {
+    background: var(--tertiary-color);
+    color: var(--dark-color);
+}
+
+.main-content {
+    background: linear-gradient(
+        135deg, 
+        rgba(4, 34, 32, 0.95), 
+        rgba(10, 92, 87, 0.95)
+    );
+}
+
+.admin-card {
+    background: rgba(10, 30, 30, 0.7);
+    border: 2px solid var(--tertiary-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.admin-input {
+    background: rgba(20, 50, 50, 0.7);
+    border: 2px solid var(--tertiary-color);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+.admin-btn {
+    background: var(--tertiary-color);
+    color: var(--dark-color);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
+
+.file-upload input[type="file"] {
+    color: var(--text-color);
+}
+
+.verification-steps {
+    background-color: rgba(10, 50, 50, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.verification-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.verification-step .status-icon {
+    margin-left: auto;
+}

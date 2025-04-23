@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chepuko Chudham - Event Registration | Chalana Chithram</title>
+    <link rel="icon" href="images/branding.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        :root {
+    --primary-color: rgb(0, 239, 225);   /* Vibrant Cyan */
+    --secondary-color: rgb(10, 92, 87);  /* Deep Teal */
+    --tertiary-color: rgb(77, 143, 142); /* Muted Aqua */
+    --dark-color: rgb(4, 34, 32);        /* Rich Dark Green */
+    --text-color: #e0e0e0;               /* Soft White */
+}
+
+/* Background - Stylish Gradient */
+body {
+    background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Cards, Sections & Containers */
+.card, .box, .container {
+    background: rgba(0, 239, 225, 0.1);  /* Subtle cyan glass effect */
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 5px 15px rgba(0, 239, 225, 0.2);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+.card:hover, .box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 239, 225, 0.5);
+}
+
+/* Buttons - Glowing Effect */
+button, .btn {
+    background: var(--primary-color);
+    color: var(--dark-color);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0px 0px 15px rgba(0, 239, 225, 0.4);
+}
+
+button:hover, .btn:hover {
+    background: var(--tertiary-color);
+    transform: scale(1.05);
+    box-shadow: 0px 4px 20px rgba(77, 143, 142, 0.6);
+}
+
+/* Links - Smooth Glow */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+a:hover {
+    color: var(--tertiary-color);
+    text-shadow: 0px 0px 10px rgba(77, 143, 142, 0.6);
+}
+
+/* Headings - Elegant Glow */
+h1, h2, h3 {
+    color: var(--primary-color);
+    text-shadow: 2px 2px 10px rgba(0, 239, 225, 0.5);
+}
+
+/* Input Fields - Remove Default Blue Outline */
+input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    background: rgba(10, 92, 87, 0.2); /* Deep Teal Background */
+    border: 1px solid var(--tertiary-color); /* Soft Aqua Border */
+    color: var(--text-color); /* White Text */
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    outline: none; /* Removes Default Blue Focus */
+}
+
+/* Custom Focus Effect - No Blue, Only Neon */
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color); /* Neon Cyan Border */
+    box-shadow: 0px 0px 10px rgba(0, 239, 225, 0.5); /* Glow Effect */
+    background: rgba(10, 92, 87, 0.3); /* Slightly Brighter Background */
+}
+
+
+/* Animated Glowing Border for Important Sections */
+.important-section {
+    border: 2px solid transparent;
+    animation: glow-border 2s infinite alternate;
+}
+
+@keyframes glow-border {
+    from {
+        border-color: var(--primary-color);
+        box-shadow: 0px 0px 10px rgba(0, 239, 225, 0.5);
+    }
+    to {
+        border-color: var(--tertiary-color);
+        box-shadow: 0px 0px 15px rgba(77, 143, 142, 0.6);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Event Poster Section -->
+            <div class="flex justify-center items-center">
+                <div class="w-full max-w-[500px] lg:max-w-[600px] relative group">
+                    <img 
+                        id="poster-image"
+                        class="w-full h-full object-contain rounded-2xl shadow-2xl transition-transform duration-300 group-hover:scale-105"
+                        alt="Chepuko Chudham Event Poster"
+                    >
+                </div>
+            </div>
+
+<!-- Registration Form -->
+<div class="bg-[rgba(4,34,32,0.8)] p-8 rounded-2xl shadow-2xl border border-[rgba(0,239,225,0.3)]">
+    <h2 
+        id="event-name" 
+        class="text-4xl font-bold text-[rgb(0,239,225)] mb-8 text-center"
+    >
+        Chepuko Chudham Registration
+    </h2>
+
+    <form id="chepuko-registration-form" class="space-y-6">
+        <input type="hidden" id="event-id" />
+
+        <div class="grid grid-cols-1 gap-6">
+            <!-- Team Strength -->
+            <div class="transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Team Strength</label>
+                <select 
+                    id="team-strength" 
+                    required 
+                    class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                >
+                    <option value="">Select Team Strength</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 People</option>
+                </select>
+            </div>
+
+            <!-- Team Name -->
+            <div class="transition-all duration-300 hover:transform hover:scale-[1.02]">
+                <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Team Name</label>
+                <input 
+                    type="text" 
+                    id="team-name" 
+                    required 
+                    class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300" 
+                    placeholder="Enter Team Name"
+                />
+            </div>
+
+            <!-- Member 1 Details -->
+            <div id="member-1-section" class="bg-[rgba(10,92,87,0.2)] p-6 rounded-xl border-l-4 border-[rgb(0,239,225)] shadow-lg">
+                <h3 class="text-2xl text-[rgb(0,239,225)] mb-5 flex items-center">
+                    <i class="fas fa-user-circle mr-3"></i>Member 1 Details
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="member-1-name" 
+                            required 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="Enter full name"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Year of Study</label>
+                        <select 
+                            id="member-1-year" 
+                            required 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                        >
+                            <option value="">Select Year</option>
+                            <option value="1st">1st Year</option>
+                            <option value="2nd">2nd Year</option>
+                            <option value="3rd">3rd Year</option>
+                            <option value="4th">4th Year</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">College Name</label>
+                        <div class="flex flex-col md:flex-row gap-3">
+                            <select 
+                                id="predefined-college-1" 
+                                class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            >
+                                <option value="">Select College (Optional)</option>
+                                <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                <option value="Other">Other College</option>
+                            </select>
+                            <input 
+                                type="text" 
+                                id="member-1-college" 
+                                placeholder="Enter College Name" 
+                                class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Roll Number <span class="text-gray-400 text-sm">(Optional)</span></label>
+                        <input 
+                            type="text" 
+                            id="member-1-roll" 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="Enter roll number"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 2 Details (Hidden by default) -->
+            <div id="member-2-section" class="hidden bg-[rgba(10,92,87,0.2)] p-6 rounded-xl border-l-4 border-[rgb(77,143,142)] shadow-lg">
+                <h3 class="text-2xl text-[rgb(0,239,225)] mb-5 flex items-center">
+                    <i class="fas fa-user-circle mr-3"></i>Member 2 Details
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="member-2-name" 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="Enter full name"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Year of Study</label>
+                        <select 
+                            id="member-2-year" 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                        >
+                            <option value="">Select Year</option>
+                            <option value="1st">1st Year</option>
+                            <option value="2nd">2nd Year</option>
+                            <option value="3rd">3rd Year</option>
+                            <option value="4th">4th Year</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">College Name</label>
+                        <div class="flex flex-col md:flex-row gap-3">
+                            <select 
+                                id="predefined-college-2" 
+                                class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            >
+                                <option value="">Select College (Optional)</option>
+                                <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                <option value="Other">Other College</option>
+                            </select>
+                            <input 
+                                type="text" 
+                                id="member-2-college" 
+                                placeholder="Enter College Name" 
+                                class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Roll Number <span class="text-gray-400 text-sm">(Optional)</span></label>
+                        <input 
+                            type="text" 
+                            id="member-2-roll" 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="Enter roll number"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Details -->
+            <div class="bg-[rgba(10,92,87,0.2)] p-6 rounded-xl border-l-4 border-[rgb(0,239,225)] shadow-lg">
+                <h3 class="text-2xl text-[rgb(0,239,225)] mb-5 flex items-center">
+                    <i class="fas fa-address-card mr-3"></i>Contact Details
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="contact-email" 
+                            required 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="your@email.com"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-[rgb(0,239,225)] mb-2 font-medium">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            id="contact-phone" 
+                            required 
+                            class="w-full p-3 rounded-lg bg-[rgba(10,92,87,0.3)] text-white border border-[rgba(77,143,142,0.5)] focus:border-[rgb(0,239,225)] focus:ring-2 focus:ring-[rgba(0,239,225,0.3)] transition-all duration-300"
+                            placeholder="+91 XXXXXXXXXX"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Details Section -->
+        <div class="mt-8 bg-[rgba(4,34,32,0.9)] border-2 border-[rgb(77,143,142)] rounded-xl p-6 shadow-xl important-section">
+            <h3 class="text-2xl text-[rgb(0,239,225)] mb-6 border-b-2 border-[rgb(77,143,142)] pb-3 flex items-center">
+                <i class="fas fa-info-circle mr-3"></i>Event Details
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-[rgba(10,92,87,0.5)] p-4 rounded-lg shadow-md backdrop-filter backdrop-blur-sm hover:transform hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-calendar-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                        <h4 class="text-[rgb(0,239,225)] font-bold">Date</h4>
+                    </div>
+                    <p id="event-date" class="text-white text-lg">-</p>
+                </div>
+                <div class="bg-[rgba(10,92,87,0.5)] p-4 rounded-lg shadow-md backdrop-filter backdrop-blur-sm hover:transform hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-clock text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                        <h4 class="text-[rgb(0,239,225)] font-bold">Time</h4>
+                    </div>
+                    <p id="event-time" class="text-white text-lg">-</p>
+                </div>
+                <div class="bg-[rgba(10,92,87,0.5)] p-4 rounded-lg shadow-md backdrop-filter backdrop-blur-sm hover:transform hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-map-marker-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                        <h4 class="text-[rgb(0,239,225)] font-bold">Venue</h4>
+                    </div>
+                    <p id="event-venue" class="text-white text-lg">-</p>
+                </div>
+                <div class="bg-[rgba(10,92,87,0.5)] p-4 rounded-lg shadow-md backdrop-filter backdrop-blur-sm hover:transform hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-ticket-alt text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                        <h4 class="text-[rgb(0,239,225)] font-bold">Entry Fee</h4>
+                    </div>
+                    <p id="event-price" class="text-white text-lg font-bold">₹0</p>
+                </div>
+                <div class="bg-[rgba(10,92,87,0.5)] p-4 rounded-lg shadow-md backdrop-filter backdrop-blur-sm col-span-full hover:transform hover:scale-[1.02] transition-all duration-300">
+                    <div class="flex items-center mb-2">
+                        <i class="fas fa-trophy text-[rgb(0,239,225)] mr-3 text-xl"></i>
+                        <h4 class="text-[rgb(0,239,225)] font-bold">Prize Pool</h4>
+                    </div>
+                    <p id="event-prize-pool" class="text-white text-lg">-</p>
+                </div>
+            </div>
+        </div>
+
+        <button 
+            type="submit" 
+            class="w-full mt-8 bg-[rgb(0,239,225)] text-[rgb(4,34,32)] py-4 px-6 rounded-lg font-bold text-lg hover:bg-[rgb(77,143,142)] transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center"
+        >
+            <i class="fas fa-paper-plane mr-2"></i> Register for Event
+        </button>
+    </form>
+</div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+
+const firebaseConfig = {
+            apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+            authDomain: "screenings-663cf.firebaseapp.com",
+            projectId: "screenings-663cf",
+            storageBucket: "screenings-663cf.firebasestorage.app",
+            messagingSenderId: "75644576041",
+            appId: "1:75644576041:web:4dcd2cfc0341fad5be1738"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const firestore = firebase.firestore();
+        
+        // Firebase Configuration and Script (similar to previous implementation)
+        // Add event listener for team strength
+        document.addEventListener('DOMContentLoaded', () => {
+            const teamStrengthSelect = document.getElementById('team-strength');
+            const member2Section = document.getElementById('member-2-section');
+
+            teamStrengthSelect.addEventListener('change', (e) => {
+                member2Section.classList.toggle('hidden', e.target.value === '1');
+                
+                // Make second member fields optional when not selected
+                const member2Inputs = member2Section.querySelectorAll('input, select');
+                member2Inputs.forEach(input => {
+                    if (e.target.value === '1') {
+                        input.removeAttribute('required');
+                    } else {
+                        input.setAttribute('required', 'required');
+                    }
+                });
+            });
+
+            // College Dropdown Handling for both members
+            ['1', '2'].forEach(memberNum => {
+                const predefinedCollegeSelect = document.getElementById(`predefined-college-${memberNum}`);
+                const collegeInput = document.getElementById(`member-${memberNum}-college`);
+
+                predefinedCollegeSelect.addEventListener('change', (e) => {
+                    if (e.target.value === 'Other') {
+                        collegeInput.disabled = false;
+                        collegeInput.value = '';
+                        collegeInput.focus();
+                    } else if (e.target.value) {
+                        collegeInput.value = e.target.value;
+                        collegeInput.disabled = true;
+                    } else {
+                        collegeInput.value = '';
+                        collegeInput.disabled = true;
+                    }
+                });
+
+                collegeInput.addEventListener('input', () => {
+                    predefinedCollegeSelect.value = 'Other';
+                });
+            });
+
+            // Load Event Details
+            const urlParams = new URLSearchParams(window.location.search);
+            const eventId = urlParams.get('eventId');
+
+            if (eventId) {
+                document.getElementById('event-id').value = eventId;
+                
+                // Fetch event details
+                firebase.firestore()
+                    .collection('chitrosav_events')
+                    .doc(eventId)
+                    .get()
+                    .then(doc => {
+                        if (doc.exists) {
+                            const eventData = doc.data();
+                            document.getElementById('poster-image').src = eventData.posterBase64 || 'default-poster.jpg';
+                            document.getElementById('event-name').textContent = eventData.name;
+                            document.getElementById('event-date').textContent = eventData.date;
+                            document.getElementById('event-time').textContent = eventData.time;
+                            document.getElementById('event-venue').textContent = eventData.venue;
+                            document.getElementById('event-price').textContent = `₹${eventData.price}`;
+                            document.getElementById('event-prize-pool').textContent = eventData.prizePool;
+                        }
+                    });
+            }
+
+// Form Submission
+document.getElementById('chepuko-registration-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+        // Get the event price (remove the ₹ symbol)
+        const eventPrice = document.getElementById('event-price').textContent.replace('₹', '');
+        
+        // Prepare registration data
+        const registrationData = {
+            eventId: document.getElementById('event-id').value,
+            teamName: document.getElementById('team-name').value,
+            teamStrength: document.getElementById('team-strength').value,
+            
+            // Add the event price to registration data
+            eventPrice: eventPrice,
+            
+            // Use first member's details as primary contact
+            name: document.getElementById('member-1-name').value,
+            email: document.getElementById('contact-email').value,
+            phone: document.getElementById('contact-phone').value,
+            college: document.getElementById('member-1-college').value,
+            
+            // Detailed team information
+            teamDetails: {
+                member1: {
+                    name: document.getElementById('member-1-name').value,
+                    college: document.getElementById('member-1-college').value,
+                    year: document.getElementById('member-1-year').value,
+                    rollNumber: document.getElementById('member-1-roll').value || 'N/A'
+                },
+                member2: document.getElementById('team-strength').value === '2' ? {
+                    name: document.getElementById('member-2-name').value,
+                    college: document.getElementById('member-2-college').value,
+                    year: document.getElementById('member-2-year').value,
+                    rollNumber: document.getElementById('member-2-roll').value || 'N/A'
+                } : null
+            },
+
+            registrationType: 'chepuko-chudham',
+            registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+            paymentStatus: 'pending'
+        };
+
+        // Generate booking ID
+        const bookingId = `CCF-${Date.now().toString(36).toUpperCase()}`;
+        registrationData.bookingId = bookingId;
+
+        // Save registration
+        const registrationRef = await firebase.firestore()
+            .collection('event_registrations')
+            .add(registrationData);
+
+        // Redirect to payment page with the price parameter
+        window.location.href = `payments.html?eventId=${registrationData.eventId}&bookingId=${bookingId}&registrationType=chepuko-chudham&amount=${eventPrice}`;
+
+    } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed. Please try again.');
+    }
+});
+        });
+    </script>
+</body>
+</html>

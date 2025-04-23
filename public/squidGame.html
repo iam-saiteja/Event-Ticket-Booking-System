@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Squid Game Challenge - Chalana Chithram</title>
+    <link rel="icon" href="images/branding.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;600;700&family=Montserrat:wght@400;500;600&display=swap");
+
+      :root {
+        --primary-color: rgb(0, 239, 225);
+        --secondary-color: rgb(10, 92, 87);
+        --tertiary-color: rgb(77, 143, 142);
+        --dark-color: rgb(4, 34, 32);
+        --text-color: #e0e0e0;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          var(--dark-color),
+          var(--secondary-color)
+        );
+        color: var(--text-color);
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .squid-game-bg {
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        border: 2px solid var(--primary-color);
+        box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+      }
+
+      .team-member-card {
+        background: rgba(10, 92, 87, 0.3);
+        border: 1px solid var(--primary-color);
+        transition: all 0.3s ease;
+      }
+
+      .team-member-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(0, 239, 225, 0.5);
+      }
+
+      .glow-button {
+        background: var(--primary-color);
+        color: white;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .glow-button::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all 0.5s ease;
+      }
+
+      .glow-button:hover::before {
+        left: 100%;
+      }
+
+      .glow-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 239, 225, 0.5);
+      }
+
+      .number-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center py-12">
+    <nav class="film-navbar fixed top-0 left-0 w-full bg-dark-color shadow-lg z-50">
+      <div class="container mx-auto flex justify-between items-center py-4 px-4">
+        <div class="logo flex items-center">
+          <button onclick="window.history.back()" class="mr-4 text-white hover:text-[var(--primary-color)]">
+            <i class="fas fa-arrow-left text-2xl"></i>
+          </button>
+          <img src="images/branding.png" alt="Chalana Chithram Logo" class="h-12 mr-4" />
+          <h1 class="text-2xl font-bold text-[var(--primary-color)]">
+            Chalana Chithram
+          </h1>
+        </div>
+      </div>
+    </nav>
+    <div class="container mx-auto px-4">
+      <div
+        class="grid md:grid-cols-2 gap-8 squid-game-bg rounded-2xl overflow-hidden"
+      >
+        <!-- Event Poster Section -->
+        <div class="flex justify-center items-center p-8">
+          <div class="w-full max-w-[500px] relative group">
+            <img
+              id="poster-image"
+              class="w-full h-full object-contain rounded-2xl shadow-2xl"
+              alt="Squid Game Challenge Poster"
+            />
+          </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="p-8 relative">
+          <h2
+            id="event-name"
+            class="text-4xl font-bold text-[var(--primary-color)] mb-6 text-center"
+          >
+            Squid Game Challenge
+          </h2>
+
+          <form id="squid-game-registration-form" class="space-y-6">
+            <input type="hidden" id="event-id" />
+            <input type="hidden" id="event-price" value="0" />
+            <!-- Hidden input for event price -->
+
+            <!-- Team Details -->
+            <div class="team-member-card p-6 relative">
+              <div class="number-circle">1</div>
+              <h3 class="text-2xl text-[var(--primary-color)] mb-4">
+                Team Details
+              </h3>
+
+              <div class="grid grid-cols-1 gap-4">
+                <div>
+                  <label class="block text-white mb-2">Team Name</label>
+                  <input
+                    type="text"
+                    id="team-name"
+                    required
+                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    placeholder="Enter Your Team Name"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-white mb-2"
+                    >Team Size (3-5 members)</label
+                  >
+                  <select
+                    id="team-size"
+                    required
+                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                  >
+                    <option value="">Select Team Size</option>
+                    <option value="3">3 Members</option>
+                    <option value="4">4 Members</option>
+                    <option value="5">5 Members</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Leader Details -->
+            <div class="team-member-card p-6 relative">
+              <div class="number-circle">2</div>
+              <h3 class="text-2xl text-[var(--primary-color)] mb-4">
+                Team Leader Details
+              </h3>
+
+              <div class="grid grid-cols-1 gap-4">
+                <div>
+                  <label class="block text-white mb-2">Team Leader Name</label>
+                  <input
+                    type="text"
+                    id="team-leader-name"
+                    required
+                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    placeholder="Enter Team Leader Name"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-white mb-2">College</label>
+                  <div class="flex space-x-2">
+                    <select
+                      id="team-leader-college-select"
+                      class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    >
+                      <option value="">Select College</option>
+                      <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                      <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                      <option value="other">Other</option>
+                    </select>
+                    <input
+                      type="text"
+                      id="team-leader-college-other"
+                      placeholder="Enter College Name"
+                      class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                      style="display: none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-white mb-2">Contact Email</label>
+                  <input
+                    type="email"
+                    id="team-leader-email"
+                    required
+                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    placeholder="Enter Email"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-white mb-2">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="team-leader-phone"
+                    required
+                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                    placeholder="Enter Phone Number"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Team Members Container -->
+            <div id="team-members-container" class="space-y-4">
+              <!-- Dynamic team member inputs will appear here -->
+            </div>
+
+            <button
+              type="submit"
+              class="w-full glow-button py-4 rounded text-xl font-bold"
+            >
+              Proceed to Payment
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+      // Firebase Configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBTYay3pvD9kKxjfVce6i2U5G91nmOKEvk",
+        authDomain: "screenings-663cf.firebaseapp.com",
+        projectId: "screenings-663cf",
+        storageBucket: "screenings-663cf.firebasestorage.app",
+        messagingSenderId: "75644576041",
+        appId: "1:75644576041:web:4dcd2cfc0341fad5be1738",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const firestore = firebase.firestore();
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const teamSizeSelect = document.getElementById("team-size");
+        const teamMembersContainer = document.getElementById(
+          "team-members-container"
+        );
+        const teamLeaderCollegeSelect = document.getElementById(
+          "team-leader-college-select"
+        );
+        const teamLeaderCollegeOther = document.getElementById(
+          "team-leader-college-other"
+        );
+
+        // College Selection Logic
+        teamLeaderCollegeSelect.addEventListener("change", (e) => {
+          if (e.target.value === "other") {
+            teamLeaderCollegeOther.style.display = "block";
+            teamLeaderCollegeOther.required = true;
+          } else {
+            teamLeaderCollegeOther.style.display = "none";
+            teamLeaderCollegeOther.required = false;
+            teamLeaderCollegeOther.value = "";
+          }
+        });
+
+        // Dynamic Team Members Generation
+        teamSizeSelect.addEventListener("change", () => {
+          const teamSize = parseInt(teamSizeSelect.value);
+          teamMembersContainer.innerHTML = ""; // Clear existing members
+
+          for (let i = 1; i < teamSize; i++) {
+            const memberDiv = document.createElement("div");
+            memberDiv.classList.add("team-member-card", "p-6", "relative");
+            memberDiv.innerHTML = `
+                        <div class="number-circle">${i + 2}</div>
+                        <h3 class="text-2xl text-[var(--primary-color)] mb-4">Team Member ${i}</h3>
+                        
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label class="block text-white mb-2">Member Name</label>
+                                <input 
+                                    type="text" 
+                                    name="member-name-${i}" 
+                                    required 
+                                    class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                                    placeholder="Enter Member Name"
+                                />
+                            </div>
+
+                            <div>
+                                <label class="block text-white mb-2">College</label>
+                                <div class="flex space-x-2">
+                                    <select 
+                                        name="member-college-select-${i}" 
+                                        class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-select"
+                                    >
+                                        <option value="">Select College</option>
+                                        <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                                        <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <input 
+                                        type="text" 
+                                        name="member-college-other-${i}" 
+                                        placeholder="Enter College Name" 
+                                        class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-other"
+                                        style="display:none;"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    `;
+            teamMembersContainer.appendChild(memberDiv);
+
+            // Add event listeners for dynamic college selection
+            const memberCollegeSelect = memberDiv.querySelector(
+              ".member-college-select"
+            );
+            const memberCollegeOther = memberDiv.querySelector(
+              ".member-college-other"
+            );
+
+            memberCollegeSelect.addEventListener("change", (e) => {
+              if (e.target.value === "other") {
+                memberCollegeOther.style.display = "block";
+                memberCollegeOther.required = true;
+              } else {
+                memberCollegeOther.style.display = "none";
+                memberCollegeOther.required = false;
+                memberCollegeOther.value = "";
+              }
+            });
+          }
+        });
+
+        // Form Submission Logic
+        document
+          .getElementById("squid-game-registration-form")
+          .addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            try {
+
+              // Validate team size is selected
+              const teamSizeSelect = document.getElementById("team-size");
+              if (!teamSizeSelect.value) {
+                alert("Please select team size");
+                teamSizeSelect.focus();
+                return;
+              }
+
+              const teamSize = parseInt(teamSizeSelect.value);
+
+              // Validate all team member fields
+              let allFieldsValid = true;
+
+              // Validate team leader college
+              const teamLeaderCollegeSelect = document.getElementById(
+                "team-leader-college-select"
+              );
+              const teamLeaderCollegeOther = document.getElementById(
+                "team-leader-college-other"
+              );
+
+              if (!teamLeaderCollegeSelect.value) {
+                alert("Please select team leader college");
+                teamLeaderCollegeSelect.focus();
+                allFieldsValid = false;
+                return;
+              }
+
+              if (
+                teamLeaderCollegeSelect.value === "other" &&
+                !teamLeaderCollegeOther.value.trim()
+              ) {
+                alert("Please enter team leader college name");
+                teamLeaderCollegeOther.focus();
+                allFieldsValid = false;
+                return;
+              }
+
+              // Prepare team members data and validate
+              const teamMembers = [];
+              for (let i = 1; i < teamSize; i++) {
+                const nameInput = document.querySelector(
+                  `input[name="member-name-${i}"]`
+                );
+                const collegeSelect = document.querySelector(
+                  `select[name="member-college-select-${i}"]`
+                );
+                const collegeOtherInput = document.querySelector(
+                  `input[name="member-college-other-${i}"]`
+                );
+
+                // Validate member name
+                if (!nameInput.value.trim()) {
+                  alert(`Please enter name for Team Member ${i}`);
+                  nameInput.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                // Validate member college
+                if (!collegeSelect.value) {
+                  alert(`Please select college for Team Member ${i}`);
+                  collegeSelect.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                // Validate other college if selected
+                if (
+                  collegeSelect.value === "other" &&
+                  !collegeOtherInput.value.trim()
+                ) {
+                  alert(`Please enter college name for Team Member ${i}`);
+                  collegeOtherInput.focus();
+                  allFieldsValid = false;
+                  return;
+                }
+
+                teamMembers.push({
+                  name: nameInput.value.trim(),
+                  college:
+                    collegeSelect.value === "other"
+                      ? collegeOtherInput.value.trim()
+                      : collegeSelect.value,
+                });
+              }
+
+              if (!allFieldsValid) return;
+
+              // Get event price from hidden input
+              const eventPrice = parseFloat(
+                document.getElementById("event-price").value
+              );
+
+              // Prepare registration data
+              const registrationData = {
+                eventId: document.getElementById("event-id").value,
+                teamName: document.getElementById("team-name").value.trim(),
+                teamSize: teamSize,
+
+                // Team Leader Details
+                name: document.getElementById("team-leader-name").value.trim(),
+                email: document
+                  .getElementById("team-leader-email")
+                  .value.trim(),
+                phone: document
+                  .getElementById("team-leader-phone")
+                  .value.trim(),
+                college:
+                  teamLeaderCollegeSelect.value === "other"
+                    ? teamLeaderCollegeOther.value.trim()
+                    : teamLeaderCollegeSelect.value,
+
+                // Team Members
+                teamMembers: teamMembers,
+
+                registrationType: "squid-game",
+                registeredAt: firebase.firestore.FieldValue.serverTimestamp(),
+                paymentStatus: "pending",
+                eventPrice: eventPrice,
+                year:2025,
+              };
+
+              // Generate booking ID
+              const bookingId = `CCF-${Date.now().toString(36).toUpperCase()}`;
+              registrationData.bookingId = bookingId;
+
+              // Save registration
+              const registrationRef = await firebase
+                .firestore()
+                .collection("event_registrations")
+                .add(registrationData);
+
+              // Show countdown popup
+              showCountdownPopup(
+                registrationData.eventId,
+                bookingId,
+                eventPrice
+              );
+            } catch (error) {
+              console.error("Registration error:", error);
+              alert("Registration failed. Please try again.");
+            }
+          });
+
+        // Countdown Popup Function
+        function showCountdownPopup(eventId, bookingId, amount) {
+          // Create popup container
+          const popupContainer = document.createElement("div");
+          popupContainer.className =
+            "fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4";
+
+          popupContainer.innerHTML = `
+        <div class="bg-[rgba(10,30,30,0.9)] border-2 border-[var(--primary-color)] rounded-lg p-6 max-w-md w-full text-center">
+            <h2 class="text-2xl text-[var(--primary-color)] mb-4">Registration Successful!</h2>
+            
+            <p class="text-white mb-6">To complete your registration, you need to make a payment of ₹${amount}.</p>
+            
+            <div class="mb-6">
+                <p class="text-white mb-2">Redirecting to payment page in:</p>
+                <div class="text-4xl text-[var(--primary-color)] font-bold" id="countdown">3</div>
+            </div>
+            
+            <div class="flex space-x-4 justify-center">
+                <button id="pay-now-btn" class="bg-[var(--primary-color)] text-black px-6 py-2 rounded font-bold">
+                    Pay Now
+                </button>
+                <button id="cancel-btn" class="bg-gray-700 text-white px-6 py-2 rounded">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    `;
+
+          // Add popup to body
+          document.body.appendChild(popupContainer);
+
+          // Set up countdown
+          let countdown = 3;
+          const countdownElement = document.getElementById("countdown");
+
+          const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+
+            if (countdown <= 0) {
+              clearInterval(countdownInterval);
+              redirectToPayment();
+            }
+          }, 1000);
+
+          // Button actions
+          document
+            .getElementById("pay-now-btn")
+            .addEventListener("click", () => {
+              clearInterval(countdownInterval);
+              redirectToPayment();
+            });
+
+          document
+            .getElementById("cancel-btn")
+            .addEventListener("click", () => {
+              clearInterval(countdownInterval);
+              document.body.removeChild(popupContainer);
+              // Optionally redirect to home or another page
+              // window.location.href = 'index.html';
+            });
+
+          // Redirect function
+          function redirectToPayment() {
+            window.location.href = `payments.html?eventId=${eventId}&bookingId=${bookingId}&registrationType=squid-game&amount=${amount}`;
+          }
+        }
+        // Dynamic Team Members Generation
+        teamSizeSelect.addEventListener("change", () => {
+          const teamSize = parseInt(teamSizeSelect.value);
+          teamMembersContainer.innerHTML = ""; // Clear existing members
+
+          for (let i = 1; i < teamSize; i++) {
+            const memberDiv = document.createElement("div");
+            memberDiv.classList.add("team-member-card", "p-6", "relative");
+            memberDiv.innerHTML = `
+            <div class="number-circle">${i + 2}</div>
+            <h3 class="text-2xl text-[var(--primary-color)] mb-4">Team Member ${i}</h3>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="block text-white mb-2">Member Name <span class="text-red-500">*</span></label>
+                    <input 
+                        type="text" 
+                        name="member-name-${i}" 
+                        required 
+                        class="w-full p-3 rounded bg-black text-white border border-[var(--primary-color)]"
+                        placeholder="Enter Member Name"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-white mb-2">College <span class="text-red-500">*</span></label>
+                    <div class="flex space-x-2">
+                        <select 
+                            name="member-college-select-${i}" 
+                            required
+                            class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-select"
+                        >
+                            <option value="">Select College</option>
+                            <option value="BVRIT Narsapur">BVRIT Narsapur</option>
+                            <option value="BVRIT Hyderabad">BVRIT Hyderabad</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <input 
+                            type="text" 
+                            name="member-college-other-${i}" 
+                            placeholder="Enter College Name" 
+                            class="w-1/2 p-3 rounded bg-black text-white border border-[var(--primary-color)] member-college-other"
+                            style="display:none;"
+                        />
+                    </div>
+                </div>
+            </div>
+        `;
+            teamMembersContainer.appendChild(memberDiv);
+
+            // Add event listeners for dynamic college selection
+            const memberCollegeSelect = memberDiv.querySelector(
+              ".member-college-select"
+            );
+            const memberCollegeOther = memberDiv.querySelector(
+              ".member-college-other"
+            );
+
+            memberCollegeSelect.addEventListener("change", (e) => {
+              if (e.target.value === "other") {
+                memberCollegeOther.style.display = "block";
+                memberCollegeOther.required = true;
+              } else {
+                memberCollegeOther.style.display = "none";
+                memberCollegeOther.required = false;
+                memberCollegeOther.value = "";
+              }
+            });
+          }
+        });
+
+        // Load Event Details
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get("eventId");
+
+        if (eventId) {
+          document.getElementById("event-id").value = eventId;
+
+          // Fetch event details
+          firestore
+            .collection("chitrosav_events")
+            .doc(eventId)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                const eventData = doc.data();
+                document.getElementById("poster-image").src =
+                  eventData.posterBase64 || "default-poster.jpg";
+                document.getElementById("event-name").textContent =
+                  eventData.name;
+                document.getElementById("event-price").value = eventData.price; // Set the event price in hidden input
+              }
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
